@@ -9,6 +9,7 @@ import RegisterScreen from '../screens/RegisterScreen';
 
 const Stack = createNativeStackNavigator();
 
+
 const Navigation = () => {
     return (
         <NavigationContainer>
