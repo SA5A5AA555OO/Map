@@ -40,7 +40,7 @@ const LoginScreen = ({navigation}) => {
                     <View style={{ flexDirection: "row", marginTop: 20 }}>
                         <Text>尚未擁有帳號?</Text>
                         <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-                            <Text style={styles.link}> 點擊註冊</Text>
+                            <Text style={styles.link}> 點擊幹註冊</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
