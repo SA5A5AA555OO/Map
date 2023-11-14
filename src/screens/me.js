@@ -1,5 +1,7 @@
+/*
+
 import React from "react";
-import {Text, View} from 'react-native';
+import {Text, View,Image} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -22,12 +24,10 @@ import GoogleMap from "../screens/GoogleMap";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-
-const Navigation = () =>{
-    return(
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name  ="Login" component={LoginScreen}/>
+const StackNavigator = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name  ="Login" component={LoginScreen}/>
                 <Stack.Screen name  ="Home" component={HomeScreen} />
                 <Stack.Screen name  ="Regester" component={RegesterScreen}  />
                 <Stack.Screen name  ="Regester2" component={RegesterScreen2}  />
@@ -43,10 +43,49 @@ const Navigation = () =>{
                 <Stack.Screen name  ="Take2" component={Take2} />
                 <Stack.Screen name  ="Take3" component={Take3} />
                 <Stack.Screen name  ="GoogleMap" component={GoogleMap} />
-
-            </Stack.Navigator>
-        </NavigationContainer>
+      </Stack.Navigator>
     );
-};
+  };
+  
+  //下方的導覽列
+  const TabNavigator = () => {
+    return (
+        <Tab.Navigator screenOptions={{
+        tabBarStyle:{ backgroundColor: '#E6A984' },
+        tabBarShowLabel:false, //下方導覽列名稱隱藏
+        }}>
+        <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+        tabBarIcon: ({focused}) => (
+            <View style={{alignItems:'center',justifyContent:'center',top:10}}>
+                <Image
+                    source={require('map/asset/home.png')}
+                    resizeMode="contain"
+                    style={{
+                        width: 25,
+                        height: 25,
+                        tintColor: focused ? 'black' : '#5A545E', // 設置默認顏色
+                    }}
+                />
+                <Text
+                style={{color:focused ?'#E6A984' :'E6A984',fontSize: 12 }}>
+                </Text>
+            </View>
+        ),
+        }}
+        />
+        </Tab.Navigator>
+    );
+  };
+ const Navigation = () => {
+    return (
+      <NavigationContainer>
+        <TabNavigator />
+      </NavigationContainer>
+    );
+  };
+  
 
-export default Navigation;
+export default Navigation;*/
