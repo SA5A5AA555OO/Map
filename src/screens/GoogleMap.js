@@ -1,20 +1,12 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import Navigation from '../Components/Navigation';
-import Ref from '../screens/Ref';
-import Meal from '../screens/Meal';
-import GoogleMap from '../screens/GoogleMap';
 
 
 
-const HomeScreen = ({navigation}) =>{
-  const handleButtonPress = () => {
-      navigation.navigate('Ref');
-    };
-    const handleButtonPress2 = () => {
-      navigation.navigate('Meal');
-    };
-    
-    
+
+
+const GoogleMap = () =>{
+  
 
     return (
 
@@ -32,8 +24,8 @@ const HomeScreen = ({navigation}) =>{
           <TouchableOpacity  onPress={handleButtonPress2}style={styles.buttonContainer}>
             <Text style={styles.buttonText}>待用餐</Text>
           </TouchableOpacity>
-          <TouchableOpacity  style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>操你媽</Text>
+          <TouchableOpacity  onPress={handleButtonPress3}style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>美食地圖</Text>
           </TouchableOpacity>
         </View>
       );
@@ -67,4 +59,4 @@ const styles = StyleSheet.create({
     },
   });
   
-export default HomeScreen;
+export default GoogleMap;
