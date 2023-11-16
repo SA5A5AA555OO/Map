@@ -3,6 +3,7 @@ import Navigation from '../Components/Navigation';
 import Ref from '../screens/Ref';
 import Meal from '../screens/Meal';
 import Me from './Me';
+import Map from './Map';
 
 
 
@@ -15,6 +16,9 @@ const HomeScreen = ({navigation}) =>{
     };
     const handleButtonPress3 = () => {
       navigation.navigate('Me');
+    };
+    const handleButtonPress4 = () => {
+      navigation.navigate('Map');
     };
     
     
@@ -37,6 +41,9 @@ const HomeScreen = ({navigation}) =>{
           </TouchableOpacity>
           <TouchableOpacity onPress={handleButtonPress3} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>個人頁面</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleButtonPress4} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>地圖</Text>
           </TouchableOpacity>
         </View>
       );

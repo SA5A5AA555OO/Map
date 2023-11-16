@@ -21,6 +21,7 @@ import Take3 from "../screens/Take3";
 import GoogleMap from "../screens/GoogleMap";
 import Me from "../screens/Me";
 import FjuRef from "../screens/FjuRef";
+import Map from "../screens/Map";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +48,7 @@ const Navigation = () =>{
                 <Stack.Screen name  ="GoogleMap" component={GoogleMap} />
                 <Stack.Screen name  ="Me" component={Me} />
                 <Stack.Screen name  ="FjuRef" component={FjuRef} />
-
+                <Stack.Screen name  ="Map" component={Map} />
             </Stack.Navigator>
         </NavigationContainer>
     );
