@@ -6,21 +6,31 @@ import {
     Image,
     ScrollView,
 } from 'react-native';
-import MapView  from 'react-native-maps';
+import MapView,{Marker} from 'react-native-maps';
+import FjuRef from '../screens/FjuRef';
 
 const Map = ({ navigation }) => {
-
+    const handleButtonPress = () => {
+        navigation.navigate('FjuRef');
+      };
     return (
         <View style={styles.container}>
-            <MapView
-            style={styles.map}
+            <MapView             
+                style={styles.map}
                 initialRegion={{
                     latitude: 25.03719676448161,//經度
                     longitude: 121.43248323862977,//緯度
                     latitudeDelta: 0.01,
                     longitudeDelta: 0.01,
-                }}
+                }}>
+                <Marker //標記地點
+                coordinate={{latitude: 25.03719676448161, longitude: 121.43248323862977}}
+                title={'食享冰箱'}
+                description={'點擊食享冰箱'}
+                onPress={handleButtonPress}
             />
+            </MapView>
+           
         </View>
 
     );
@@ -53,9 +63,9 @@ const styles = StyleSheet.create({
     link: {
         color: '#DA7746',
     },
-    map:{
-        width:'100%',
-        height:'100%',
+    map: {
+        width: '100%',
+        height: '100%',
     },
 
     buttonContainer: {
