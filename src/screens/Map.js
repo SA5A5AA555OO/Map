@@ -1,17 +1,17 @@
 import React from "react";
 import {
-    View,
-    StyleSheet,
-    Text,
-    Image,
-    ScrollView,
+    View, StyleSheet, Text, Image, ScrollView,
 } from 'react-native';
 import MapView,{Marker} from 'react-native-maps';
 import FjuRef from '../screens/FjuRef';
+import Store from '../screens/Store';
 
 const Map = ({ navigation }) => {
-    const handleButtonPress = () => {
+    const handleButtonPress1 = () => {
         navigation.navigate('FjuRef');
+      };
+    const handleButtonPress2 = () => {
+        navigation.navigate('Store');
       };
     return (
         <View style={styles.container}>
@@ -24,11 +24,17 @@ const Map = ({ navigation }) => {
                     longitudeDelta: 0.01,
                 }}>
                 <Marker //標記地點
-                coordinate={{latitude: 25.03719676448161, longitude: 121.43248323862977}}
+                coordinate={{latitude: 25.036536324078433,  longitude: 121.43183548002627}}
                 title={'食享冰箱'}
                 description={'點擊食享冰箱'}
-                onPress={handleButtonPress}
-            />
+                onPress={handleButtonPress1}
+                />
+                <Marker //標記地點
+                coordinate={{latitude: 25.042853691197738,  longitude: 121.44725038057825}}
+                title={'素食的店'}
+                description={'素食的店'}
+                onPress={handleButtonPress2}
+                />
             </MapView>
            
         </View>
