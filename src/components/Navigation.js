@@ -19,6 +19,7 @@ import Take1 from "../screens/Take1";
 import Take2 from "../screens/Take2";
 import Take3 from "../screens/Take3";
 import GoogleMap from "../screens/GoogleMap";
+import Me from "../screens/Me";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -43,6 +44,7 @@ const Navigation = () =>{
                 <Stack.Screen name  ="Take2" component={Take2} />
                 <Stack.Screen name  ="Take3" component={Take3} />
                 <Stack.Screen name  ="GoogleMap" component={GoogleMap} />
+                <Stack.Screen name  ="Me" component={Me} />
 
             </Stack.Navigator>
         </NavigationContainer>
