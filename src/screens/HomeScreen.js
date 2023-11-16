@@ -2,7 +2,7 @@ import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from '
 import Navigation from '../Components/Navigation';
 import Ref from '../screens/Ref';
 import Meal from '../screens/Meal';
-import GoogleMap from '../screens/GoogleMap';
+import Me from './Me';
 
 
 
@@ -12,6 +12,9 @@ const HomeScreen = ({navigation}) =>{
     };
     const handleButtonPress2 = () => {
       navigation.navigate('Meal');
+    };
+    const handleButtonPress3 = () => {
+      navigation.navigate('Me');
     };
     
     
@@ -32,8 +35,8 @@ const HomeScreen = ({navigation}) =>{
           <TouchableOpacity  onPress={handleButtonPress2}style={styles.buttonContainer}>
             <Text style={styles.buttonText}>待用餐</Text>
           </TouchableOpacity>
-          <TouchableOpacity  style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>操你媽</Text>
+          <TouchableOpacity onPress={handleButtonPress3} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>個人頁面</Text>
           </TouchableOpacity>
         </View>
       );

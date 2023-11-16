@@ -10,7 +10,8 @@ const Meal = ({navigation}) =>{
         navigation.navigate('Store');
       };
       return (
-        <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.container}>
+           <ScrollView >
             <Text style={styles.headerText}>待用餐據點</Text>
             <Text ></Text>
             <Image
@@ -41,6 +42,7 @@ const Meal = ({navigation}) =>{
                
             </View>
             </ScrollView>
+            </View>
      
       );
 };
