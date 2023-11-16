@@ -33,6 +33,9 @@ const Store = ({navigation}) =>{
                <TouchableOpacity  onPress={handleButtonPress2} style={styles.buttonContainer}>
                  <Text style={styles.buttonText}>領取待用餐</Text>
                </TouchableOpacity>
+               <TouchableOpacity  style={styles.buttonContainer}>
+                 <Text style={styles.buttonText}>加入最愛</Text>
+               </TouchableOpacity>
                  
                 
             
@@ -46,7 +49,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'flex-start',
       backgroundColor:'#FDFBF1',
-      paddingTop:20,
+      
     },
     headerText: {
         fontSize: 40,
@@ -72,26 +75,24 @@ const styles = StyleSheet.create({
     },
     line: {
         borderBottomWidth: 1, // 线的宽度
-        borderBottomColor: 'black', // 线的颜色
-        borderBottomStyle: 'solid', // 线的样式，可以是 'solid'、'dotted' 或 'dashed'
-        // 可选：设置线的长度和位置
+        borderBottomColor: 'black', 
         width: 350,
        alignSelf: 'center',
       },
 
 
     buttonContainer: {
-      backgroundColor: '#E6A984', // 自定义背景颜色
+      backgroundColor: '#E6A984', 
       padding: 20,
-      borderRadius: 20, // 圆角效果
-      marginVertical: 10, // 设置垂直间距
+      borderRadius: 30, // 圆角效果
+      marginVertical: 5, // 设置垂直间距
       width:'80%'
     },
     buttonText: {
       color: 'white', // 文本颜色
       fontWeight: 'bold',
       textAlign: 'center', // 文本居中
-      
+      fontSize:15,
     },
   });
   

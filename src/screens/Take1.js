@@ -14,6 +14,10 @@ const Take1 = ({navigation}) =>{
              <Text style={styles.headerText}>素食的店</Text>
             <Text ></Text>
             <Image
+              style={styles.logo1}
+               source={require('map/asset/step1.jpg')}/>
+               <Text></Text>
+            <Image
               style={styles.logo}
                source={require('map/asset/素食的店.jpg')}/>
            
@@ -64,6 +68,10 @@ logo: {
     width: 350,
     height: 200,
     borderRadius: 30,
+  },
+  logo1: {
+    width: 350,
+    height: 60,
   },
   button: {
     backgroundColor: '#E6A984', // 自定义按钮颜色

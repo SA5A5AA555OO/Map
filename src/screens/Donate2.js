@@ -1,93 +1,110 @@
 import React, { useState } from 'react';
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
-import Navigation from '../Components/Navigation';
-import Donate1 from '../screens/Donate1';
+import { Text, View, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
+const Donate2 = ({ navigation }) => {
+  const handleButtonPress = () => {
+    navigation.navigate('Donate1');
+  };
 
-const RegesterScreen = ({navigation}) =>{
-   
-    const handleButtonPress = () => {
-      navigation.navigate('Donate1');
-    };
-    return(
-        <View style={styles.container}>
-             <Text style={styles.headerText}>素食的店</Text>
-            <Text ></Text>
-            <Image
-              style={styles.logo}
-               source={require('map/asset/素食的店.jpg')}/>
-           
-          
+  const [count, setCount] = useState(0);
 
+  const handleOperation = (value) => {
+    setCount(count + value);
+  };
 
+  return (
+    <View style={styles.container}>
+      <Text style={styles.headerText}>素食的店</Text>
+      <Text></Text>
+      <Image style={styles.logo1} source={require('map/asset/Dstep1.jpg')} />
+      <Text></Text>
+      <Image style={styles.logo} source={require('map/asset/素食的店.jpg')} />
+
+      <View style={styles.detailsContainer}>
+        <View style={styles.rowContainer}>
+          <Text style={styles.detail}>乾麵 $30       </Text>
+          <View style={styles.counterContainer}>
+            <TouchableOpacity style={styles.button} onPress={() => handleOperation(-1)}>
+              <Text style={styles.buttonText}>-</Text>
+            </TouchableOpacity>
+            <Text style={styles.counterText}>  {count}  </Text>
+            <TouchableOpacity style={styles.button} onPress={() => handleOperation(1)}>
+              <Text style={styles.buttonText}>+</Text>
+            </TouchableOpacity>
             
-            <View style={{ alignSelf: 'flex-start' }}>
-               <Text style={styles.detail}>乾麵 $30</Text>
-              
-            </View>
-            <TouchableOpacity onPress={handleButtonPress} style={styles.button}>
-                  <Text style={styles.buttonText}>捐贈</Text>
-                </TouchableOpacity>
-            
-        
-        
+
+          </View>
+        </View>
+        <Text style={styles.totalText}>總計${count*30}</Text>
+        <Text></Text>
+        <TouchableOpacity onPress={handleButtonPress} style={styles.donateButton}>
+          <Text style={styles.buttonText}>捐贈</Text>
+        </TouchableOpacity>
+      </View>
     </View>
-    );
+  );
 };
-const styles =StyleSheet.create({
-  container:{
-  flex:1,
-  alignItems:'center',
-  backgroundColor:'#FDFBF1',
 
-},
-  wrapper:{
-      width:'80%',
-      
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#FDFBF1',
   },
-  headerText: {
-    fontSize: 40,
+  logo1: {
+    width: 350,
+    height: 60,
   },
-  leftText :{
-    fontSize: 30,
-    left:20,
-    position: 'absolute',
-    top: 0,
-},
-detail:{
-    fontSize: 35,
-    left:20,
-    
-    
-},
-logo: {
+  logo: {
     width: 350,
     height: 200,
     borderRadius: 30,
   },
+  detailsContainer: {
+    alignItems: 'center',
+    margin: 20,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  detail: {
+    fontSize: 35,
+    marginBottom: 20,
+    marginRight: 10,
+  },
+  counterContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  counterText: {
+    fontSize: 20,
+    marginHorizontal: 10,
+  },
   button: {
-    backgroundColor: '#E6A984', // 自定义按钮颜色
-    paddingVertical: 20,        // 垂直方向的內邊距
-    paddingHorizontal: 40,      // 水平方向的內邊距
+    backgroundColor: '#E6A984',
+    padding: 10,
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize:20
+  },
+  donateButton: {
+    backgroundColor: '#E6A984',
+    paddingVertical: 20,
+    paddingHorizontal: 40,
     borderRadius: 30,
   },
-    buttonText: {
-      color: 'white', // 按钮文本颜色
-      fontWeight: 'bold',
-      textAlign: 'center',},
-
-  input:{
-      marginBottom:12,
-      borderWidth:1,
-      borderColor:'#bbb',
-      borderRadius:5,
-      paddingHorizontal:14,
-      backgroundColor: 'white',
+  headerText: {
+    fontSize: 40,
   },
-  link:{
-      color:'#DA7746',
+  totalText:{
+    fontSize: 30,
+
   }
-  
 });
 
-export default RegesterScreen;
+export default Donate2;
