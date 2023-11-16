@@ -18,10 +18,10 @@ const FjuRef = ({navigation}) =>{
             <View style={styles.line} />
             <Text></Text>
             <View style={{ alignSelf: 'flex-start' }}>
-            <Text style={styles.detail}>今日開放領取時間:   1:30</Text>
+               <Text style={styles.detail}>今日開放領取時間:   1:30</Text>
                <Text style={styles.detail}>地址:新北市新莊區中正路510號</Text>
                <Text style={styles.detail}>電話:02-2905-2000</Text>
-               <Text style={styles.detail}>僅供輔大師生教職員領取</Text>
+               <Text style={styles.red}>僅供輔大師生教職員領取</Text>
                </View>
                <Image
               style={styles.pic}
@@ -62,9 +62,16 @@ const styles = StyleSheet.create({
         fontSize: 30,
         left:20,
     },
+    red:{
+      fontSize: 20,
+      left:20,
+      padding:5,
+      color:'red'
+    },
     detail:{
         fontSize: 20,
-        left:20
+        left:20,
+        padding:5,
     },
     line: {
         borderBottomWidth: 1, // 线的宽度

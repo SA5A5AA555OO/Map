@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet} from 'react-native';
+import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import Navigation from '../Components/Navigation';
-import LoginScreen from '../screens/LoginScreen';
+import HomeScreen from './HomeScreen';
+import React, { useState } from 'react';
 
 
-const RegesterScreen = ({navigation}) =>{
+
+const EditProfile = ({navigation}) =>{
     const [email,setEmail]=useState('');
     const [password, setPassword]=useState('');
     const handleButtonPress = () => {
@@ -46,7 +47,7 @@ const RegesterScreen = ({navigation}) =>{
             secureTextEntry={true}
             />
            <TouchableOpacity onPress={handleButtonPress} style={styles.button}>
-                  <Text style={styles.buttonText}>註冊</Text>
+                  <Text style={styles.buttonText}>修改</Text>
                 </TouchableOpacity>
             <View style={{flexDirection:'row', marginTop:20}}></View>
 
@@ -76,10 +77,12 @@ const styles =StyleSheet.create({
     buttonText: {
       color: 'white', // 按钮文本颜色
       fontWeight: 'bold',
-      textAlign: 'center',},
+      textAlign: 'center',
+      fontSize:20,
+    },
 
   input:{
-      marginBottom:12,
+      marginBottom:20,
       borderWidth:1,
       borderColor:'#bbb',
       borderRadius:20,
@@ -93,4 +96,4 @@ const styles =StyleSheet.create({
   
 });
 
-export default RegesterScreen;
+export default EditProfile;

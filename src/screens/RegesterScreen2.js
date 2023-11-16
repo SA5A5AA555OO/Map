@@ -77,8 +77,8 @@ const styles =StyleSheet.create({
   },
   button: {
       backgroundColor: '#E6A984', // 自定义按钮颜色
-      padding: 10,
-      borderRadius: 5,
+      padding: 20,
+      borderRadius: 20,
     },
     buttonText: {
       color: 'white', // 按钮文本颜色
@@ -89,9 +89,10 @@ const styles =StyleSheet.create({
       marginBottom:12,
       borderWidth:1,
       borderColor:'#bbb',
-      borderRadius:5,
+      borderRadius:20,
       paddingHorizontal:14,
       backgroundColor: 'white',
+      height:60,
   },
   link:{
       color:'#DA7746',

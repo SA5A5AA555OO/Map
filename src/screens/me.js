@@ -1,27 +1,35 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import Navigation from '../Components/Navigation';
-import HomeScreen from './HomeScreen';
+import Favorite from '../screens/Favorite';
+import Record from '../screens/Record';
+import EditProfile from '../screens/EditProfile';
+
 
 
 
 
 const Me = ({navigation}) =>{
    
-      return (
-        <View style={styles.container}>
-            
-            <Text></Text>
-            <Image
-              style={styles.logo}
-               source={require('map/asset/頭像.jpg')}/>
-               <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>我的最愛</Text>
-               <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>訂單紀錄</Text>
-               <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>修改個人資訊</Text>
-
-           
-        </View>
-     
-      );
+  return (
+    <View style={styles.container}>
+      <Text></Text>
+      <Image
+        style={styles.logo}
+        source={require('map/asset/頭像.jpg')}
+        
+      />
+      <TouchableOpacity onPress={() => navigation.navigate('Favorite')}>
+        <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>我的最愛</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Record')}>
+        <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>訂單紀錄</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
+        <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>修改個人資訊</Text>
+      </TouchableOpacity>
+    </View>
+  );
+  
 };
 const styles = StyleSheet.create({
     container: {
@@ -38,11 +46,12 @@ const styles = StyleSheet.create({
         width: 150,
         height: 150,
         borderRadius: 100,
+        marginBottom: 50,
         
       },
     leftText :{
-        fontSize: 25,
-        left:20,
+        fontSize: 30,
+        marginBottom: 10,
     },
     detail:{
         fontSize: 20,

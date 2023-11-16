@@ -22,6 +22,9 @@ import GoogleMap from "../screens/GoogleMap";
 import Me from "../screens/Me";
 import FjuRef from "../screens/FjuRef";
 import Map from "../screens/Map";
+import Favorite from "../screens/Favorite";
+import Record from "../screens/Record";
+import EditProfile from "../screens/EditProfile";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -49,6 +52,9 @@ const Navigation = () =>{
                 <Stack.Screen name  ="Me" component={Me} />
                 <Stack.Screen name  ="FjuRef" component={FjuRef} />
                 <Stack.Screen name  ="Map" component={Map} />
+                <Stack.Screen name  ="Favorite" component={Favorite} />
+                <Stack.Screen name  ="Record" component={Record} />
+                <Stack.Screen name  ="EditProfile" component={EditProfile} />
             </Stack.Navigator>
         </NavigationContainer>
     );
