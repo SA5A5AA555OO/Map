@@ -5,7 +5,11 @@ import Donate3 from '../screens/Donate3';
 
 
 const RegesterScreen = ({navigation}) =>{
-   
+  const [isChecked, setChecked] = useState(false);
+
+  const handleCheckboxToggle = () => {
+    setChecked(!isChecked);
+  };
     const handleButtonPress = () => {
       navigation.navigate('Donate3');
     };
@@ -38,6 +42,7 @@ const RegesterScreen = ({navigation}) =>{
             placeholder ="信箱"
             
             />
+            
         
         <TouchableOpacity onPress={handleButtonPress} style={styles.button}>
                   <Text style={styles.buttonText}>前往付款</Text>
@@ -96,7 +101,7 @@ logo1: {
       marginBottom:12,
       borderWidth:1,
       borderColor:'#bbb',
-      borderRadius:5,
+      borderRadius:20,
       paddingHorizontal:14,
       backgroundColor: 'white',
   },

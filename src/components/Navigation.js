@@ -25,6 +25,11 @@ import Map from "../screens/Map";
 import Favorite from "../screens/Favorite";
 import Record from "../screens/Record";
 import EditProfile from "../screens/EditProfile";
+import Shop from "../screens/Shop";
+import TakePeople from "../screens/TakePeople";
+import DonatePeople from "../screens/DonatePeople";
+import ShopImf from "../screens/ShopImf";
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -55,6 +60,10 @@ const Navigation = () =>{
                 <Stack.Screen name  ="Favorite" component={Favorite} />
                 <Stack.Screen name  ="Record" component={Record} />
                 <Stack.Screen name  ="EditProfile" component={EditProfile} />
+                <Stack.Screen name  ="Shop" component={Shop} />
+                <Stack.Screen name  ="TakePeople" component={TakePeople} />
+                <Stack.Screen name  ="DonatePeople" component={DonatePeople} />
+                <Stack.Screen name  ="ShopImf" component={ShopImf} />
             </Stack.Navigator>
         </NavigationContainer>
     );
