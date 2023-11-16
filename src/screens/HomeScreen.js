@@ -4,6 +4,7 @@ import Ref from '../screens/Ref';
 import Meal from '../screens/Meal';
 import Me from './Me';
 import Map from './Map';
+import Shop from '../screens/Shop';
 
 
 
@@ -19,6 +20,9 @@ const HomeScreen = ({navigation}) =>{
     };
     const handleButtonPress4 = () => {
       navigation.navigate('Map');
+    };
+    const handleButtonPress5 = () => {
+      navigation.navigate('Shop');
     };
     
     
@@ -41,6 +45,9 @@ const HomeScreen = ({navigation}) =>{
           </TouchableOpacity>
           <TouchableOpacity onPress={handleButtonPress3} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>個人頁面</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleButtonPress5} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>店家資訊</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleButtonPress4} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>地圖</Text>
