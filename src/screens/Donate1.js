@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet} from 'react-native';
+import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import Navigation from '../Components/Navigation';
 import Donate3 from '../screens/Donate3';
 
@@ -11,8 +11,14 @@ const RegesterScreen = ({navigation}) =>{
     };
     return(
         <View style={styles.container}>
-            <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>素食的店</Text>
-        
+             <Text style={styles.headerText}>素食的店</Text>
+            <Text ></Text>
+            <Image
+              style={styles.logo1}
+               source={require('map/asset/step2.jpg')}/>
+               <Text></Text>
+               <Text ></Text>
+               <Text ></Text>
         <View style={styles.wrapper}>
             <TextInput
             style={styles.input} 
@@ -51,7 +57,7 @@ const styles =StyleSheet.create({
   flex:1,
   alignItems:'center',
   backgroundColor:'#FDFBF1',
-  justifyContent:'center',},
+  },
   wrapper:{
       width:'80%',
       
@@ -68,6 +74,13 @@ detail:{
     
     
 },
+headerText: {
+    fontSize: 40,
+  },
+logo1: {
+    width: 350,
+    height: 60,
+  },
   button: {
     backgroundColor: '#E6A984', // 自定义按钮颜色
     paddingVertical: 20,        // 垂直方向的內邊距

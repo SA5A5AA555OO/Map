@@ -9,8 +9,11 @@ const Take3 = ({navigation}) =>{
    
       return (
         <View style={styles.container}>
-            <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>素食的店</Text>
-            
+            <Text style={styles.headerText}>素食的店</Text>
+            <Text ></Text>
+            <Image
+              style={styles.logo1}
+               source={require('map/asset/step3.jpg')}/>
             <TouchableOpacity  style={styles.buttonContainer}>
                   <Text style={styles.buttonText}>領取編號 42</Text>
                 </TouchableOpacity>
@@ -27,7 +30,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'flex-start',
       backgroundColor:'#FDFBF1',
-      paddingTop:20,
+      
     },
     headerText: {
         fontSize: 40,
@@ -68,6 +71,10 @@ const styles = StyleSheet.create({
       textAlign: 'center', // 文本居中
       fontSize:30
       
+    },
+    logo1: {
+      width: 350,
+      height: 60,
     },
   });
   
