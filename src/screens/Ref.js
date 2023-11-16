@@ -1,13 +1,13 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image,ScrollView} from 'react-native';
 import Navigation from '../Components/Navigation';
-import RefTodayFood from '../screens/RefTodayFood';
+import FjuRef from '../screens/FjuRef';
 
 
 
 
 const Ref = ({navigation}) =>{
     const handleButtonPress = () => {
-        navigation.navigate('RefTodayFood');
+        navigation.navigate('FjuRef');
       };
       return (
         <View style={styles.container}>
