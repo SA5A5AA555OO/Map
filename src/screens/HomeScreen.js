@@ -36,7 +36,7 @@ const HomeScreen = ({navigation}) =>{
             <Text style={styles.buttonText}>待用餐</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleButtonPress3} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>操你媽</Text>
+            <Text style={styles.buttonText}>個人頁面</Text>
           </TouchableOpacity>
         </View>
       );

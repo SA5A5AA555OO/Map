@@ -1,4 +1,4 @@
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
+import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image,ScrollView} from 'react-native';
 import Navigation from '../Components/Navigation';
 import RefTodayFood from '../screens/RefTodayFood';
 
@@ -11,6 +11,7 @@ const Ref = ({navigation}) =>{
       };
       return (
         <View style={styles.container}>
+           <ScrollView >
             <Text style={styles.headerText}>食享冰箱據點</Text>
             <Text ></Text>
             <Image
@@ -38,8 +39,10 @@ const Ref = ({navigation}) =>{
                <Text style={styles.detail}>今日開放領取時間:</Text>
                <Text style={styles.detail}>地址:台北市中正區中華路二段315巷18號</Text>
                <Text style={styles.detail}>電話:02-2303-6281</Text>
-               
+               <Text></Text>
+               <Text></Text>
             </View>
+            </ScrollView>
         </View>
      
       );
