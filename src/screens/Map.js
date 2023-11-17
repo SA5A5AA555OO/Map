@@ -32,7 +32,7 @@ const Map = ({ navigation }) => {
                 <Marker //標記地點
                 coordinate={{latitude: 25.042853691197738,  longitude: 121.44725038057825}}
                 title={'素食的店'}
-                description={'素食的店'}
+                description={'點擊素食的店'}
                 onPress={handleButtonPress2}
                 />
             </MapView>

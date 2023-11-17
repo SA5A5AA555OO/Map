@@ -1,6 +1,7 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import Navigation from '../Components/Navigation';
 import HomeScreen from './HomeScreen';
+import { DataTable } from 'react-native-paper';
 
 
 
@@ -9,11 +10,33 @@ const DonatePeople = ({navigation}) =>{
    
       return (
         <View style={styles.container}>
-            <Text style={styles.headerText}>尚無最愛店家</Text>
-            
+      <DataTable>
+        <DataTable.Header>
+          <DataTable.Title>姓名</DataTable.Title>
+          <DataTable.Title>電話</DataTable.Title>
+          <DataTable.Title numeric>捐贈數量</DataTable.Title>
+        </DataTable.Header>
 
-           
-        </View>
+        <DataTable.Row>
+          <DataTable.Cell>謝暈眩</DataTable.Cell>
+          <DataTable.Cell>0983279525</DataTable.Cell>
+          <DataTable.Cell numeric>1</DataTable.Cell>
+        </DataTable.Row>
+
+        <DataTable.Row>
+          <DataTable.Cell>汪殊榮</DataTable.Cell>
+          <DataTable.Cell>0912345623</DataTable.Cell>
+          <DataTable.Cell numeric>10</DataTable.Cell>
+        </DataTable.Row>
+
+        <DataTable.Row>
+          <DataTable.Cell>王家碰</DataTable.Cell>
+          <DataTable.Cell>0983425334</DataTable.Cell>
+          <DataTable.Cell numeric>5</DataTable.Cell>
+        </DataTable.Row>
+
+      </DataTable>
+    </View>
      
       );
 };
@@ -21,7 +44,6 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
       backgroundColor:'#FDFBF1',
     },
     headerText: {
