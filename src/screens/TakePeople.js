@@ -1,6 +1,7 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import Navigation from '../Components/Navigation';
 import HomeScreen from './HomeScreen';
+import { DataTable } from 'react-native-paper';
 
 
 
@@ -9,11 +10,33 @@ const TakePeople = ({navigation}) =>{
    
       return (
         <View style={styles.container}>
-            <Text style={styles.headerText}>尚無最愛店家</Text>
-            
+      <DataTable>
+        <DataTable.Header>
+          <DataTable.Title>姓名</DataTable.Title>
+          <DataTable.Title>電話</DataTable.Title>
+          <DataTable.Title numeric>信箱</DataTable.Title>
+        </DataTable.Header>
 
-           
-        </View>
+        <DataTable.Row>
+          <DataTable.Cell>廖老大</DataTable.Cell>
+          <DataTable.Cell>0983635462</DataTable.Cell>
+          <DataTable.Cell numeric>ruikewang3@gmail.com</DataTable.Cell>
+        </DataTable.Row>
+
+        <DataTable.Row>
+          <DataTable.Cell>Bob</DataTable.Cell>
+          <DataTable.Cell>0912345678</DataTable.Cell>
+          <DataTable.Cell numeric>105</DataTable.Cell>
+        </DataTable.Row>
+
+        <DataTable.Row>
+          <DataTable.Cell>Mei</DataTable.Cell>
+          <DataTable.Cell>0935472634</DataTable.Cell>
+          <DataTable.Cell numeric>23</DataTable.Cell>
+        </DataTable.Row>
+
+      </DataTable>
+    </View>
      
       );
 };
@@ -21,15 +44,15 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
       backgroundColor:'#FDFBF1',
+      
     },
     headerText: {
         fontSize: 40,
       },
     logo: {
-        width: 150,
-        height: 150,
+        width: 70,
+        height: 70,
         borderRadius: 100,
         
       },
@@ -44,7 +67,7 @@ const styles = StyleSheet.create({
     link:{
         color:'#DA7746',
     },
-
+    
     
 
     
