@@ -38,7 +38,7 @@ const MainStack = () => {
         <Stack.Navigator>
             <Stack.Screen name="Tabs" component={TabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Home" component={HomeScreen} />
+            
             <Stack.Screen name="Regester" component={RegesterScreen} />
             <Stack.Screen name="Regester2" component={RegesterScreen2} />
             <Stack.Screen name="RegesterChoose" component={RegesterChoose} />
@@ -53,9 +53,9 @@ const MainStack = () => {
             <Stack.Screen name="Take2" component={Take2} />
             <Stack.Screen name="Take3" component={Take3} />
             <Stack.Screen name="GoogleMap" component={GoogleMap} />
-            <Stack.Screen name="Me" component={Me} />
+
             <Stack.Screen name="FjuRef" component={FjuRef} />
-            <Stack.Screen name="Map" component={Map} />
+            
             <Stack.Screen name="Favorite" component={Favorite} />
             <Stack.Screen name="Record" component={Record} />
             <Stack.Screen name="EditProfile" component={EditProfile} />
