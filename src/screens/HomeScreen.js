@@ -52,6 +52,9 @@ const HomeScreen = ({navigation}) =>{
           <TouchableOpacity onPress={handleButtonPress4} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>地圖</Text>
           </TouchableOpacity>
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
         </View>
       );
 };
