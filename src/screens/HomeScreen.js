@@ -35,7 +35,7 @@ const HomeScreen = ({navigation}) =>{
             <View style={styles.topBlock}></View>
             <Image
               style={styles.logo}
-               source={require('map/asset/logo.png')}/>
+               source={require('map/asset/即食行樂2.png')}/>
            
           <TouchableOpacity onPress={handleButtonPress} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>食享冰箱</Text>

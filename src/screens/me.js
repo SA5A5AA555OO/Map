@@ -12,17 +12,17 @@ const Me = ({navigation}) =>{
    
   return (
     <View style={styles.container}>
-      <Text></Text>
-      <Image
-        style={styles.logo}
-        source={require('map/asset/頭像.jpg')}
-        
-      />
+      <View style={styles.row}>
+         <Image
+           style={styles.logo}
+           source={require('map/asset/user.png')}/>
+           <Text style={styles.headerText} >個人頁面</Text>
+      </View>
       <TouchableOpacity onPress={() => navigation.navigate('Favorite')}>
         <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>我的最愛</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Record')}>
-        <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>訂單紀錄</Text>
+        <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>查看領取資訊</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
         <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>修改個人資訊</Text>
@@ -34,24 +34,28 @@ const Me = ({navigation}) =>{
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: 'center',
+      paddingLeft:20,
       justifyContent: 'flex-start',
       backgroundColor:'#FDFBF1',
       paddingTop:20,
     },
     headerText: {
-        fontSize: 40,
+        fontSize: 35,
+        
       },
     logo: {
-        width: 150,
-        height: 150,
+        width: 45,
+        height: 45,
         borderRadius: 100,
         marginBottom: 50,
         
       },
     leftText :{
-        fontSize: 30,
+        fontSize: 25,
         marginBottom: 10,
+    },
+    row:{
+      flexDirection: 'row',
     },
     detail:{
         fontSize: 20,
