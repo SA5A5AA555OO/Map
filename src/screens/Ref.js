@@ -13,8 +13,7 @@ const Ref = ({navigation}) =>{
         
         <View style={styles.container}>
            <ScrollView >
-            <Text style={styles.headerText}>食享冰箱據點</Text>
-            <Text ></Text>
+            
             <View style={styles.row}>
               <TextInput
                 style={styles.input} 
@@ -81,17 +80,17 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 100,
-        marginBottom: 50,
+        marginBottom: 20,
         
       },
     leftText :{
         fontSize: 30,
-        left:20,
+        left:10,
         color:'#DA7746', 
     },
     detail:{
         fontSize: 18,
-        left:20
+        left:10
     },
     input:{
       marginBottom:12,
@@ -100,11 +99,13 @@ const styles = StyleSheet.create({
       borderRadius:15,
       paddingHorizontal:14,
       backgroundColor: 'white',
-      height: 50,
-      width:'80%',
+      height: 45,
+      width:'70%',
+      
   },
   row:{
     flexDirection: 'row',
+    paddingLeft:70
   },
 
     

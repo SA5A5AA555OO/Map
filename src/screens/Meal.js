@@ -12,8 +12,7 @@ const Meal = ({navigation}) =>{
       return (
         <View style={styles.container}>
            <ScrollView >
-            <Text style={styles.headerText}>待用餐據點</Text>
-            <Text ></Text>
+            
             <View style={styles.row}>
               <TextInput
                 style={styles.input} 
@@ -63,7 +62,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'flex-start',
       backgroundColor:'#FDFBF1',
-      paddingTop:20,
+      paddingTop:20
+      
     },
     headerText: {
         fontSize: 40,
@@ -75,22 +75,23 @@ const styles = StyleSheet.create({
       },
     leftText :{
         fontSize: 30,
-        left:20,
+        left:10,
         color:'#DA7746',
     },
     detail:{
         fontSize: 18,
-        left:20
+        left:10
     },
     logo2: {
       width: 50,
       height: 50,
       borderRadius: 100,
-      marginBottom: 50,
+      marginBottom: 20,
       
     },
     row:{
       flexDirection: 'row',
+      paddingLeft:70
     },
     input:{
       marginBottom:12,
@@ -99,8 +100,8 @@ const styles = StyleSheet.create({
       borderRadius:15,
       paddingHorizontal:14,
       backgroundColor: 'white',
-      height: 50,
-      width:'80%',
+      height: 45,
+      width:'70%',
   },
 
     
