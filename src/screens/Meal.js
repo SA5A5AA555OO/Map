@@ -14,6 +14,17 @@ const Meal = ({navigation}) =>{
            <ScrollView >
             <Text style={styles.headerText}>待用餐據點</Text>
             <Text ></Text>
+            <View style={styles.row}>
+              <TextInput
+                style={styles.input} 
+                placeholder ="輸入店家名稱"
+                />
+                <Text></Text>
+                   <Image
+                    style={styles.logo2}
+                    source={require('map/asset/search.png')}/>
+           
+             </View>
             <Image
               style={styles.logo}
                source={require('map/asset/素食的店.jpg')}/>
@@ -39,7 +50,7 @@ const Meal = ({navigation}) =>{
                <Text style={styles.detail}>今日提供份數:5</Text>
                <Text style={styles.detail}>地址:台北市中正區中華路二段315巷18號</Text>
                <Text style={styles.detail}>電話:0912345678</Text>
-               
+               <Text></Text>
             </View>
             </ScrollView>
             </View>
@@ -68,11 +79,29 @@ const styles = StyleSheet.create({
         color:'#DA7746',
     },
     detail:{
-        fontSize: 20,
+        fontSize: 18,
         left:20
     },
-
-    
+    logo2: {
+      width: 50,
+      height: 50,
+      borderRadius: 100,
+      marginBottom: 50,
+      
+    },
+    row:{
+      flexDirection: 'row',
+    },
+    input:{
+      marginBottom:12,
+      borderWidth:1,
+      borderColor:'#bbb',
+      borderRadius:15,
+      paddingHorizontal:14,
+      backgroundColor: 'white',
+      height: 50,
+      width:'80%',
+  },
 
     
     buttonContainer: {

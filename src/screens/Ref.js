@@ -10,10 +10,24 @@ const Ref = ({navigation}) =>{
         navigation.navigate('FjuRef');
       };
       return (
+        
         <View style={styles.container}>
            <ScrollView >
             <Text style={styles.headerText}>食享冰箱據點</Text>
             <Text ></Text>
+            <View style={styles.row}>
+              <TextInput
+                style={styles.input} 
+                placeholder ="輸入店家名稱"
+                />
+                <Text></Text>
+                   <Image
+                    style={styles.logo2}
+                    source={require('map/asset/search.png')}/>
+           
+             </View>
+            
+                
             <Image
               style={styles.logo}
                source={require('map/asset/ref.jpg')}/>
@@ -63,15 +77,35 @@ const styles = StyleSheet.create({
         height: 200,
         borderRadius: 30,
       },
+      logo2: {
+        width: 50,
+        height: 50,
+        borderRadius: 100,
+        marginBottom: 50,
+        
+      },
     leftText :{
         fontSize: 30,
         left:20,
         color:'#DA7746', 
     },
     detail:{
-        fontSize: 20,
+        fontSize: 18,
         left:20
     },
+    input:{
+      marginBottom:12,
+      borderWidth:1,
+      borderColor:'#bbb',
+      borderRadius:15,
+      paddingHorizontal:14,
+      backgroundColor: 'white',
+      height: 50,
+      width:'80%',
+  },
+  row:{
+    flexDirection: 'row',
+  },
 
     
 
