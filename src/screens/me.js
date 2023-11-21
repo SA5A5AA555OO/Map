@@ -3,7 +3,7 @@ import Navigation from '../Components/Navigation';
 import Favorite from '../screens/Favorite';
 import Record from '../screens/Record';
 import EditProfile from '../screens/EditProfile';
-
+import LoginScreen from '../screens/LoginScreen';
 
 
 
@@ -17,6 +17,9 @@ const Me = ({navigation}) =>{
   };
   const handleButtonPress3 = () => {
     navigation.navigate('EditProfile');
+  };
+  const handleButtonPress4 = () => {
+    navigation.navigate('Login');
   };
   return (
     <View style={styles.container}>
@@ -35,6 +38,9 @@ const Me = ({navigation}) =>{
           </TouchableOpacity>
           <TouchableOpacity onPress={handleButtonPress3} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>修改個人資料</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleButtonPress4} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>登入</Text>
           </TouchableOpacity>
     </View>
     

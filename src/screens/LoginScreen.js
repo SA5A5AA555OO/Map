@@ -3,11 +3,12 @@ import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet} from 'react-
 import Navigation from '../Components/Navigation';
 import RegesterScreen from '../screens/RegesterScreen';
 import HomeScreen from '../screens/HomeScreen';
+import LoginSuccess from '../screens/LoginSuccess';
 const LoginScreen = ({navigation}) =>{
     const [email,setEmail]=useState('');
     const [password, setPassword]=useState('');
     const handleButtonPress = () => {
-        navigation.navigate('Home');
+        navigation.navigate('LoginSuccess');
       };
 
     return (
