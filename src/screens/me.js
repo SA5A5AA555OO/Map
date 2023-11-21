@@ -9,7 +9,15 @@ import EditProfile from '../screens/EditProfile';
 
 
 const Me = ({navigation}) =>{
-   
+  const handleButtonPress = () => {
+    navigation.navigate('Favorite');
+  };
+  const handleButtonPress2 = () => {
+    navigation.navigate('Record');
+  };
+  const handleButtonPress3 = () => {
+    navigation.navigate('EditProfile');
+  };
   return (
     <View style={styles.container}>
       <View style={styles.row}>
@@ -18,23 +26,24 @@ const Me = ({navigation}) =>{
            source={require('map/asset/user.png')}/>
            <Text style={styles.headerText} >個人頁面</Text>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('Favorite')}>
-        <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>我的最愛</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Record')}>
-        <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>查看領取資訊</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
-        <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>修改個人資訊</Text>
-      </TouchableOpacity>
+      
+      <TouchableOpacity onPress={handleButtonPress} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>查看最愛店家</Text>
+          </TouchableOpacity>
+          <TouchableOpacity  onPress={handleButtonPress2}style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>查看領取資訊</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleButtonPress3} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>修改個人資料</Text>
+          </TouchableOpacity>
     </View>
+    
   );
   
 };
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      paddingLeft:20,
       justifyContent: 'flex-start',
       backgroundColor:'#FDFBF1',
       paddingTop:20,
@@ -55,6 +64,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     row:{
+      paddingLeft:20,
       flexDirection: 'row',
     },
     detail:{
@@ -65,22 +75,25 @@ const styles = StyleSheet.create({
         color:'#DA7746',
     },
 
-    
-
-    
     buttonContainer: {
       backgroundColor: '#E6A984', // 自定义背景颜色
       padding: 20,
       borderRadius: 20, // 圆角效果
       marginVertical: 10, // 设置垂直间距
-      width:'80%'
+      width:'80%',
+      alignSelf: 'center', 
+       
     },
     buttonText: {
       color: 'white', // 文本颜色
       fontWeight: 'bold',
       textAlign: 'center', // 文本居中
+      fontSize:20,
       
     },
+
+    
+    
   });
   
 export default Me;
