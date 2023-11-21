@@ -29,6 +29,7 @@ import Shop from "../screens/Shop";
 import TakePeople from "../screens/TakePeople";
 import DonatePeople from "../screens/DonatePeople";
 import ShopImf from "../screens/ShopImf";
+import LoginSuccess from "../screens/LoginSuccess";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -63,6 +64,7 @@ const MainStack = () => {
             <Stack.Screen name="TakePeople" component={TakePeople} />
             <Stack.Screen name="DonatePeople" component={DonatePeople} />
             <Stack.Screen name="ShopImf" component={ShopImf} />
+            <Stack.Screen name="LoginSuccess" component={LoginSuccess} />
         </Stack.Navigator>
     );
 };
