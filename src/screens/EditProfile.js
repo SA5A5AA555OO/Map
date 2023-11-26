@@ -6,6 +6,9 @@ import React, { useState } from 'react';
 
 
 const EditProfile = ({navigation}) =>{
+  const showAlert = () =>{
+    Alert.alert('修改成功')
+}
     const [email,setEmail]=useState('');
     const [password, setPassword]=useState('');
     const handleButtonPress = () => {

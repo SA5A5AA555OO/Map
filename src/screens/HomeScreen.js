@@ -35,7 +35,7 @@ const HomeScreen = ({navigation}) =>{
             <View style={styles.topBlock}></View>
             <Image
               style={styles.logo}
-               source={require('map/asset/即食行樂2.png')}/>
+               source={require('map/asset/即食行樂2.jpg')}/>
            
           <TouchableOpacity onPress={handleButtonPress} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>食享冰箱</Text>
@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor:'#FDFBF1'
+      backgroundColor:'#FDFBF1',
+      paddingTop:30,
     },
     
     buttonContainer: {
@@ -81,8 +82,8 @@ const styles = StyleSheet.create({
       
     },
     logo: {
-      width: 300,
-      height: 250,
+      width: 170,
+      height: 170,
       borderRadius: 30,
     },
   });

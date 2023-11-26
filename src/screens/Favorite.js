@@ -9,9 +9,18 @@ const Favorite = ({navigation}) =>{
    
       return (
         <View style={styles.container}>
-            <Text style={styles.headerText}>尚無最愛店家</Text>
-            
-
+          <View style={{ alignSelf: 'flex-start' }}>
+          <Text style={styles.headerText}>已儲存的店家</Text>
+          </View>
+          <Text></Text>
+            <Image
+              style={styles.logo}
+               source={require('map/asset/歐姆先生.jpg')}/>
+         <View style={{ alignSelf: 'flex-start' }}>
+            <Text style={styles.detail}>歐姆先生</Text>
+            <Text  style={styles.detail}>今日提供份數  10份</Text>
+         </View>
+         
            
         </View>
      
@@ -21,17 +30,18 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
+      
       backgroundColor:'#FDFBF1',
     },
     headerText: {
-        fontSize: 40,
+        fontSize: 30,
+        paddingTop:20,
+        paddingLeft:50,
       },
     logo: {
-        width: 150,
-        height: 150,
-        borderRadius: 100,
-        
+        width: 300,
+        height: 200,
+        borderRadius: 40,
       },
     leftText :{
         fontSize: 25,
@@ -39,7 +49,8 @@ const styles = StyleSheet.create({
     },
     detail:{
         fontSize: 20,
-        left:20
+        left:50,
+        
     },
     link:{
         color:'#DA7746',
