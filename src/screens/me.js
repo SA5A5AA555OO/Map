@@ -26,33 +26,35 @@ const Me = ({navigation}) => {
   const handleButtonPress4 = () => {
     navigation.navigate('Login');
   };
+  
+  const handleButtonPress5 = () => {
+    navigation.navigate('MyDonate');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <Image style={styles.logo} source={require('map/asset/user.png')} />
         <Text style={styles.headerText}>個人頁面</Text>
       </View>
+      
+      <TouchableOpacity onPress={handleButtonPress} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>查看最愛店家</Text>
+          </TouchableOpacity>
+          <TouchableOpacity  onPress={handleButtonPress2}style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>查看領取資訊</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleButtonPress5} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>查看捐贈資訊</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleButtonPress3} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>修改個人資料</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity onPress={handleButtonPress4} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>登入</Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={handleButtonPress}
-        style={styles.buttonContainer}>
-        <Text style={styles.buttonText}>查看最愛店家</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={handleButtonPress2}
-        style={styles.buttonContainer}>
-        <Text style={styles.buttonText}>查看領取資訊</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={handleButtonPress3}
-        style={styles.buttonContainer}>
-        <Text style={styles.buttonText}>修改個人資料</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={handleButtonPress4}
-        style={styles.buttonContainer}>
-        <Text style={styles.buttonText}>登入</Text>
-      </TouchableOpacity>
     </View>
   );
 };

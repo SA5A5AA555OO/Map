@@ -42,6 +42,34 @@ const RefTodayFood = () => {
 };
 
 const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      backgroundColor:'#FDFBF1',
+      paddingTop:20,
+    },
+    headerText: {
+        fontSize: 40,
+      },
+    pic: {
+        width: 130,
+        height: 130,
+        borderRadius: 100,
+        backgroundColor:'white',
+        
+      },
+    leftText :{
+        fontSize: 30,
+        left:20,
+    },
+    detail:{
+        fontSize: 20,
+        left:20
+    },
+
+
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
