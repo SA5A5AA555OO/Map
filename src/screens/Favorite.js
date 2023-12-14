@@ -1,3 +1,4 @@
+
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image,ScrollView} from 'react-native';
 import Navigation from '../Components/Navigation';
 import HomeScreen from './HomeScreen';
@@ -60,6 +61,7 @@ const Favorite = ({navigation}) =>{
         </View>
      
       );
+
 };
 const styles = StyleSheet.create({
   container: {
@@ -128,3 +130,4 @@ row:{
   });
   
 export default Favorite;
+

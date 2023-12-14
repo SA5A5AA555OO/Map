@@ -1,3 +1,4 @@
+
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image,ScrollView} from 'react-native';
 import Navigation from '../Components/Navigation';
 import Ref from '../screens/Ref';
@@ -6,9 +7,7 @@ import Me from './Me';
 import Map from './Map';
 import Shop from '../screens/Shop';
 
-
-
-const HomeScreen = ({navigation}) =>{
+const HomeScreen = ({navigation}) => {
   const handleButtonPress = () => {
       navigation.navigate('Ref');
     };
@@ -18,7 +17,6 @@ const HomeScreen = ({navigation}) =>{
     const handleButtonPress3 = () => {
       navigation.navigate('Me');
     };
-    
     const handleButtonPress5 = () => {
       navigation.navigate('Shop');
     };
@@ -28,10 +26,13 @@ const HomeScreen = ({navigation}) =>{
     
     
 
-    return (
 
-      
-        
+  return (
+    <View style={styles.container}>
+      <View style={styles.topBlock} />
+      <Image style={styles.logo} source={require('map/asset/即食行樂2.jpg')} />
+
+
         <View style={styles.container}>
          
             <View style={styles.topBlock}></View>
@@ -61,35 +62,35 @@ const HomeScreen = ({navigation}) =>{
          
         </View>
       );
+
 };
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor:'#FDFBF1',
-      paddingTop:30,
-    },
-    
-    buttonContainer: {
-      backgroundColor: '#E6A984', // 自定义背景颜色
-      padding: 20,
-      borderRadius: 20, // 圆角效果
-      marginVertical: 10, // 设置垂直间距
-      width:'80%'
-    },
-    buttonText: {
-      color: 'white', // 文本颜色
-      fontWeight: 'bold',
-      textAlign: 'center', // 文本居中
-      fontSize:20,
-      
-    },
-    logo: {
-      width: 170,
-      height: 170,
-      borderRadius: 30,
-    },
-  });
-  
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FDFBF1',
+    paddingTop: 30,
+  },
+
+  buttonContainer: {
+    backgroundColor: '#E6A984', // 自定义背景颜色
+    padding: 20,
+    borderRadius: 20, // 圆角效果
+    marginVertical: 10, // 设置垂直间距
+    width: '80%',
+  },
+  buttonText: {
+    color: 'white', // 文本颜色
+    fontWeight: 'bold',
+    textAlign: 'center', // 文本居中
+    fontSize: 20,
+  },
+  logo: {
+    width: 170,
+    height: 170,
+    borderRadius: 30,
+  },
+});
+
 export default HomeScreen;
