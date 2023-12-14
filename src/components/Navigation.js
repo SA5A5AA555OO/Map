@@ -30,6 +30,9 @@ import TakePeople from "../screens/TakePeople";
 import DonatePeople from "../screens/DonatePeople";
 import ShopImf from "../screens/ShopImf";
 import LoginSuccess from "../screens/LoginSuccess";
+import MyDonate from "../screens/MyDonate";
+import RefAdjust from "../screens/RefAdjust";
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -65,6 +68,8 @@ const MainStack = () => {
             <Stack.Screen name="DonatePeople" component={DonatePeople} />
             <Stack.Screen name="ShopImf" component={ShopImf} />
             <Stack.Screen name="LoginSuccess" component={LoginSuccess} />
+            <Stack.Screen name="MyDonate" component={MyDonate} />
+            <Stack.Screen name="RefAdjust" component={RefAdjust} />
         </Stack.Navigator>
     );
 };

@@ -1,4 +1,4 @@
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
+import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image,ScrollView} from 'react-native';
 import Navigation from '../Components/Navigation';
 import Ref from '../screens/Ref';
 import Meal from '../screens/Meal';
@@ -18,11 +18,12 @@ const HomeScreen = ({navigation}) =>{
     const handleButtonPress3 = () => {
       navigation.navigate('Me');
     };
-    const handleButtonPress4 = () => {
-      navigation.navigate('Map');
-    };
+    
     const handleButtonPress5 = () => {
       navigation.navigate('Shop');
+    };
+    const handleButtonPress6 = () => {
+      navigation.navigate('RefAdjust');
     };
     
     
@@ -32,6 +33,7 @@ const HomeScreen = ({navigation}) =>{
       
         
         <View style={styles.container}>
+         
             <View style={styles.topBlock}></View>
             <Image
               style={styles.logo}
@@ -49,12 +51,14 @@ const HomeScreen = ({navigation}) =>{
           <TouchableOpacity onPress={handleButtonPress5} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>店家資訊</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleButtonPress4} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>地圖</Text>
+          
+          <TouchableOpacity onPress={handleButtonPress6} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>修改冰箱資訊</Text>
           </TouchableOpacity>
           <Text></Text>
           <Text></Text>
           <Text></Text>
+         
         </View>
       );
 };

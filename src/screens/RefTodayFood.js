@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
         height: 130,
         borderRadius: 100,
         backgroundColor:'white',
+        
       },
     leftText :{
         fontSize: 30,
