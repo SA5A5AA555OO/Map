@@ -32,8 +32,26 @@ const Meal = ({navigation}) => {
           <Text style={styles.detail}>電話:0932921110</Text>
           <Text style={styles.detail}>請讓給有需要人士領取</Text>
         </View>
+        <Image style={styles.logo} source={require('map/asset/歐姆先生.jpg')} />
 
-        {/* 省略其他部分 */}
+        <TouchableOpacity
+          onPress={handleButtonPress}
+          style={{alignSelf: 'flex-start'}}>
+          <Text style={styles.leftText}>歐姆先生</Text>
+        </TouchableOpacity>
+
+        <View style={{alignSelf: 'flex-start'}}>
+          <Text style={styles.detail}>今日提供份數:5</Text>
+          <Text style={styles.detail}>地址:新北市新莊區中華路二段18號</Text>
+          <Text style={styles.detail}>電話:0932921110</Text>
+          <Text style={styles.detail}>請讓給有需要人士領取</Text>
+        </View>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+
+        
       </ScrollView>
     </View>
   );

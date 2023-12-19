@@ -61,6 +61,20 @@ const MainStack = () => {
             <Stack.Screen name="LoginSuccess" component={LoginSuccess} />
             <Stack.Screen name="MyDonate" component={MyDonate} />
             <Stack.Screen name="RefAdjust" component={RefAdjust} />
+            <Stack.Screen name="Regester" component={RegesterScreen} />
+            <Stack.Screen name="RegesterChoose" component={RegesterChoose} />
+            <Stack.Screen name="Regester2" component={RegesterScreen2} />
+            <Stack.Screen name="Ref" component={Ref} />
+            <Stack.Screen name="RefTodayFood" component={RefTodayFood} />
+            <Stack.Screen name="Meal" component={Meal} />
+            <Stack.Screen name="Store" component={Store} />
+            <Stack.Screen name="Donate1" component={Donate1} />
+            <Stack.Screen name="Donate2" component={Donate2} />
+            <Stack.Screen name="Donate3" component={Donate3} />
+            <Stack.Screen name="Take1" component={Take1} />
+            <Stack.Screen name="Take2" component={Take2} />
+            <Stack.Screen name="Take3" component={Take3} />
+            <Stack.Screen name="GoogleMap" component={GoogleMap} />
         </Stack.Navigator>
     );
 };
