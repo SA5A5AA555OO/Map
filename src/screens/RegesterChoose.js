@@ -1,5 +1,4 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet} from 'react-native';
-import Navigation from '../Components/Navigation';
 import RegesterScreen from '../screens/RegesterScreen';
 import RegesterScreen2 from '../screens/RegesterScreen';
 

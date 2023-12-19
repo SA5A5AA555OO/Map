@@ -1,5 +1,4 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
-import Navigation from '../Components/Navigation';
 import Favorite from '../screens/Favorite';
 import Record from '../screens/Record';
 import EditProfile from '../screens/EditProfile';

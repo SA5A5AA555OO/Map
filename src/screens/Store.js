@@ -1,6 +1,5 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 
-import Navigation from '../Components/Navigation';
 import Donate2 from '../screens/Donate2';
 import Take1 from '../screens/Take1';
 import { Icon } from '@rneui/themed';

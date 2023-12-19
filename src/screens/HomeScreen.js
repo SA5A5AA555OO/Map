@@ -1,5 +1,4 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image,ScrollView} from 'react-native';
-import Navigation from '../Components/Navigation';
 import Ref from '../screens/Ref';
 import Meal from '../screens/Meal';
 import Me from './Me';

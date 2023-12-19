@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet} from 'react-native';
-import Navigation from '../Components/Navigation';
 import RegesterScreen from '../screens/RegesterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import LoginSuccess from '../screens/LoginSuccess';

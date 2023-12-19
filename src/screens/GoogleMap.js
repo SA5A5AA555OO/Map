@@ -1,5 +1,5 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
-import Navigation from '../Components/Navigation';
+
 
 
 

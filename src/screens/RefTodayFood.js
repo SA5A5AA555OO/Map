@@ -1,5 +1,4 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
-import Navigation from '../Components/Navigation';
 import HomeScreen from '../screens/HomeScreen';
 import { Icon } from '@rneui/themed';
 
@@ -23,7 +22,7 @@ const RefTodayFood = () =>{
     </View>
     <View style={{ marginLeft: 60 }}>
       <Image style={styles.pic} source={require('map/asset/牛奶.jpg')} />
-      <Text style={styles.detail}>麵包:50份</Text>
+      <Text style={styles.detail}>牛奶:50份</Text>
     </View>
   </View>
 </View>
