@@ -14,11 +14,11 @@ const Meal = ({navigation}) => {
           <Text />
           <Image
             style={styles.logo2}
-            source={require('../assets/search.png')}
+            source={require('map/asset/search.png')}
           />
         </View>
 
-        <Image style={styles.logo} source={require('../assets/素食的店.jpg')} />
+        <Image style={styles.logo} source={require('map/asset/素食的店.jpg')} />
 
         <TouchableOpacity
           onPress={handleButtonPress}

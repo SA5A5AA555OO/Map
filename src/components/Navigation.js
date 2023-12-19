@@ -66,17 +66,7 @@ const MainStack = () => {
 };
 
 
-      <Stack.Screen name="Favorite" component={Favorite} />
-      <Stack.Screen name="Record" component={Record} />
-      <Stack.Screen name="EditProfile" component={EditProfile} />
-      <Stack.Screen name="Shop" component={Shop} />
-      <Stack.Screen name="TakePeople" component={TakePeople} />
-      <Stack.Screen name="DonatePeople" component={DonatePeople} />
-      <Stack.Screen name="ShopImf" component={ShopImf} />
-      <Stack.Screen name="LoginSuccess" component={LoginSuccess} />
-    </Stack.Navigator>
-  );
-};
+      
 
 //下方的導覽列
 const TabNavigator = () => {

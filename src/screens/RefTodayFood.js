@@ -16,11 +16,11 @@ const RefTodayFood = () => {
       <View style={{marginBottom: 60}}>
         <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
           <View>
-            <Image style={styles.pic} source={require('./assets/吐司.png')} />
+            <Image style={styles.pic} source={require('map/asset/吐司.png')} />
             <Text style={styles.detail}>麵包:50份</Text>
           </View>
           <View style={{marginLeft: 60}}>
-            <Image style={styles.pic} source={require('./assets/牛奶.jpg')} />
+            <Image style={styles.pic} source={require('map/asset/牛奶.jpg')} />
             <Text style={styles.detail}>牛奶:50份</Text>
           </View>
         </View>
@@ -28,11 +28,11 @@ const RefTodayFood = () => {
       <View style={{marginBottom: 60}}>
         <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
           <View>
-            <Image style={styles.pic} source={require('assets/餅乾.jpg')} />
+            <Image style={styles.pic} source={require('map/asset/餅乾.jpg')} />
             <Text style={styles.detail}>餅乾:50份</Text>
           </View>
           <View style={{marginLeft: 60}}>
-            <Image style={styles.pic} source={require('assets/水果.jpg')} />
+            <Image style={styles.pic} source={require('map/asset/水果.jpg')} />
             <Text style={styles.detail}>水果:50份</Text>
           </View>
         </View>

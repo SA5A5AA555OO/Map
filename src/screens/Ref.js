@@ -12,10 +12,10 @@ const Ref = ({navigation}) => {
         <View style={styles.row}>
           <TextInput style={styles.input} placeholder="輸入店家名稱" />
           <Text />
-          <Image style={styles.logo2} source={require('./assets/search.png')} />
+          <Image style={styles.logo2} source={require('map/asset/search.png')} />
         </View>
 
-        <Image style={styles.logo} source={require('../assets/ref.jpg')} />
+        <Image style={styles.logo} source={require('map/asset/ref.jpg')} />
 
         <TouchableOpacity
           onPress={handleButtonPress}
