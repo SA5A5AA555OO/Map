@@ -1,43 +1,47 @@
-import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, {useState} from 'react';
+import {Text, View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 
-const Donate2 = ({ navigation }) => {
+const Donate2 = ({navigation}) => {
   const handleButtonPress = () => {
     navigation.navigate('Donate1');
   };
 
   const [count, setCount] = useState(0);
 
-  const handleOperation = (value) => {
+  const handleOperation = value => {
     setCount(count + value);
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>素食的店</Text>
-      <Text></Text>
+      <Text />
       <Image style={styles.logo1} source={require('map/asset/Dstep1.jpg')} />
-      <Text></Text>
+      <Text />
       <Image style={styles.logo} source={require('map/asset/素食的店.jpg')} />
 
       <View style={styles.detailsContainer}>
         <View style={styles.rowContainer}>
-          <Text style={styles.detail}>乾麵 $30       </Text>
+          <Text style={styles.detail}>乾麵 $30 </Text>
           <View style={styles.counterContainer}>
-            <TouchableOpacity style={styles.button} onPress={() => handleOperation(-1)}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleOperation(-1)}>
               <Text style={styles.buttonText}>-</Text>
             </TouchableOpacity>
-            <Text style={styles.counterText}>  {count}  </Text>
-            <TouchableOpacity style={styles.button} onPress={() => handleOperation(1)}>
+            <Text style={styles.counterText}> {count} </Text>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleOperation(1)}>
               <Text style={styles.buttonText}>+</Text>
             </TouchableOpacity>
-            
-
           </View>
         </View>
-        <Text style={styles.totalText}>總計${count*30}</Text>
-        <Text></Text>
-        <TouchableOpacity onPress={handleButtonPress} style={styles.donateButton}>
+        <Text style={styles.totalText}>總計${count * 30}</Text>
+        <Text />
+        <TouchableOpacity
+          onPress={handleButtonPress}
+          style={styles.donateButton}>
           <Text style={styles.buttonText}>捐贈</Text>
         </TouchableOpacity>
       </View>
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize:20
+    fontSize: 20,
   },
   donateButton: {
     backgroundColor: '#E6A984',
@@ -101,10 +105,9 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 40,
   },
-  totalText:{
+  totalText: {
     fontSize: 30,
-
-  }
+  },
 });
 
 export default Donate2;
