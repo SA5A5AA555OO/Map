@@ -32,6 +32,7 @@ const Meal = ({navigation}) => {
           <Text style={styles.detail}>電話:0932921110</Text>
           <Text style={styles.detail}>請讓給有需要人士領取</Text>
         </View>
+        <Text></Text>
         <Image style={styles.logo} source={require('map/asset/歐姆先生.jpg')} />
 
         <TouchableOpacity
