@@ -33,6 +33,9 @@ import ShopImf from "../screens/ShopImf";
 import LoginSuccess from "../screens/LoginSuccess";
 import MyDonate from "../screens/MyDonate";
 import RefAdjust from "../screens/RefAdjust";
+import Introduction from "../screens/Introduction";
+import Introduction2 from "../screens/Introduction2";
+
 
 
 const Stack = createNativeStackNavigator();
@@ -75,6 +78,8 @@ const MainStack = () => {
             <Stack.Screen name="Take2" component={Take2} />
             <Stack.Screen name="Take3" component={Take3} />
             <Stack.Screen name="GoogleMap" component={GoogleMap} />
+            <Stack.Screen name="Introduction" component={Introduction} />
+            <Stack.Screen name="Introduction2" component={Introduction2} />
         </Stack.Navigator>
     );
 };

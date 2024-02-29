@@ -5,6 +5,7 @@ import Meal from '../screens/Meal';
 import Me from './Me';
 import Map from './Map';
 import Shop from '../screens/Shop';
+import Introduction from '../screens/Introduction';
 
 const HomeScreen = ({navigation}) => {
   const handleButtonPress = () => {
@@ -14,7 +15,7 @@ const HomeScreen = ({navigation}) => {
       navigation.navigate('Meal');
     };
     const handleButtonPress3 = () => {
-      navigation.navigate('Me');
+      navigation.navigate('Introduction');
     };
     const handleButtonPress5 = () => {
       navigation.navigate('Shop');
@@ -35,15 +36,14 @@ const HomeScreen = ({navigation}) => {
             <Image
               style={styles.logo}
                source={require('map/asset/即食行樂2.jpg')}/>
-           
+           <TouchableOpacity onPress={handleButtonPress3} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>介紹</Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={handleButtonPress} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>食享冰箱</Text>
           </TouchableOpacity>
           <TouchableOpacity  onPress={handleButtonPress2}style={styles.buttonContainer}>
             <Text style={styles.buttonText}>待用餐</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleButtonPress3} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>個人頁面</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleButtonPress5} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>店家資訊</Text>
