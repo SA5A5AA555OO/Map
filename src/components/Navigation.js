@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Text, View, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -42,15 +41,25 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const MainStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Tabs"
-        component={TabNavigator}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen name="Login" component={LoginScreen} />
-
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Tabs" component={TabNavigator} options={{ headerShown: false }} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            
+            <Stack.Screen name="Regester" component={RegesterScreen} />
+            <Stack.Screen name="Regester2" component={RegesterScreen2} />
+            <Stack.Screen name="RegesterChoose" component={RegesterChoose} />
+            <Stack.Screen name="Ref" component={Ref} />
+            <Stack.Screen name="RefTodayFood" component={RefTodayFood} />
+            <Stack.Screen name="Meal" component={Meal} />
+            <Stack.Screen name="Store" component={Store} />
+            <Stack.Screen name="Donate1" component={Donate1} />
+            <Stack.Screen name="Donate2" component={Donate2} />
+            <Stack.Screen name="Donate3" component={Donate3} />
+            <Stack.Screen name="Take1" component={Take1} />
+            <Stack.Screen name="Take2" component={Take2} />
+            <Stack.Screen name="Take3" component={Take3} />
+            <Stack.Screen name="GoogleMap" component={GoogleMap} />
 
             <Stack.Screen name="FjuRef" component={FjuRef} />
             
@@ -85,100 +94,89 @@ const MainStack = () => {
 };
 
 
-      
-
 //下方的導覽列
 const TabNavigator = () => {
-  return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarStyle: {backgroundColor: 'white'},
-        tabBarShowLabel: false, //下方導覽列名稱隱藏
-      }}>
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <View
-              style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
-              <Image
-                source={require('map/asset/home.png')}
-                resizeMode="contain"
-                style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: focused ? 'black' : '#5A545E', // 設置默認顏色
+    return (
+        <Tab.Navigator screenOptions={{
+            tabBarStyle: { backgroundColor: 'white' },
+            tabBarShowLabel: false, //下方導覽列名稱隱藏
+        }}>
+            <Tab.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{
+                    tabBarIcon: ({ focused }) => (
+                        <View style={{ alignItems: 'center', justifyContent: 'center', top: 10 }}>
+                            <Image
+                                source={require('map/asset/home.png')}
+                                resizeMode="contain"
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: focused ? 'black' : '#5A545E', // 設置默認顏色
+                                }}
+                            />
+                            <Text
+                                style={{ color: focused ? '#E6A984' : 'E6A984', fontSize: 12 }}>
+                            </Text>
+                        </View>
+                    ),
                 }}
-              />
-              <Text
-                style={{
-                  color: focused ? '#E6A984' : 'E6A984',
-                  fontSize: 12,
-                }}></Text>
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Map"
-        component={Map}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <View
-              style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
-              <Image
-                source={require('map/asset/map.png')}
-                resizeMode="contain"
-                style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: focused ? 'black' : '#5A545E', // 設置默認顏色
+            />
+            <Tab.Screen
+                name="Map"
+                component={Map}
+                options={{
+                    tabBarIcon: ({ focused }) => (
+                        <View style={{ alignItems: 'center', justifyContent: 'center', top: 10 }}>
+                            <Image
+                                source={require('map/asset/map.png')}
+                                resizeMode="contain"
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: focused ? 'black' : '#5A545E', // 設置默認顏色
+                                }}
+                            />
+                            <Text
+                                style={{ color: focused ? '#E6A984' : 'E6A984', fontSize: 12 }}>
+                            </Text>
+                        </View>
+                    ),
                 }}
-              />
-              <Text
-                style={{
-                  color: focused ? '#E6A984' : 'E6A984',
-                  fontSize: 12,
-                }}></Text>
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Me"
-        component={Me}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <View
-              style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
-              <Image
-                source={require('map/asset/user.png')}
-                resizeMode="contain"
-                style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: focused ? 'black' : '#5A545E', // 設置默認顏色
+            />
+            <Tab.Screen
+                name="Me"
+                component={Me}
+                options={{
+                    tabBarIcon: ({ focused }) => (
+                        <View style={{ alignItems: 'center', justifyContent: 'center', top: 10 }}>
+                            <Image
+                                source={require('map/asset/user.png')}
+                                resizeMode="contain"
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: focused ? 'black' : '#5A545E', // 設置默認顏色
+                                }}
+                            />
+                            <Text
+                                style={{ color: focused ? '#E6A984' : 'E6A984', fontSize: 12 }}>
+                            </Text>
+                        </View>
+                    ),
                 }}
-              />
-              <Text
-                style={{
-                  color: focused ? '#E6A984' : 'E6A984',
-                  fontSize: 12,
-                }}></Text>
-            </View>
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
+            />
+        </Tab.Navigator>
+    );
 };
 const Navigation = () => {
-  return (
-    <NavigationContainer>
-      <MainStack />
-    </NavigationContainer>
-  );
+    return (
+        <NavigationContainer>
+            <MainStack />
+        </NavigationContainer>
+    );
 };
+
 
 export default Navigation;

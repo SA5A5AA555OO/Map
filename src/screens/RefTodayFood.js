@@ -1,6 +1,8 @@
-/* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import {Text, View, Image, StyleSheet} from 'react-native';
+import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
+import Navigation from '../Components/Navigation';
+import HomeScreen from '../screens/HomeScreen';
+import { Icon } from '@rneui/themed';
+
 
 const RefTodayFood = () => {
   return (
@@ -37,35 +39,39 @@ const RefTodayFood = () => {
           </View>
         </View>
       </View>
-    </View>
-  );
+</View>    
+      );
 };
 
 
-
-
+            
+             
+        
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    backgroundColor: '#FDFBF1',
-    paddingTop: 20,
-  },
-  pic: {
-    width: 130,
-    height: 130,
-    borderRadius: 100,
-    backgroundColor: 'white',
-  },
-  leftText: {
-    fontSize: 30,
-    left: 20,
-  },
-  detail: {
-    fontSize: 20,
-    left: 20,
-  },
-});
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      backgroundColor:'#FDFBF1',
+      paddingTop:20,
+    },
+    
+    pic: {
+        width: 130,
+        height: 130,
+        borderRadius: 100,
+        backgroundColor:'white',
+        
+      },
+    leftText :{
+        fontSize: 30,
+        left:20,
+    },
+    detail:{
+        fontSize: 20,
+        left:20
+    },
 
+  });
+  
 export default RefTodayFood;

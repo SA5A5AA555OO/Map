@@ -1,13 +1,14 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image,ScrollView} from 'react-native';
 import FjuRef from '../screens/FjuRef';
 
-const Ref = ({navigation}) => {
-  const handleButtonPress = () => {
-    navigation.navigate('FjuRef');
-  };
 
-  return (
-    <View style={styles.container}>
+const Ref = ({navigation}) =>{
+    const handleButtonPress = () => {
+        navigation.navigate('FjuRef');
+      };
+      return (
+        
+        <View style={styles.container}>
            <ScrollView >
             
             <View style={styles.row}>
@@ -19,12 +20,10 @@ const Ref = ({navigation}) => {
                    <Image
                     style={styles.logo2}
                     source={require('map/asset/search.png')}/>
-
            
              </View>
-        
+            
                 
-                <Text></Text>
             <Image
               style={styles.logo}
                source={require('map/asset/ref.jpg')}/>
@@ -55,10 +54,11 @@ const Ref = ({navigation}) => {
             </View>
             </ScrollView>
         </View>
-  );
+     
+      );
 };
-
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     alignItems: 'center',
@@ -124,4 +124,7 @@ row:{
   },
   });
 
+
+  
+  
 export default Ref;
