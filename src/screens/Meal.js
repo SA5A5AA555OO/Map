@@ -1,5 +1,4 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image,ScrollView} from 'react-native';
-import Navigation from '../Components/Navigation';
 import Store from '../screens/Store';
 
 
@@ -32,29 +31,37 @@ const Meal = ({navigation}) =>{
            <Text style={styles.leftText}>素食的店</Text>
            </TouchableOpacity>
 
+        <View style={{alignSelf: 'flex-start'}}>
+          <Text style={styles.detail}>今日提供份數:10</Text>
+          <Text style={styles.detail}>地址:新北市新莊區泰順街</Text>
+          <Text style={styles.detail}>電話:0932921110</Text>
+          <Text style={styles.detail}>請讓給有需要人士領取</Text>
+        </View>
+        <Text></Text>
+        <Image style={styles.logo} source={require('map/asset/歐姆先生.jpg')} />
 
-            
-            <View style={{ alignSelf: 'flex-start' }}>
-               <Text style={styles.detail}>今日提供份數:10</Text>
-               <Text style={styles.detail}>地址:新北市新莊區泰順街</Text>
-               <Text style={styles.detail}>電話:0932921110</Text>
-               <Text style={styles.detail}>請讓給有需要人士領取</Text>
-            </View>
-            <Text></Text>
-            <Image
-              style={styles.logo}
-               source={require('map/asset/歐姆先生.jpg')}/>
-            <Text style={[styles.leftText, { alignSelf: 'flex-start' }]}>歐姆先生</Text>
-            <View style={{ alignSelf: 'flex-start' }}>
-               <Text style={styles.detail}>今日提供份數:5</Text>
-               <Text style={styles.detail}>地址:台北市中正區中華路二段315巷18號</Text>
-               <Text style={styles.detail}>電話:0912345678</Text>
-               <Text></Text>
-            </View>
-            </ScrollView>
-            </View>
-     
-      );
+        <TouchableOpacity
+          onPress={handleButtonPress}
+          style={{alignSelf: 'flex-start'}}>
+          <Text style={styles.leftText}>歐姆先生</Text>
+        </TouchableOpacity>
+
+        <View style={{alignSelf: 'flex-start'}}>
+          <Text style={styles.detail}>今日提供份數:5</Text>
+          <Text style={styles.detail}>地址:新北市新莊區中華路二段18號</Text>
+          <Text style={styles.detail}>電話:0932921110</Text>
+          <Text style={styles.detail}>請讓給有需要人士領取</Text>
+        </View>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+
+        
+      </ScrollView>
+    </View>
+  );
+
 };
 const styles = StyleSheet.create({
     container: {

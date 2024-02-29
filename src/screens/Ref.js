@@ -1,8 +1,5 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image,ScrollView} from 'react-native';
-import Navigation from '../Components/Navigation';
 import FjuRef from '../screens/FjuRef';
-
-
 
 
 const Ref = ({navigation}) =>{
@@ -61,69 +58,73 @@ const Ref = ({navigation}) =>{
       );
 };
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      backgroundColor:'#FDFBF1',
-      paddingTop:20,
-    },
-    headerText: {
-        fontSize: 40,
-      },
-    logo: {
-        width: 350,
-        height: 200,
-        borderRadius: 30,
-      },
-      logo2: {
-        width: 50,
-        height: 50,
-        borderRadius: 100,
-        marginBottom: 20,
-        
-      },
-    leftText :{
-        fontSize: 30,
-        left:10,
-        color:'#DA7746', 
-    },
-    detail:{
-        fontSize: 18,
-        left:10
-    },
-    input:{
-      marginBottom:12,
-      borderWidth:1,
-      borderColor:'#bbb',
-      borderRadius:15,
-      paddingHorizontal:14,
-      backgroundColor: 'white',
-      height: 45,
-      width:'70%',
-      
-  },
-  row:{
-    flexDirection: 'row',
-    paddingLeft:70
-  },
 
-    
-
-    
-    buttonContainer: {
-      backgroundColor: '#E6A984', // 自定义背景颜色
-      padding: 20,
-      borderRadius: 20, // 圆角效果
-      marginVertical: 10, // 设置垂直间距
-      width:'80%'
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor:'#FDFBF1',
+    paddingTop:20,
+  },
+  headerText: {
+      fontSize: 30,
     },
-    buttonText: {
-      color: 'white', // 文本颜色
-      fontWeight: 'bold',
-      textAlign: 'center', // 文本居中
+  logo: {
+      width: 350,
+      height: 200,
+      borderRadius: 30,
+    },
+    logo2: {
+      width: 50,
+      height: 50,
+      borderRadius: 100,
+      marginBottom: 20,
       
     },
+  leftText :{
+      fontSize: 30,
+      left:10,
+      color:'#DA7746', 
+  },
+  detail:{
+      fontSize: 18,
+      left:10
+  },
+  input:{
+    marginBottom:12,
+    borderWidth:1,
+    borderColor:'#bbb',
+    borderRadius:15,
+    paddingHorizontal:14,
+    backgroundColor: 'white',
+    height: 45,
+    width:'70%',
+    
+},
+row:{
+  flexDirection: 'row',
+  paddingLeft:70
+},
+
+  
+
+  
+  buttonContainer: {
+    backgroundColor: '#E6A984', // 自定义背景颜色
+    padding: 20,
+    borderRadius: 20, // 圆角效果
+    marginVertical: 10, // 设置垂直间距
+    width:'80%'
+  },
+  buttonText: {
+    color: 'white', // 文本颜色
+    fontWeight: 'bold',
+    textAlign: 'center', // 文本居中
+    
+  },
   });
+
+
+  
   
 export default Ref;
