@@ -14,7 +14,7 @@ const CustomMarker = ({ coordinate, title, icon }) => (
         </View>
     </Marker>
 );
-
+ 
 const Map = ({ navigation }) => {
     const markerCoordinate = { latitude: 25.0335130275009, longitude: 121.43384983277525 };
     const markerTitle = '您的位置';
