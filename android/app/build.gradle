@@ -1,7 +1,11 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
+
 apply plugin: 'com.google.gms.google-services' 
-/**
+
+
+/** 
+>>>>>>> 1093ac8346a17da697e8cf80cd30395282bc7dcc
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
  */
