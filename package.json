@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@firebase/firestore": "^4.4.3",
     "@react-native-community/geolocation": "^3.2.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-firebase/app": "^19.0.1",

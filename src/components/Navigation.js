@@ -34,6 +34,7 @@ import MyDonate from "../screens/MyDonate";
 import RefAdjust from "../screens/RefAdjust";
 import Introduction from "../screens/Introduction";
 import Introduction2 from "../screens/Introduction2";
+import Test from "../screens/Test";
 
 
 
@@ -72,6 +73,7 @@ const MainStack = () => {
         <Stack.Screen name="GoogleMap" component={GoogleMap} />
         <Stack.Screen name="Introduction" component={Introduction} />
         <Stack.Screen name="Introduction2" component={Introduction2} />
+        <Stack.Screen name="Test" component={Test} />
       </Stack.Navigator>
     );
   };
