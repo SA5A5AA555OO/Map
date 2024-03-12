@@ -1,51 +1,77 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image,ScrollView} from 'react-native';
 import Store from '../screens/Store';
-
+import React, { useState ,useEffect} from "react";
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, doc, getDoc } from 'firebase/firestore/lite';
+const firebaseConfig = {
+  apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
+authDomain: "sa5a5aa555oo.firebaseapp.com",
+databaseURL: "https://sa5a5aa555oo-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId: "sa5a5aa555oo",
+storageBucket: "sa5a5aa555oo.appspot.com",
+messagingSenderId: "602378113582",
+appId: "1:602378113582:web:c6b308cc039586506ec5bf",
+measurementId: "G-NS22NW5C8F"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 
 
 const Meal = ({navigation}) =>{
+  const [userData, setUserData] = useState(null);
+    
+  
+    const getData = async (db) => {
+      const userCollection = collection(db, "store");
+      const userDoc = doc(userCollection, "素食的店");
+      const userDocSnap = await getDoc(userDoc);
+      if (userDocSnap.exists()) {
+        setUserData(userDocSnap.data());
+      } else {
+        console.log("Document not found");
+      }
+    };
+  
+    useEffect(() => {
+      getData(db); // 將 db 傳遞給 getData 函數
+    }, []);
     const handleButtonPress = () => {
         navigation.navigate('Store');
       };
       return (
         <View style={styles.container}>
            <ScrollView >
-            
             <View style={styles.row}>
-              <TextInput
-                style={styles.input} 
-                placeholder ="輸入店家名稱"
-                />
+              <TextInput style={styles.input}  placeholder ="輸入店家名稱"/>
                 <Text></Text>
-                   <Image
-                    style={styles.logo2}
-                    source={require('map/asset/search.png')}/>
-           
+                   <Image style={styles.logo2} source={require('map/asset/search.png')}/>
              </View>
-            <Image
-              style={styles.logo}
-               source={require('map/asset/素食的店.jpg')}/>
-           
+
+
+           <Image style={styles.logo} source={require('map/asset/素食的店.jpg')}/>
            <TouchableOpacity onPress={handleButtonPress} style={{ alignSelf: 'flex-start' }}>
-           <Text style={styles.leftText}>素食的店</Text>
+           <Text style={styles.leftText}>{userData ? userData.store_name : 'Loading...'}</Text>
            </TouchableOpacity>
-
-        <View style={{alignSelf: 'flex-start'}}>
-          <Text style={styles.detail}>今日提供份數:10</Text>
-          <Text style={styles.detail}>地址:新北市新莊區泰順街</Text>
-          <Text style={styles.detail}>電話:0932921110</Text>
-          <Text style={styles.detail}>請讓給有需要人士領取</Text>
-        </View>
+           <View style={{alignSelf: 'flex-start'}}>
+           {userData ? (
+          <>
+            <Text style={styles.detail}>今日提供份數: {userData.provide}</Text>
+            <Text style={styles.detail}>地址: {userData.store_address}</Text>
+            <Text style={styles.detail}>電話: {userData.store_phone}</Text>
+          </>
+        ) : (
+          <Text>Loading...</Text>
+        )}
+             <Text style={styles.detail}>請讓給有需要人士領取</Text>
+           </View>
         <Text></Text>
+
+
         <Image style={styles.logo} source={require('map/asset/歐姆先生.jpg')} />
-
-        <TouchableOpacity
-          onPress={handleButtonPress}
-          style={{alignSelf: 'flex-start'}}>
-          <Text style={styles.leftText}>歐姆先生</Text>
+        <TouchableOpacity onPress={handleButtonPress} style={{alignSelf: 'flex-start'}}>
+        <Text style={styles.leftText}>歐姆先生</Text>
         </TouchableOpacity>
-
         <View style={{alignSelf: 'flex-start'}}>
           <Text style={styles.detail}>今日提供份數:5</Text>
           <Text style={styles.detail}>地址:新北市新莊區中華路二段18號</Text>

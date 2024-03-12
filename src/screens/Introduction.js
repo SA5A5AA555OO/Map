@@ -1,11 +1,13 @@
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet,Image,} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import HomeScreen from '../screens/HomeScreen';
 import Introduction2 from '../screens/Introduction2';
-
 const Introduction = ({navigation}) => {
+
+  
   return (
     <View style={styles.container}>
-      
+       
       <Text></Text>
       <Text></Text>
       <Text></Text>
@@ -17,6 +19,7 @@ const Introduction = ({navigation}) => {
       <TouchableOpacity onPress={() => navigation.navigate('Introduction2')}>
         <Text style={styles.link}>下一頁</Text>
       </TouchableOpacity>
+      
     </View>
   );
 };
