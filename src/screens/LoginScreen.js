@@ -60,7 +60,7 @@ const LoginScreen = ({navigation}) =>{
         }
 
         // 導航到登入成功的畫面或其他畫面
-        navigation.navigate('LoginSuccess');
+        navigation.navigate('LoginSuccess', { email,status: userStatus });
         console.log(userStatus)
       } else {
         console.log('找不到符合條件的使用者');

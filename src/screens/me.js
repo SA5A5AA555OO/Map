@@ -1,14 +1,56 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
-
+import React, { useState ,useEffect} from "react";
+import { useRoute } from '@react-navigation/native';
 import Favorite from './Favorite';
 import Record from './Record';
 import EditProfile from './EditProfile';
 import LoginScreen from './LoginScreen';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, doc, getDoc, query, where, getDocs} from 'firebase/firestore/lite';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { firebase } from "@react-native-firebase/firestore";
+const firebaseConfig = {
+  apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
+authDomain: "sa5a5aa555oo.firebaseapp.com",
+databaseURL: "https://sa5a5aa555oo-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId: "sa5a5aa555oo",
+storageBucket: "sa5a5aa555oo.appspot.com",
+messagingSenderId: "602378113582",
+appId: "1:602378113582:web:c6b308cc039586506ec5bf",
+measurementId: "G-NS22NW5C8F"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 
 
+const Me = ({ navigation, route }) => {
+  const { email } = route.params || { email: '' }; // 從路由參數中獲取 email
 
-const Me = ({navigation}) =>{
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    // 確認 email 不為空才執行
+    email && fetchUserData();
+  }, [email]); // 當 email 發生變化時重新執行效果
+
+  const fetchUserData = async () => {
+    try {
+      const usersCollection = collection(db, 'user');
+      const q = query(usersCollection, where('email', '==', email));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const userData = querySnapshot.docs[0].data();
+        setUserData(userData);
+      } else {
+        console.log('找不到符合條件的使用者');
+      }
+    } catch (error) {
+      console.error('獲取使用者資料時發生錯誤：', error);
+    }
+  };
+
   const handleButtonPress = () => {
     navigation.navigate('Favorite');
   };
@@ -32,7 +74,8 @@ const Me = ({navigation}) =>{
          <Image
            style={styles.logo}
            source={require('map/asset/user.png')}/>
-           <Text style={styles.headerText} >個人頁面</Text>
+           <Text style={styles.headerText} >您好,{userData ? userData.username : '用戶'}</Text>
+
       </View>
       
       <TouchableOpacity onPress={handleButtonPress} style={styles.buttonContainer}>
