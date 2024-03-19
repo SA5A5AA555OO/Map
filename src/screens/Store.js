@@ -1,10 +1,27 @@
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
-
+import { View, Image, Text, ScrollView, StyleSheet , TouchableOpacity ,TextInput} from 'react-native';
+import React, { useState ,useEffect} from "react";
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, doc, getDoc } from 'firebase/firestore/lite';
+import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
+import { useRoute } from '@react-navigation/native';
 import Donate2 from '../screens/Donate2';
 import Take1 from '../screens/Take1';
 import { Icon } from '@rneui/themed';
 
 
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
+authDomain: "sa5a5aa555oo.firebaseapp.com",
+databaseURL: "https://sa5a5aa555oo-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId: "sa5a5aa555oo",
+storageBucket: "sa5a5aa555oo.appspot.com",
+messagingSenderId: "602378113582",
+appId: "1:602378113582:web:c6b308cc039586506ec5bf",
+measurementId: "G-NS22NW5C8F"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 
 const Store = ({navigation}) =>{
@@ -14,14 +31,32 @@ const Store = ({navigation}) =>{
       const handleButtonPress2 = () => {
         navigation.navigate('Take1');
       };
+      const route = useRoute();
+      const { storeName } = route.params;
+
+      const [userData, setUserData] = useState(null);
+      const getData = async (db) => {
+        const userCollection = collection(db, "store");
+        const userDoc = doc(userCollection, storeName);
+        const userDocSnap = await getDoc(userDoc);
+        if (userDocSnap.exists()) {
+          setUserData(userDocSnap.data());
+        } else {
+          console.log("Document not found");
+        }
+      };
+    
+      useEffect(() => {
+        getData(db); // 將 db 傳遞給 getData 函數
+      }, []);
       return (
         <View style={styles.container}>
-            <Text style={styles.headerText}>素食的店</Text>
+            <Text style={styles.headerText}>{route.params.storeName}</Text>
             <View style={styles.line} />
             <View style={{ alignSelf: 'flex-start' }}>
-               <Text style={styles.detail}>營業時間 13:30-20:00</Text>
-               <Text style={styles.detail}>地址:新北市新莊區泰順街</Text>
-               <Text style={styles.detail}>電話:0932921110</Text>
+               <Text style={styles.detail}>營業時間:{userData ? userData.opentime : 'Loading...'}</Text>
+               <Text style={styles.detail}>地址:{userData ? userData.store_address : 'Loading...'}</Text>
+               <Text style={styles.detail}>電話:{userData ? userData.store_phone : 'Loading...'}</Text>
                </View>
                <Image
               style={styles.pic}
