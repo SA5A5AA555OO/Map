@@ -25,7 +25,7 @@ const RefTodayFood = () => {
   
     const getData = async (db) => {
       const userCollection = collection(db, "fridges");
-      const userDoc = doc(userCollection, "輔大食享冰箱");
+      const userDoc = doc(userCollection, "jtJgYOmcTgBJAfbhR5WD");
       const userDocSnap = await getDoc(userDoc);
       if (userDocSnap.exists()) {
         setUserData(userDocSnap.data());
@@ -51,11 +51,11 @@ const RefTodayFood = () => {
         <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
           <View>
             <Image style={styles.pic} source={require('map/asset/吐司.png')} />
-            <Text style={styles.detail}>麵包:{userData ? userData.bread : 'Loading...'}份</Text>
+            <Text style={styles.detail}>麵包:{userData ? userData.bread_quantity : 'Loading...'}份</Text>
           </View>
           <View style={{marginLeft: 60}}>
             <Image style={styles.pic} source={require('map/asset/牛奶.jpg')} />
-            <Text style={styles.detail}>牛奶:{userData ? userData.milk : 'Loading...'}份</Text>
+            <Text style={styles.detail}>牛奶:{userData ? userData.milk_quantity : 'Loading...'}份</Text>
           </View>
         </View>
       </View>
@@ -63,11 +63,11 @@ const RefTodayFood = () => {
         <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
           <View>
             <Image style={styles.pic} source={require('map/asset/餅乾.jpg')} />
-            <Text style={styles.detail}>餅乾:{userData ? userData.cookie : 'Loading...'}份</Text>
+            <Text style={styles.detail}>餅乾:{userData ? userData.cookies_quantity  : 'Loading...'}份</Text>
           </View>
           <View style={{marginLeft: 60}}>
             <Image style={styles.pic} source={require('map/asset/水果.jpg')} />
-            <Text style={styles.detail}>水果:{userData ? userData.friut : 'Loading...'}份</Text>
+            <Text style={styles.detail}>水果:{userData ? userData.fruit_quantity  : 'Loading...'}份</Text>
           </View>
         </View>
       </View>

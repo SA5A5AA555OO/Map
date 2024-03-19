@@ -1,10 +1,12 @@
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image,ScrollView} from 'react-native';
-import Store from '../screens/Store';
+import { View, Image, Text, ScrollView, StyleSheet , TouchableOpacity ,TextInput} from 'react-native';
 import React, { useState ,useEffect} from "react";
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, getDoc } from 'firebase/firestore/lite';
+import { getFirestore, collection, doc, getDocs } from 'firebase/firestore/lite';
+import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
+import Store from '../screens/Store';
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
+apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
 authDomain: "sa5a5aa555oo.firebaseapp.com",
 databaseURL: "https://sa5a5aa555oo-default-rtdb.asia-southeast1.firebasedatabase.app",
 projectId: "sa5a5aa555oo",
@@ -15,79 +17,87 @@ measurementId: "G-NS22NW5C8F"
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 
+const Meal = ({ navigation }) => {
+  const [stores, setStores] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState('');
 
-const Meal = ({navigation}) =>{
-  const [userData, setUserData] = useState(null);
-    
-  
-    const getData = async (db) => {
-      const userCollection = collection(db, "store");
-      const userDoc = doc(userCollection, "素食的店");
-      const userDocSnap = await getDoc(userDoc);
-      if (userDocSnap.exists()) {
-        setUserData(userDocSnap.data());
-      } else {
-        console.log("Document not found");
-      }
+  const handleButtonPress = (storeName) => {
+    navigation.navigate('Store', { storeName: storeName });
+  };
+
+  useEffect(() => {
+    const fetchStores = async () => {
+      const storeCollection = collection(db, 'store');
+      const storeSnapshot = await getDocs(storeCollection);
+      const storeData = storeSnapshot.docs.map(doc => doc.data());
+      setStores(storeData);
     };
-  
-    useEffect(() => {
-      getData(db); // 將 db 傳遞給 getData 函數
-    }, []);
-    const handleButtonPress = () => {
-        navigation.navigate('Store');
-      };
-      return (
-        <View style={styles.container}>
-           <ScrollView >
-            <View style={styles.row}>
-              <TextInput style={styles.input}  placeholder ="輸入店家名稱"/>
-                <Text></Text>
-                   <Image style={styles.logo2} source={require('map/asset/search.png')}/>
-             </View>
 
+    fetchStores();
+  }, [db]);
 
-           <Image style={styles.logo} source={require('map/asset/素食的店.jpg')}/>
-           <TouchableOpacity onPress={handleButtonPress} style={{ alignSelf: 'flex-start' }}>
-           <Text style={styles.leftText}>{userData ? userData.store_name : 'Loading...'}</Text>
-           </TouchableOpacity>
-           <View style={{alignSelf: 'flex-start'}}>
-           {userData ? (
-          <>
-            <Text style={styles.detail}>今日提供份數: {userData.provide}</Text>
-            <Text style={styles.detail}>地址: {userData.store_address}</Text>
-            <Text style={styles.detail}>電話: {userData.store_phone}</Text>
-          </>
-        ) : (
-          <Text>Loading...</Text>
-        )}
-             <Text style={styles.detail}>請讓給有需要人士領取</Text>
-           </View>
-        <Text></Text>
+  useEffect(() => {
+    const storageRef = ref(storage, 'meal');
+    listAll(storageRef)
+      .then((res) => {
+        return Promise.all(res.items.map(itemRef => getDownloadURL(itemRef)));
+      })
+      .then((urls) => {
+        setImageUrls(urls);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error listing files: ', error);
+        setLoading(false);
+      });
+  }, [storage]);
 
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
 
-        <Image style={styles.logo} source={require('map/asset/歐姆先生.jpg')} />
-        <TouchableOpacity onPress={handleButtonPress} style={{alignSelf: 'flex-start'}}>
-        <Text style={styles.leftText}>歐姆先生</Text>
-        </TouchableOpacity>
-        <View style={{alignSelf: 'flex-start'}}>
-          <Text style={styles.detail}>今日提供份數:5</Text>
-          <Text style={styles.detail}>地址:新北市新莊區中華路二段18號</Text>
-          <Text style={styles.detail}>電話:0932921110</Text>
-          <Text style={styles.detail}>請讓給有需要人士領取</Text>
+  return (
+    <View style={styles.container}>
+      <ScrollView>
+        <View style={styles.row}>
+          <TextInput
+            style={styles.input}
+            placeholder="輸入店家名稱"
+            onChangeText={text => setSearchText(text)}
+          />
+          <Text></Text>
+          <Image style={styles.logo2} source={require('map/asset/search.png')} />
         </View>
-        <Text></Text>
-        <Text></Text>
-        <Text></Text>
-        <Text></Text>
+        {imageUrls.map((url, index) => {
+          const storeName = stores[index].store_name;
+          if (!storeName.includes(searchText) && searchText !== '') {
+            return null;
+          }
 
-        
+          return (
+            <View key={index}>
+              <Image source={{ uri: url }} style={styles.logo} />
+              <View style={styles.storeContainer}>
+                <TouchableOpacity onPress={() => handleButtonPress(storeName)} style={{ alignSelf: 'flex-start' }}>
+                  <Text style={styles.leftText}>{storeName}</Text>
+                </TouchableOpacity>
+                <Text style={styles.detail}>今日提供份數: {stores[index].provide}</Text>
+                <Text style={styles.detail}>地址: {stores[index].store_address}</Text>
+                <Text style={styles.detail}>電話: {stores[index].store_phone}</Text>
+                {/* Add other store details here */}
+              </View>
+              <Text></Text>
+            </View>
+          );
+        })}
       </ScrollView>
     </View>
   );
-
 };
 const styles = StyleSheet.create({
     container: {
