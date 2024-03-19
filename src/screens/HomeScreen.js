@@ -1,4 +1,6 @@
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image,ScrollView} from 'react-native';
+import React, { useState, useEffect, } from 'react';
+import { Text, TextInput, View, Button, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import Ref from '../screens/Ref';
 import Meal from '../screens/Meal';
 import Me from './Me';
@@ -8,57 +10,48 @@ import Introduction from '../screens/Introduction';
 
 
 
-const HomeScreen = ({navigation}) =>{
-  const handleButtonPress = () => {
-      navigation.navigate('Ref');
-    };
-    const handleButtonPress2 = () => {
-      navigation.navigate('Meal');
-    };
-    const handleButtonPress3 = () => {
-      navigation.navigate('Introduction');
-    };
-    
-    const handleButtonPress5 = () => {
-      navigation.navigate('Shop');
-    };
-    const handleButtonPress6 = () => {
-      navigation.navigate('RefAdjust');
-    };
+const HomeScreen = ({ navigation }) => {
+  const route = useRoute();
+  const { status } = route.params || { status: 0 };
+  const [buttons, setButtons] = useState([]);
+
+    useEffect(() => {
+        // 根據使用者的 status 狀態動態設置按鈕
+        switch (status) {
+            case 1:
+                setButtons([
+                    { text: '介紹', onPress: () => navigation.navigate('Introduction') },
+                    { text: '食享冰箱', onPress: () => navigation.navigate('Ref') },
+                    { text: '待用餐', onPress: () => navigation.navigate('Meal') }
+                ]);
+                break;
+            case 2:
+                setButtons([{ text: '修改冰箱資訊', onPress: () => navigation.navigate('RefAdjust') }]);
+                break;
+            case 3:
+                setButtons([{ text: '店家資訊', onPress: () => navigation.navigate('Shop') }]);
+                break;
+            default:
+                setButtons([]);
+                break;
+        }
+    }, [status]);
     
     
 
     return (
-
-
-        <View style={styles.container}>
-         
-            <View style={styles.topBlock}></View>
-            <Image
+      <View style={styles.container}>
+          <View style={styles.topBlock}></View>
+          <Image
               style={styles.logo}
-               source={require('map/asset/即食行樂2.jpg')}/>
-           <TouchableOpacity onPress={handleButtonPress3} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>介紹</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleButtonPress} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>食享冰箱</Text>
-          </TouchableOpacity>
-          <TouchableOpacity  onPress={handleButtonPress2}style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>待用餐</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleButtonPress5} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>店家資訊</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity onPress={handleButtonPress6} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>修改冰箱資訊</Text>
-          </TouchableOpacity>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-         
-        </View>
-      );
+              source={require('map/asset/即食行樂2.jpg')} />
+          {buttons.map((button, index) => (
+              <TouchableOpacity key={index} onPress={button.onPress} style={styles.buttonContainer}>
+                  <Text style={styles.buttonText}>{button.text}</Text>
+              </TouchableOpacity>
+          ))}
+      </View>
+  );
 };
 
 const styles = StyleSheet.create({
