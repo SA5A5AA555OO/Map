@@ -67,7 +67,7 @@ const RefTodayFood = () => {
           </View>
           <View style={{marginLeft: 60}}>
             <Image style={styles.pic} source={require('map/asset/水果.jpg')} />
-            <Text style={styles.detail}>水果:{userData ? userData.fruit_quantity  : 'Loading...'}份</Text>
+            <Text style={styles.detail}>水果:{userData ? userData.friut_quantity  : 'Loading...'}份</Text>
           </View>
         </View>
       </View>

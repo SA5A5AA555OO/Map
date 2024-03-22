@@ -25,7 +25,7 @@ const Shop = ({navigation}) =>{
             <Text style={styles.buttonText}>查看捐贈數量</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleButtonPress3} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>編輯公布資訊</Text>
+            <Text style={styles.buttonText}>公布資訊</Text>
           </TouchableOpacity>
             
 

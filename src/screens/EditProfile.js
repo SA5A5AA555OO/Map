@@ -1,5 +1,5 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
-import HomeScreen from './HomeScreen';
+import Me from './Me';
 import React, { useState } from 'react';
 
 
@@ -11,7 +11,7 @@ const EditProfile = ({navigation}) =>{
     const [email,setEmail]=useState('');
     const [password, setPassword]=useState('');
     const handleButtonPress = () => {
-      navigation.navigate('Home');
+      navigation.navigate('Me');
     };
     return(
         <View style={styles.container}>
