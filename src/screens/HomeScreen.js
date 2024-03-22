@@ -20,13 +20,13 @@ const HomeScreen = ({ navigation }) => {
         switch (status) {
             case 1:
                 setButtons([
-                    { text: '介紹', onPress: () => navigation.navigate('Introduction') },
+                    { text: '介紹', onPress: () => navigation.navigate('Introduction', {  status: status }) },
                     { text: '食享冰箱', onPress: () => navigation.navigate('Ref') },
                     { text: '待用餐', onPress: () => navigation.navigate('Meal') }
                 ]);
                 break;
             case 2:
-                setButtons([{ text: '修改冰箱資訊', onPress: () => navigation.navigate('RefAdjust') }]);
+                setButtons([{ text: '修改冰箱資訊', onPress: () => navigation.navigate('RefAdjust', {  status: status }) }]);
                 break;
             case 3:
                 setButtons([{ text: '店家資訊', onPress: () => navigation.navigate('Shop') }]);
@@ -50,6 +50,7 @@ const HomeScreen = ({ navigation }) => {
                   <Text style={styles.buttonText}>{button.text}</Text>
               </TouchableOpacity>
           ))}
+          
       </View>
   );
 };
