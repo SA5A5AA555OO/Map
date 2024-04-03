@@ -25,11 +25,11 @@ const db = getFirestore(app);
 
 
 const Store = ({navigation}) =>{
-    const handleButtonPress = () => {
-        navigation.navigate('Donate2');
+    const handleButtonPress = (storeName) => {
+        navigation.navigate('Donate2', { storeName: storeName });
       };
-      const handleButtonPress2 = () => {
-        navigation.navigate('Take1');
+      const handleButtonPress2 = (storeName) => {
+        navigation.navigate('Take1', { storeName: storeName });
       };
       const route = useRoute();
       const { storeName } = route.params;
@@ -61,12 +61,12 @@ const Store = ({navigation}) =>{
                <Image
               style={styles.pic}
                source={require('map/asset/map.jpg')}/> 
-               <TouchableOpacity onPress={handleButtonPress}style={styles.buttonContainer}>
-                 <Text style={styles.buttonText}>捐贈待用餐</Text>
-               </TouchableOpacity>
-               <TouchableOpacity  onPress={handleButtonPress2} style={styles.buttonContainer}>
-                 <Text style={styles.buttonText}>領取待用餐</Text>
-               </TouchableOpacity>
+               <TouchableOpacity onPress={() => handleButtonPress(storeName)} style={styles.buttonContainer}>
+                  <Text style={styles.buttonText}>捐贈待用餐</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleButtonPress2(storeName)} style={styles.buttonContainer}>
+                  <Text style={styles.buttonText}>領取待用餐</Text>
+                </TouchableOpacity>
                <TouchableOpacity  style={styles.buttonContainer}>
                  <Text style={styles.buttonText}>加入最愛</Text>
                </TouchableOpacity>
