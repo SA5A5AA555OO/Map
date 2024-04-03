@@ -77,13 +77,29 @@ const MainStack = () => {
       </Stack.Navigator>
     );
   };
-
+  const LogoTitle = () => {
+    return (
+        <Image
+            source={require('map/asset/headerimage.jpg')}
+            style={{ width: 50, height: 50 }}
+        />
+    );
+};
 
 //下方的導覽列
 const TabNavigator = () => {
     return (
         <Tab.Navigator screenOptions={{
-            tabBarStyle: { backgroundColor: 'white' },
+            tabBarStyle: { 
+                position:'absolute',
+                backgroundColor: '#FFDCB9', 
+                bottom: 20,
+                left: 15,
+                right: 15,
+                elevation: 0,
+                borderRadius: 20,
+                height: 60,
+            },
             tabBarShowLabel: false, //下方導覽列名稱隱藏
         }}>
             <Tab.Screen

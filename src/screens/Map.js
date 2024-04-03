@@ -1,11 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View, StyleSheet, Text, Image, ScrollView,
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, doc, getDocs } from 'firebase/firestore/lite';
+import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import FjuRef from '../screens/FjuRef';
 import Store from '../screens/Store';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
+    authDomain: "sa5a5aa555oo.firebaseapp.com",
+    databaseURL: "https://sa5a5aa555oo-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "sa5a5aa555oo",
+    storageBucket: "sa5a5aa555oo.appspot.com",
+    messagingSenderId: "602378113582",
+    appId: "1:602378113582:web:c6b308cc039586506ec5bf",
+    measurementId: "G-NS22NW5C8F"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
 const CustomMarker = ({ coordinate, title, icon }) => (
     <Marker coordinate={coordinate} title={title}>
@@ -25,59 +41,62 @@ const Map = ({ navigation }) => {
 
     const [distance, setDistance] = useState(null);
     const [duration, setDuration] = useState(null);
+    
+    const [store, setStore] = useState([]);
+
+    useEffect(() => {
+        const fetchStoreData = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'store'));
+                const storeData = querySnapshot.docs.map(doc => doc.data());
+                setStore(storeData);
+            } catch (error) {
+                console.error('Error fetching store data:', error);
+            }
+        };
+
+        fetchStoreData();
+    }, [db]);
 
 
-    const [markerslist, setMarkersList] = useState([
-        {
-            id: 1,
-            latitude: 25.036536324078433,//經度
-            longitude: 121.43183548002627,//緯度
-            title: '食享冰箱',
-            description: '點擊食享冰箱'
-        },
-        {
-            id: 2,
-            latitude: 25.042853691197738,//經度
-            longitude: 121.44725038057825,//緯度
-            title: '素食的店',
-            description: '點擊素食的店'
-        }
-    ])
 
-    const handleButtonPress = (markerId) => {
-        if (markerId === 1) {
-            navigation.navigate('FjuRef');
-            setDestination({ latitude: 25.036536324078433, longitude: 121.43183548002627 });
-        } else if (markerId === 2) {
-            navigation.navigate('Store');
-            setDestination({ latitude: 25.042853691197738, longitude: 121.44725038057825 });
-        }
-    };
+    // 點擊店鋪標記時的處理函數
+  const handleButtonPress = (storeName) => {
+    // 導航到 Store 畫面並傳遞 storeName 參數
+    navigation.navigate('Store', { storeName: storeName });
+    // 在 store 數據中查找選定的店鋪
+    const selectedStore = store.find(store => store.store_name === storeName);
+    // 如果找到了選定的店鋪，設置目的地
+    if (selectedStore) {
+      setDestination({ latitude: selectedStore.latitude, longitude: selectedStore.longitude });
+    }
+  };
+    
+    
+    
 
     return (
         <View style={styles.container}>
             <MapView
                 style={styles.map}
                 initialRegion={{
-                    latitude: 25.03719676448161,//經度
-                    longitude: 121.43248323862977,//緯度
+                    latitude: 25.03719676448161,
+                    longitude: 121.43248323862977,
                     latitudeDelta: 0.01,
                     longitudeDelta: 0.01,
                 }}>
                 <CustomMarker coordinate={markerCoordinate} title={markerTitle} icon={customIcon} />
-                {
-                    markerslist.map((marker) => {
-                        return (
-                            <Marker //標記地點
-                                key={marker.id}
-                                coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
-                                title={marker.title}
-                                description={marker.description}
-                                onPress={() => handleButtonPress(marker.id)}
-                            />
-                        )
-                    })
-                }
+                {store.map((store) => (
+                    <Marker
+                        key={store.store_name}
+                        coordinate={{
+                            latitude: parseFloat(store.latitude),
+                            longitude: parseFloat(store.longitude)
+                        }}
+                        title={store.store_name}
+                        onPress={() => handleButtonPress(store.store_name)} 
+                    />
+                ))}
                 {origin && destination != undefined ? (
                     <MapViewDirections
                         origin={origin}
