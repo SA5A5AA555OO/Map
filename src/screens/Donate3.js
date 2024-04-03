@@ -1,14 +1,15 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
-
+import { useRoute } from '@react-navigation/native';
 
 
 
 const Donate3 = ({navigation}) =>{
-   
+  const route = useRoute();
+  const { storeName } = route.params;
       return (
         <View style={styles.container}>
-            <Text style={styles.headerText}>素食的店</Text>
+            <Text style={styles.headerText}>{storeName}</Text>
             <Text></Text>
             <Image
               style={styles.logo1}

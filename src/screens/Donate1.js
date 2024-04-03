@@ -1,20 +1,47 @@
 import React, { useState } from 'react';
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import Donate3 from '../screens/Donate3';
+import { initializeApp } from 'firebase/app';
+import { useRoute } from '@react-navigation/native';
+import { getFirestore } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
+const firebaseConfig = {
+  apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
+authDomain: "sa5a5aa555oo.firebaseapp.com",
+databaseURL: "https://sa5a5aa555oo-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId: "sa5a5aa555oo",
+storageBucket: "sa5a5aa555oo.appspot.com",
+messagingSenderId: "602378113582",
+appId: "1:602378113582:web:c6b308cc039586506ec5bf",
+measurementId: "G-NS22NW5C8F"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const Donate1 = ({navigation}) =>{
+  const route = useRoute();
+      const { storeName, count  } = route.params;
+      const [name, setName] = useState('');
+      const [phone, setPhone] = useState('');
+      const [email, setEmail] = useState('');
 
-
-const RegesterScreen = ({navigation}) =>{
-  const [isChecked, setChecked] = useState(false);
-
-  const handleCheckboxToggle = () => {
-    setChecked(!isChecked);
-  };
-    const handleButtonPress = () => {
-      navigation.navigate('Donate3');
-    };
+      const handleButtonPress = async (storeName) => {
+        try {
+          const docRef = await addDoc(collection(db, 'donate'), {
+            storeName: storeName,
+            name: name,
+            phone: phone,
+            email: email,
+            count: count
+          });
+          console.log('Document written with ID: ', docRef.id);
+          navigation.navigate('Donate3', { storeName: storeName });
+        } catch (e) {
+          console.error('Error adding document: ', e);
+        }
+      };
     return(
         <View style={styles.container}>
-             <Text style={styles.headerText}>素食的店</Text>
+             <Text style={styles.headerText}>{storeName}</Text>
             <Text ></Text>
             <Image
               style={styles.logo1}
@@ -22,28 +49,29 @@ const RegesterScreen = ({navigation}) =>{
                <Text></Text>
                <Text ></Text>
                <Text ></Text>
-        <View style={styles.wrapper}>
-            <TextInput
-            style={styles.input} 
-           
-            placeholder ="姓名"
+               <View style={styles.wrapper}>
+        <TextInput
+          style={styles.input} 
+          placeholder="姓名"
+          value={name}
+          onChangeText={setName}
+        />
+        <TextInput
+          style={styles.input} 
+          placeholder="電話"
+          value={phone}
+          onChangeText={setPhone}
+        />
+        <TextInput
+          style={styles.input} 
+          placeholder="信箱"
+          value={email}
+          onChangeText={setEmail}
+        />
+            <Text>捐贈數量:{count}       總價:</Text>
+            <Text></Text>
             
-            />
-            <TextInput
-            style={styles.input} 
-            
-            placeholder ="電話"
-            
-            />
-            <TextInput
-            style={styles.input} 
-            
-            placeholder ="信箱"
-            
-            />
-            
-        
-        <TouchableOpacity onPress={handleButtonPress} style={styles.button}>
+        <TouchableOpacity onPress={() => handleButtonPress(storeName)}  style={styles.button}>
                   <Text style={styles.buttonText}>前往付款</Text>
                 </TouchableOpacity>
             <View style={{flexDirection:'row', marginTop:20}}></View>
@@ -110,4 +138,4 @@ logo1: {
   
 });
 
-export default RegesterScreen;
+export default Donate1;

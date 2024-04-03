@@ -1,20 +1,57 @@
-import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Image, Text, ScrollView, StyleSheet , TouchableOpacity ,TextInput} from 'react-native';
+import React, { useState ,useEffect} from "react";
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, doc, getDoc, where,query } from 'firebase/firestore/lite';
+import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
+import { useRoute } from '@react-navigation/native';
+const firebaseConfig = {
+  apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
+authDomain: "sa5a5aa555oo.firebaseapp.com",
+databaseURL: "https://sa5a5aa555oo-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId: "sa5a5aa555oo",
+storageBucket: "sa5a5aa555oo.appspot.com",
+messagingSenderId: "602378113582",
+appId: "1:602378113582:web:c6b308cc039586506ec5bf",
+measurementId: "G-NS22NW5C8F"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
 
 const Donate2 = ({ navigation }) => {
-  const handleButtonPress = () => {
-    navigation.navigate('Donate1');
+  //查詢資料
+  const [userData, setUserData] = useState(null);
+      const getData = async (db) => {
+        const userCollection = collection(db, "store");
+        const userDoc = doc(userCollection, storeName);
+        const userDocSnap = await getDoc(userDoc);
+        if (userDocSnap.exists()) {
+          setUserData(userDocSnap.data());
+        } else {
+          console.log("Document not found");
+        }
+      };
+    
+      useEffect(() => {
+        getData(db); // 將 db 傳遞給 getData 函數
+      }, []);
+  //
+  
+  
+const route = useRoute();
+const { storeName } = route.params;
+  const handleButtonPress = (storeName) => {
+    navigation.navigate('Donate1', { storeName: storeName ,count: count  });
   };
-
   const [count, setCount] = useState(0);
-
   const handleOperation = (value) => {
     setCount(count + value);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>素食的店</Text>
+      <Text style={styles.headerText}>{storeName}</Text>
       <Text></Text>
       <Image style={styles.logo1} source={require('map/asset/Dstep1.jpg')} />
       <Text></Text>
@@ -22,7 +59,7 @@ const Donate2 = ({ navigation }) => {
 
       <View style={styles.detailsContainer}>
         <View style={styles.rowContainer}>
-          <Text style={styles.detail}>乾麵 $30       </Text>
+          <Text style={styles.detail}>一份 ${userData ? userData.good_price : 'Loading...'}元       </Text>
           <View style={styles.counterContainer}>
             <TouchableOpacity style={styles.button} onPress={() => handleOperation(-1)}>
               <Text style={styles.buttonText}>-</Text>
@@ -35,9 +72,9 @@ const Donate2 = ({ navigation }) => {
 
           </View>
         </View>
-        <Text style={styles.totalText}>總計${count*30}</Text>
+        <Text style={styles.totalText}>總計${userData ? userData.good_price * count : 'Loading...'}</Text>
         <Text></Text>
-        <TouchableOpacity onPress={handleButtonPress} style={styles.donateButton}>
+        <TouchableOpacity onPress={() => handleButtonPress(storeName)} style={styles.donateButton}>
           <Text style={styles.buttonText}>捐贈</Text>
         </TouchableOpacity>
       </View>
