@@ -15,6 +15,9 @@ const Introduction2 = ({navigation}) => {
       <Text></Text>
       <Text></Text>
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+      <Text></Text>
+      <Text></Text>
+      
         <Text style={styles.link}>回主頁</Text>
       </TouchableOpacity>
     </View>

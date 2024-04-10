@@ -1,50 +1,77 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import HomeScreen from './HomeScreen';
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from "react";
 import { Alert } from 'react-native'
+import { useRoute } from '@react-navigation/native';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, doc, getDoc, query, where, getDocs} from 'firebase/firestore/lite';
+const firebaseConfig = {
+  apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
+authDomain: "sa5a5aa555oo.firebaseapp.com",
+databaseURL: "https://sa5a5aa555oo-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId: "sa5a5aa555oo",
+storageBucket: "sa5a5aa555oo.appspot.com",
+messagingSenderId: "602378113582",
+appId: "1:602378113582:web:c6b308cc039586506ec5bf",
+measurementId: "G-NS22NW5C8F"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 
 const MyDonate = ({navigation}) =>{
+  const route = useRoute();
+const { email } = route.params || { email: '' };
   const [selected, setSelected] = useState('notReceived');
-  const showTip = () => {
-    Alert.alert('領取成功')
-}
+  
+  const [userData, setUserData] = useState(null);
 
-const showAlert = () =>{
-    Alert.alert(
-        '警告',
-        '確認領取?？',
-        [
-            {text: '確認', onPress: () => showTip()},
-            {text: '取消', style: 'cancel'}, 
-        ],
-        {cancelable: false}
-    )
-}
+  useEffect(() => {
+    // 確認 email 不為空才執行
+    email && fetchUserData();
+  }, [email]); // 當 email 發生變化時重新執行效果
+
+  const fetchUserData = async () => {
+    try {
+      const usersCollection = collection(db, "donate");
+      const q = query(usersCollection, where("email", "==", email));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const userDataList = querySnapshot.docs.map((doc) => doc.data());
+        setUserData(userDataList);
+      } else {
+        console.log("找不到符合條件的使用者");
+      }
+    } catch (error) {
+      console.error("獲取使用者資料時發生錯誤：", error);
+    }
+  };
   const handlePress = (option) => {
     setSelected(option);
   };
   const renderContent = () => {
-    if (selected === 'notReceived') {
-      return <View><View style={styles.row}>
+    if (selected === 'notReceived' && userData) {
+      return userData.map((data, index) => (
+        <View key={index}>
+          <View style={styles.row}>
             <Image
-           style={styles.logo}
-           source={require('map/asset/food.jpg')}/>
-             <View>
-             <Text style={styles.leftText}>領取編號4398</Text>
-             <Text style={styles.detail}>素食的店</Text>
-             </View>
-             <TouchableOpacity onPress = {showAlert} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>領取</Text>
-          </TouchableOpacity>
-             </View>
-             <Text></Text>
-             <View style={styles.line} />
-           </View>
-    
-    
-    
-    
+              style={styles.logo}
+              source={require("map/asset/food.jpg")}
+            />
+            <View>
+              <Text style={styles.leftText}>{data.storeName}</Text>
+              <Text style={styles.detail}>捐贈數量:{data.count}</Text>
+            </View>
+            <TouchableOpacity style={styles.buttonContainer}>
+              <Text style={styles.buttonText}>付款</Text>
+            </TouchableOpacity>
+          </View>
+          <Text></Text>
+          <View style={styles.line} />
+          <Text></Text>
+        </View>
+      ));
     } else if (selected === 'received') {
       return <View><View style={styles.row}>
       <Image
@@ -52,7 +79,7 @@ const showAlert = () =>{
      source={require('map/asset/food.jpg')}/>
        <View>
        <Text style={styles.leftText}>素食的店</Text>
-       <Text style={styles.detail}>乾麵 : 1</Text>
+       <Text style={styles.detail}>捐贈數量 : 1</Text>
        </View>
        <TouchableOpacity  style={styles.buttonContainer}>
       <Text style={styles.buttonText}>回饋</Text>
@@ -60,10 +87,10 @@ const showAlert = () =>{
        </View>
        <Text></Text>
        <View style={styles.line} />
-           </View>
-    
+    </View>
     }
   };
+  
       return (
         <View style={styles.container}>
         <View style={styles.row}>

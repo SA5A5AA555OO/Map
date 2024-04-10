@@ -17,6 +17,9 @@ const Introduction = ({navigation}) => {
       <Text></Text>
       <Text></Text>
       <TouchableOpacity onPress={() => navigation.navigate('Introduction2')}>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
         <Text style={styles.link}>下一頁</Text>
       </TouchableOpacity>
       

@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import Take3 from '../screens/Donate3';
-
+import { useRoute } from '@react-navigation/native';
 
 const Take2 = ({navigation}) =>{
-   
-    const handleButtonPress = () => {
-      navigation.navigate('Take3');
-    };
+  const route = useRoute();
+  const { storeName } = route.params;
+
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const handleButtonPress = () => {
+    if (name.trim() === '' || phone.trim() === '' || email.trim() === '') {
+      alert('請填寫所有必填項目');
+      return;
+    }
+
+    navigation.navigate('Take3', { storeName: storeName, name: name, phone: phone, email: email });
+  };
+  
     return(
         <View style={styles.container}>
-             <Text style={styles.headerText}>素食的店</Text>
+             <Text style={styles.headerText}>{ storeName }</Text>
             <Text ></Text>
             <Image
               style={styles.logo1}
@@ -19,24 +30,21 @@ const Take2 = ({navigation}) =>{
                <Text ></Text>
                <Text ></Text>
         <View style={styles.wrapper}>
-            <TextInput
-            style={styles.input} 
-           
-            placeholder ="姓名"
-            
-            />
-            <TextInput
-            style={styles.input} 
-            
-            placeholder ="電話"
-            
-            />
-            <TextInput
-            style={styles.input} 
-            
-            placeholder ="信箱"
-            
-            />
+        <TextInput
+          style={styles.input}
+          placeholder="姓名"
+          value={name}
+          onChangeText={setName} />
+        <TextInput
+          style={styles.input}
+          placeholder="電話"
+          value={phone}
+          onChangeText={setPhone} />
+        <TextInput
+          style={styles.input}
+          placeholder="信箱"
+          value={email}
+          onChangeText={setEmail} />
             <Text ></Text>
             <Text ></Text>
         
