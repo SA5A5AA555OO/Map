@@ -7,7 +7,7 @@ import EditProfile from './EditProfile';
 import LoginScreen from './LoginScreen';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, getDoc, query, where, getDocs} from 'firebase/firestore/lite';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword,signOut } from 'firebase/auth';
 import { firebase } from "@react-native-firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
@@ -25,9 +25,29 @@ const db = getFirestore(app);
 
 
 const Me = ({ navigation, route }) => {
-  const { email } = route.params || { email: '' }; // 從路由參數中獲取 email
-
+  const { email: routeEmail } = route.params || { email: '' }; // 從路由參數中獲取 email
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // 新增一個狀態來追蹤登入狀態
   const [userData, setUserData] = useState(null);
+  const [email, setEmail] = useState(routeEmail); // 將路由參數中的 email 存儲在狀態中
+  const [status, setStatus] = useState('');
+
+  const auth = getAuth();
+  
+
+  useEffect(() => {
+    // 判斷是否已經登入
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        setIsLoggedIn(true);
+        setEmail(user.email);
+        setStatus('已登入');
+      } else {
+        setIsLoggedIn(false);
+        setEmail('');
+        setStatus('');
+      }
+    });
+  }, [email, status]); // 添加 email 和 status 作為 useEffect 的依賴
 
   useEffect(() => {
     // 確認 email 不為空才執行
@@ -55,17 +75,33 @@ const Me = ({ navigation, route }) => {
     navigation.navigate('Favorite');
   };
   const handleButtonPress2 = () => {
-    navigation.navigate('Record');
+    navigation.navigate('Record', {email});
   };
   const handleButtonPress3 = () => {
     navigation.navigate('EditProfile');
   };
-  const handleButtonPress4 = () => {
-    navigation.navigate('Login');
+  const handleLogin = () => {
+    if (isLoggedIn) {
+      // 如果已經登入，執行登出操作
+      signOut(auth)
+        .then(() => {
+          // 登出成功後清除 email 和 status，並將登入狀態設置為 false
+          setEmail('000@gmail.com');
+          setStatus('0');
+          setIsLoggedIn(false);
+          navigation.navigate('Home', { email: userData.email, status: status });
+          navigation.navigate('Me', { email: userData.email, status: status });
+        
+        })
+        .catch(error => console.error('登出時發生錯誤：', error));
+    } else {
+      // 如果尚未登入，導航到登入頁面
+      navigation.navigate('Login');
+    }
   };
-  
+
   const handleButtonPress5 = () => {
-    navigation.navigate('MyDonate');
+    navigation.navigate('MyDonate', {email});
   };
 
   return (
@@ -79,21 +115,22 @@ const Me = ({ navigation, route }) => {
       </View>
       
       <TouchableOpacity onPress={handleButtonPress} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>查看最愛店家</Text>
+            <Text style={styles.buttonText}>最愛店家</Text>
           </TouchableOpacity>
           <TouchableOpacity  onPress={handleButtonPress2}style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>查看領取資訊</Text>
+            <Text style={styles.buttonText}>領取資訊</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleButtonPress5} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>查看捐贈資訊</Text>
+            <Text style={styles.buttonText}>捐贈資訊</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleButtonPress3} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>修改個人資料</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity onPress={handleButtonPress4} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>登入</Text>
-          </TouchableOpacity>
+          <TouchableOpacity onPress={handleLogin} style={styles.buttonContainer}>
+        <Text style={styles.buttonText}>{isLoggedIn ? '登出' : '登入'}</Text>
+      </TouchableOpacity>
+    
     </View>
     
   );
