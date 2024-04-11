@@ -1,12 +1,14 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import HomeScreen from './HomeScreen';
 import { DataTable } from 'react-native-paper';
-
+import { useRoute } from '@react-navigation/native';
 
 
 
 const DonatePeople = ({navigation}) =>{
-   
+  const route = useRoute();
+  const { username } = route.params || { username: '用戶' };
+
       return (
         <View style={styles.container}>
       <DataTable>
@@ -35,6 +37,7 @@ const DonatePeople = ({navigation}) =>{
         </DataTable.Row>
 
       </DataTable>
+      <Text>{username}</Text>
     </View>
      
       );

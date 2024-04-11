@@ -7,29 +7,30 @@ import Me from './Me';
 import Map from './Map';
 import Shop from '../screens/Shop';
 import Introduction from '../screens/Introduction';
-
+import { useNavigation } from '@react-navigation/native';
 
 
 const HomeScreen = ({ navigation }) => {
   const route = useRoute();
-  const { status } = route.params || { status: 0 };
+  const { status,email } = route.params || { status: 0 };
   const [buttons, setButtons] = useState([]);
-
+  const { username } = route.params || { username: '' };
+  
     useEffect(() => {
         // 根據使用者的 status 狀態動態設置按鈕
         switch (status) {
-            case 1:
+            case "1":
                 setButtons([
                     { text: '介紹', onPress: () => navigation.navigate('Introduction', {  status: status }) },
                     { text: '食享冰箱', onPress: () => navigation.navigate('Ref') },
                     { text: '待用餐', onPress: () => navigation.navigate('Meal') }
                 ]);
                 break;
-            case 2:
+            case "2":
                 setButtons([{ text: '修改冰箱資訊', onPress: () => navigation.navigate('RefAdjust', {  status: status }) }]);
                 break;
-            case 3:
-                setButtons([{ text: '店家資訊', onPress: () => navigation.navigate('Shop') }]);
+            case "3":
+                setButtons([{ text: '店家資訊', onPress: () => navigation.navigate('Shop',{  email: email }) }]);
                 break;
             default:
                 setButtons([]);
@@ -50,7 +51,6 @@ const HomeScreen = ({ navigation }) => {
                   <Text style={styles.buttonText}>{button.text}</Text>
               </TouchableOpacity>
           ))}
-          
       </View>
   );
 };
