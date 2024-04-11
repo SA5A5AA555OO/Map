@@ -23,7 +23,7 @@ const db = getFirestore(app);
 
 const Take3 = ({ navigation }) => {
   const route = useRoute();
-  const { status } = route.params;
+  const { status,email } = route.params;
   const [userData, setUserData] = useState(null); // State to store user data
 
   // Effect to fetch user data
@@ -54,8 +54,8 @@ const Take3 = ({ navigation }) => {
         <Text style={styles.buttonText}>登入成功</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => {
-        navigation.navigate('Me', { email: userData.email, status: status });
-        navigation.navigate('Home', { email: userData.email, status: status });
+        navigation.navigate('Me', { email: email, status: status });
+        navigation.navigate('Home', { email: email, status: status });
       }}>
         <Text style={styles.link}>繼續</Text>
       </TouchableOpacity>
