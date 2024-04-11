@@ -1,44 +1,68 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import HomeScreen from './HomeScreen';
+import React, { useState ,useEffect} from "react";
 import { DataTable } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
-
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, doc, getDoc, query, where, getDocs} from 'firebase/firestore/lite';
+const firebaseConfig = {
+  apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
+authDomain: "sa5a5aa555oo.firebaseapp.com",
+databaseURL: "https://sa5a5aa555oo-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId: "sa5a5aa555oo",
+storageBucket: "sa5a5aa555oo.appspot.com",
+messagingSenderId: "602378113582",
+appId: "1:602378113582:web:c6b308cc039586506ec5bf",
+measurementId: "G-NS22NW5C8F"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 
 const DonatePeople = ({navigation}) =>{
   const route = useRoute();
   const { username } = route.params || { username: '用戶' };
+  const [pickupData, setPickupData] = useState([]);
 
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
+      const pickupsCollection = collection(db, 'donate');
+      const q = query(pickupsCollection, where('storeName', '==', username));
+      const querySnapshot = await getDocs(q);
+
+      const data = [];
+      querySnapshot.forEach(doc => {
+        data.push(doc.data());
+      });
+
+      setPickupData(data);
+    } catch (error) {
+      console.error('查詢資料時發生錯誤：', error);
+    }
+  };
       return (
         <View style={styles.container}>
-      <DataTable>
-        <DataTable.Header>
-          <DataTable.Title>姓名</DataTable.Title>
-          <DataTable.Title>電話</DataTable.Title>
-          <DataTable.Title numeric>捐贈數量</DataTable.Title>
-        </DataTable.Header>
-
-        <DataTable.Row>
-          <DataTable.Cell>謝暈眩</DataTable.Cell>
-          <DataTable.Cell>0983279525</DataTable.Cell>
-          <DataTable.Cell numeric>1</DataTable.Cell>
-        </DataTable.Row>
-
-        <DataTable.Row>
-          <DataTable.Cell>汪殊榮</DataTable.Cell>
-          <DataTable.Cell>0912345623</DataTable.Cell>
-          <DataTable.Cell numeric>10</DataTable.Cell>
-        </DataTable.Row>
-
-        <DataTable.Row>
-          <DataTable.Cell>王家碰</DataTable.Cell>
-          <DataTable.Cell>0983425334</DataTable.Cell>
-          <DataTable.Cell numeric>5</DataTable.Cell>
-        </DataTable.Row>
-
-      </DataTable>
-      <Text>{username}</Text>
-    </View>
+          <Text style={styles.headerText}>{username}</Text>
+        <DataTable>
+          <DataTable.Header>
+            <DataTable.Title>姓名</DataTable.Title>
+            <DataTable.Title>電話</DataTable.Title>
+            <DataTable.Title>捐贈書量</DataTable.Title>
+          </DataTable.Header>
+  
+          {pickupData.map((item, index) => (
+            <DataTable.Row key={index}>
+              <DataTable.Cell>{item.name}</DataTable.Cell>
+              <DataTable.Cell>{item.phone}</DataTable.Cell>
+              <DataTable.Cell>{item.count}</DataTable.Cell>
+            </DataTable.Row>
+          ))}
+        </DataTable>
+      </View>
      
       );
 };
