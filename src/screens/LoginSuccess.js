@@ -30,6 +30,7 @@ const Take3 = ({ navigation }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        // console.log("(LoginSuccess)fetchUserData")
         const usersCollection = collection(db, 'user');
         const q = query(usersCollection, where('status', '==', status)); // Adjust the query as per your requirements
         const querySnapshot = await getDocs(q);
