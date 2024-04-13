@@ -30,7 +30,7 @@ const LoginScreen = ({navigation}) =>{
       // 使用 Firebase 的身份驗證進行登入
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
+      // console.log("loginscreen email: "+email);
       // 如果登入成功，繼續從 Firestore 中獲取更多使用者資訊
       const usersCollection = collection(db, 'user');
       const q = query(usersCollection, where('email', '==', email), where('password', '==', password));
