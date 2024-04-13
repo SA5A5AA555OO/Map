@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
     View, StyleSheet, Text, Image, ScrollView,
 } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import MapView, { Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { initializeApp } from 'firebase/app';
@@ -19,9 +20,9 @@ const firebaseConfig = {
     messagingSenderId: "602378113582",
     appId: "1:602378113582:web:c6b308cc039586506ec5bf",
     measurementId: "G-NS22NW5C8F"
-    };
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 const CustomMarker = ({ coordinate, title, icon }) => (
     <Marker coordinate={coordinate} title={title}>
@@ -30,7 +31,7 @@ const CustomMarker = ({ coordinate, title, icon }) => (
         </View>
     </Marker>
 );
- 
+
 const Map = ({ navigation }) => {
     const markerCoordinate = { latitude: 25.0335130275009, longitude: 121.43384983277525 };
     const markerTitle = '您的位置';
@@ -41,10 +42,14 @@ const Map = ({ navigation }) => {
 
     const [distance, setDistance] = useState(null);
     const [duration, setDuration] = useState(null);
-    
+
+    const route = useRoute();
+    const { status, email } = route.params || { status: 0 };
+
     const [store, setStore] = useState([]);
 
     useEffect(() => {
+        console.log(`(map)52 useEffect  status:${status}   email:${email}`)
         const fetchStoreData = async () => {
             try {
                 const querySnapshot = await getDocs(collection(db, 'store'));
@@ -61,19 +66,19 @@ const Map = ({ navigation }) => {
 
 
     // 點擊店鋪標記時的處理函數
-  const handleButtonPress = (storeName) => {
-    // 導航到 Store 畫面並傳遞 storeName 參數
-    navigation.navigate('Store', { storeName: storeName });
-    // 在 store 數據中查找選定的店鋪
-    const selectedStore = store.find(store => store.store_name === storeName);
-    // 如果找到了選定的店鋪，設置目的地
-    if (selectedStore) {
-      setDestination({ latitude: selectedStore.latitude, longitude: selectedStore.longitude });
-    }
-  };
-    
-    
-    
+    const handleButtonPress = (storeName) => {
+        // 導航到 Store 畫面並傳遞 storeName 參數
+        navigation.navigate('Store', { storeName: storeName , email: email, status: status });
+        // 在 store 數據中查找選定的店鋪
+        const selectedStore = store.find(store => store.store_name === storeName);
+        // 如果找到了選定的店鋪，設置目的地
+        if (selectedStore) {
+            setDestination({ latitude: selectedStore.latitude, longitude: selectedStore.longitude });
+        }
+    };
+
+
+
 
     return (
         <View style={styles.container}>
@@ -94,7 +99,7 @@ const Map = ({ navigation }) => {
                             longitude: parseFloat(store.longitude)
                         }}
                         title={store.store_name}
-                        onPress={() => handleButtonPress(store.store_name)} 
+                        onPress={() => handleButtonPress(store.store_name)}
                     />
                 ))}
                 {origin && destination != undefined ? (
@@ -107,7 +112,7 @@ const Map = ({ navigation }) => {
                         onReady={(result) => {
                             setDistance(result.distance);
                             setDuration(result.duration);
-                            
+
                             console.log(`Distance: ${result.distance} km`);
                             console.log(`Duration: ${result.duration} min`);
                         }}

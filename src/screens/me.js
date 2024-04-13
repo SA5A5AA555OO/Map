@@ -122,6 +122,7 @@ const Me = ({ navigation, route }) => {
         // console.log(`(Me)logout clear data email ${email} status ${status}`)
         setIsLoggedIn(false);
           navigation.navigate('Home', { email: "000@gmail.com", status: "0" });
+          navigation.navigate('Map', { email: "000@gmail.com", status: "0" });
           navigation.navigate('Me', { email: "000@gmail.com", status: "0" });
       })
       .catch(error => console.error('登出時發生錯誤：', error));

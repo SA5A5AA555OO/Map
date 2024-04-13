@@ -56,6 +56,7 @@ const Take3 = ({ navigation }) => {
       </TouchableOpacity>
       <TouchableOpacity onPress={() => {
         navigation.navigate('Me', { email: email, status: status });
+        navigation.navigate('Map', { email: email, status: status });
         navigation.navigate('Home', { email: email, status: status });
       }}>
         <Text style={styles.link}>繼續</Text>
