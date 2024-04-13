@@ -2,8 +2,10 @@ import {Text, View, TouchableOpacity, StyleSheet,Image,} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import HomeScreen from '../screens/HomeScreen';
 import Introduction2 from '../screens/Introduction2';
+import { useRoute } from '@react-navigation/native';
 const Introduction = ({navigation}) => {
-
+  const route = useRoute();
+  const { status  } = route.params;
   
   return (
     <View style={styles.container}>
@@ -16,7 +18,7 @@ const Introduction = ({navigation}) => {
       <Text style={styles.text}>用戶可使用手機查看可領取物資以及捐贈待用餐</Text>
       <Text></Text>
       <Text></Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Introduction2')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Introduction2', {  status: status })}>
         <Text></Text>
         <Text></Text>
         <Text></Text>

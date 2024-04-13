@@ -1,10 +1,10 @@
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
+import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image,ScrollView} from 'react-native';
 import HomeScreen from './HomeScreen';
 import React, { useState ,useEffect} from "react";
 import { DataTable } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, getDoc, query, where, getDocs} from 'firebase/firestore/lite';
+import { getFirestore, collection, doc, query, where, getDocs, updateDoc} from 'firebase/firestore/lite';
 const firebaseConfig = {
   apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
 authDomain: "sa5a5aa555oo.firebaseapp.com",
@@ -31,85 +31,145 @@ const TakePeople = ({navigation}) =>{
   const fetchUserData = async () => {
     try {
       const pickupsCollection = collection(db, 'pickup');
-      const q = query(pickupsCollection, where('storeName', '==', username));
+      const q = query(pickupsCollection, where('storeName', '==', username),where('take', '==', false));
       const querySnapshot = await getDocs(q);
-
+  
       const data = [];
       querySnapshot.forEach(doc => {
         data.push(doc.data());
       });
-
+  
       setPickupData(data);
     } catch (error) {
       console.error('查詢資料時發生錯誤：', error);
     }
   };
+  const handlePickup = async (randomNumber) => {
+    try {
+      const pickupsCollection = collection(db, 'pickup');
+      const q = query(pickupsCollection, where('randomNumber', '==', randomNumber));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (snapshot) => {
+        const docRef = doc(db, 'pickup', snapshot.id);
+        await updateDoc(docRef, { take: true });
+        console.log('Updated taken to true');
+        fetchUserData(); 
+      });
+    } catch (error) {
+      console.error('Error updating document:', error);
+    }
+  };
+  
+  
+  
+
+
+
+  
       return (
         <View style={styles.container}>
-          <Text style={styles.headerText}>{username}</Text>
-        <DataTable>
-          <DataTable.Header>
-            <DataTable.Title>姓名</DataTable.Title>
-            <DataTable.Title>電話</DataTable.Title>
-            <DataTable.Title>領取編號</DataTable.Title>
-          </DataTable.Header>
-  
-          {pickupData.map((item, index) => (
-            <DataTable.Row key={index}>
-              <DataTable.Cell>{item.name}</DataTable.Cell>
-              <DataTable.Cell>{item.phone}</DataTable.Cell>
-              <DataTable.Cell>{item.randomNumber}</DataTable.Cell>
-            </DataTable.Row>
-          ))}
-        </DataTable>
+        <Text style={styles.headerText}>{username}</Text>
+        <Text></Text>
+      
+        {pickupData.map((item, index) => (
+          <View key={index}>
+            <ScrollView>
+              <View style={styles.row}>
+                <Image
+                  style={styles.logo}
+                  source={require("map/asset/food.jpg")}
+                />
+                <View>
+                  <Text style={styles.leftText}>姓名:{item.name}</Text>
+                  <Text style={styles.detail}>領取號碼:{item.randomNumber}</Text>
+                  <Text style={styles.detail}>電話:{item.phone}</Text>
+                </View>
+                <TouchableOpacity
+              style={styles.buttonContainer}
+              onPress={() => handlePickup(item.randomNumber)} 
+            >
+              <Text style={styles.buttonText}>完成</Text>
+            </TouchableOpacity>
+              </View>
+              <Text></Text>
+              <View style={styles.line} />
+              <Text></Text>
+            </ScrollView>
+          </View>
+        ))}
       </View>
-     
       );
 };
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      backgroundColor:'#FDFBF1',
+  container: {
+    flex: 1,
+    backgroundColor:'#FDFBF1',
+    paddingTop:20,
+    
+  },
+  textContainer: {
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    
+    
+  },
+  headerText: {
+      fontSize: 40,
+      paddingLeft: 138,
+    },
+    
+  logo: {
+      width: 63,
+      height: 63,
+      borderRadius: 100,
       
     },
-    headerText: {
-        fontSize: 30,
-      },
-    logo: {
-        width: 70,
-        height: 70,
-        borderRadius: 100,
-        
-      },
-    leftText :{
-        fontSize: 25,
-        left:20,
+    row:{
+     
+      flexDirection: 'row',
     },
-    detail:{
-        fontSize: 20,
-        left:20
+    line: {
+      borderBottomWidth: 1, 
+      borderBottomColor: 'black', 
+      borderBottomStyle: 'solid',
+      width: 350,
+     alignSelf: 'center',
     },
-    link:{
-        color:'#DA7746',
-    },
-    
-    
+  leftText :{
+      fontSize: 25,
+      paddingLeft:15,
+  },
 
+  detail:{
+      fontSize: 20,
+      paddingLeft:15,
+  },
+ text:{
+  fontSize:20,
+ },
+  selected: {
+    backgroundColor: '#FBE8CD', 
+  },
+  
+
+  
+  buttonContainer: {
+    backgroundColor: '#E6A984', 
+    padding: 20,
+    borderRadius: 30, 
+    marginVertical: 10, 
+    width:'18%',
+    marginLeft: 'auto',
+    marginRight:10,
+  },
+  buttonText: {
+    color: 'white', 
+    fontWeight: 'bold',
+    textAlign: 'center', 
     
-    buttonContainer: {
-      backgroundColor: '#E6A984', // 自定义背景颜色
-      padding: 20,
-      borderRadius: 20, // 圆角效果
-      marginVertical: 10, // 设置垂直间距
-      width:'80%'
-    },
-    buttonText: {
-      color: 'white', // 文本颜色
-      fontWeight: 'bold',
-      textAlign: 'center', // 文本居中
-      
-    },
-  });
+  },
+});
   
 export default TakePeople;
