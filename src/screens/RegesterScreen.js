@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, TextInput, View, Button, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import LoginScreen from '../screens/LoginScreen';
-
+import RegisterScreenButton from '../screens/RegesterScreenButton'
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, getDoc, query, where, getDocs, addDoc } from 'firebase/firestore/lite';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
@@ -34,21 +34,21 @@ const RegesterScreen = ({ navigation }) => {
             // 發送驗證郵件
             await sendEmailVerification(user);
 
-            // 將用戶資料儲存到 Firestore 中
-            await addDoc(collection(db, 'user'), {
-                username: name,
-                phone: phone,
-                email: email,
-                password: password,
-                status: "1",
-            });
+            // // 將用戶資料儲存到 Firestore 中
+            // await addDoc(collection(db, 'user'), {
+            //     username: name,
+            //     phone: phone,
+            //     email: email,
+            //     password: password,
+            //     status: "0",
+            // });
 
             // 顯示註冊成功提示訊息
             Alert.alert('註冊成功', '請檢查您的電子郵件收件箱以完成驗證。');
 
 
-            // 導航到首頁或其他畫面
-            navigation.navigate('Login');
+
+            navigation.navigate('RegesterButton',{email,password,phone,name});
         } catch (error) {
             // 顯示註冊失敗的錯誤訊息
             Alert.alert('註冊失敗', error.message);

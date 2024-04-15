@@ -24,6 +24,7 @@ const firebaseConfig = {
 const LoginScreen = ({navigation}) =>{
     const [email,setEmail]=useState('');
     const [password, setPassword]=useState('');
+    const auth = getAuth(app); // 使用 getAuth 獲取 Firebase 身份驗證物件
 
     const handleButtonPress = async () => {
     try {
@@ -33,7 +34,7 @@ const LoginScreen = ({navigation}) =>{
       // console.log("loginscreen email: "+email);
       // 如果登入成功，繼續從 Firestore 中獲取更多使用者資訊
       const usersCollection = collection(db, 'user');
-      const q = query(usersCollection, where('email', '==', email), where('password', '==', password));
+      const q = query(usersCollection, where('email', '==', email));
       const querySnapshot = await getDocs(q);
       
 
