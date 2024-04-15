@@ -1,4 +1,4 @@
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
+import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image, ScrollView} from 'react-native';
 import HomeScreen from './HomeScreen';
 import React, { useState ,useEffect} from "react";
 import { Alert } from 'react-native'
@@ -67,46 +67,53 @@ const [userData, setUserData] = useState(null);
     if (selected === 'notReceived' && userData) {
       return userData.map((data, index) => (
         <View key={index}>
-          <View style={styles.row}>
-            <Image
-              style={styles.logo}
-              source={require("map/asset/food.jpg")}
-            />
-            <View>
-              <Text style={styles.leftText}>{data.storeName}</Text>
-              <Text style={styles.detail}>領取號碼:{data.randomNumber}</Text>
-            </View>
-            <TouchableOpacity style={styles.buttonContainer}>
-              <Text style={styles.buttonText}>付款</Text>
-            </TouchableOpacity>
-          </View>
-          <Text></Text>
-          <View style={styles.line} />
-          <Text></Text>
+          {data.take === false && (
+            <ScrollView>
+              <View style={styles.row}>
+                <Image
+                  style={styles.logo}
+                  source={require("map/asset/food.jpg")}
+                />
+                <View>
+                  <Text style={styles.leftText}>{data.storeName}</Text>
+                  <Text style={styles.detail}>領取號碼:{data.randomNumber}</Text>
+                </View>
+                
+              </View>
+              <Text></Text>
+              <View style={styles.line} />
+              <Text></Text>
+            </ScrollView>
+          )}
         </View>
-    ));
+      ));
     
     
     
     } else if (selected === 'received') {
-      return <View><View style={styles.row}>
-      <Image
-     style={styles.logo}
-     source={require('map/asset/food.jpg')}/>
-       <View>
-       <Text style={styles.leftText}>素食的店</Text>
-       <Text style={styles.detail}>乾麵 : 1</Text>
-       </View>
-       <TouchableOpacity  style={styles.buttonContainer}>
-      <Text style={styles.buttonText}>回饋</Text>
-    </TouchableOpacity>
-       </View>
-       <Text></Text>
-       <View style={styles.line} />
-           </View>
-    
-    }
-  };
+      return userData.map((data, index) => (
+        <View key={index}>
+          {data.take === true && (
+            <ScrollView>
+              <View style={styles.row}>
+                <Image
+                  style={styles.logo}
+                  source={require("map/asset/food.jpg")}
+                />
+                <View>
+                  <Text style={styles.leftText}>{data.storeName}</Text>
+                  <Text style={styles.detail}>領取號碼:{data.randomNumber}</Text>
+                </View>
+                
+              </View>
+              <Text></Text>
+              <View style={styles.line} />
+              <Text></Text>
+            </ScrollView>
+          )}
+        </View>
+      ));
+  };}
       return (
         <View style={styles.container}>
         <View style={styles.row}>

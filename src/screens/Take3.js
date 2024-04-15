@@ -29,7 +29,8 @@ const Take3 = ({navigation}) =>{
           name: name,
           phone: phone,
           email: email,
-          randomNumber: randomNumber
+          randomNumber: randomNumber,
+          take: false
         });
         console.log("Document written with ID: ", docRef.id);
       } catch (e) {

@@ -1,4 +1,4 @@
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
+import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image, ScrollView} from 'react-native';
 import HomeScreen from './HomeScreen';
 import React, { useState ,useEffect} from "react";
 import { Alert } from 'react-native'

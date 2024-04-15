@@ -4,7 +4,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, getDocs } from 'firebase/firestore/lite';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import Store from '../screens/Store';
-
+import { useRoute } from '@react-navigation/native';
 const firebaseConfig = {
 apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
 authDomain: "sa5a5aa555oo.firebaseapp.com",
@@ -21,13 +21,15 @@ const storage = getStorage(app);
 
 
 const Meal = ({ navigation }) => {
+  const route = useRoute();
+  const { status, email } = route.params;
   const [stores, setStores] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
 
   const handleButtonPress = (storeName) => {
-    navigation.navigate('Store', { storeName: storeName });
+    navigation.navigate('Store', { storeName: storeName , status: status });
   };
 
   useEffect(() => {
