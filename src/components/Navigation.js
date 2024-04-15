@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegesterScreen from "../screens/RegesterScreen";
+import RegesterScreenButton from "../screens/RegesterScreenButton";
 import RegesterChoose from "../screens/RegesterChoose";
 import RegesterScreen2 from "../screens/RegesterScreen2";
 import Ref from "../screens/Ref";
@@ -58,6 +59,7 @@ const MainStack = () => {
         <Stack.Screen name="MyDonate" component={MyDonate} />
         <Stack.Screen name="RefAdjust" component={RefAdjust} />
         <Stack.Screen name="Regester" component={RegesterScreen} />
+        <Stack.Screen name="RegesterButton" component={RegesterScreenButton} />
         <Stack.Screen name="RegesterChoose" component={RegesterChoose} />
         <Stack.Screen name="Regester2" component={RegesterScreen2} />
         <Stack.Screen name="Ref" component={Ref} />
