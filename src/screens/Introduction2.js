@@ -1,7 +1,9 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import HomeScreen from './HomeScreen';
-
+import { useRoute } from '@react-navigation/native';
 const Introduction2 = ({navigation}) => {
+  const route = useRoute();
+  const { status  } = route.params;
   return (
     <View style={styles.container}>
       
@@ -14,7 +16,7 @@ const Introduction2 = ({navigation}) => {
       <Text style={styles.text}>發揮大學在地責任，解決區域內的社會議題。</Text>
       <Text></Text>
       <Text></Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Home', {  status: status })}>
       <Text></Text>
       <Text></Text>
       
