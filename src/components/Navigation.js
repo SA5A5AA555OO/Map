@@ -36,6 +36,7 @@ import RefAdjust from "../screens/RefAdjust";
 import Introduction from "../screens/Introduction";
 import Introduction2 from "../screens/Introduction2";
 import Test from "../screens/Test";
+import ForgetPassword from "../screens/ForgetPassword"
 
 
 
@@ -76,6 +77,7 @@ const MainStack = () => {
         <Stack.Screen name="Introduction" component={Introduction} />
         <Stack.Screen name="Introduction2" component={Introduction2} />
         <Stack.Screen name="Test" component={Test} />
+        <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
       </Stack.Navigator>
     );
   };
