@@ -29,7 +29,7 @@ const Meal = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
 
   const handleButtonPress = (storeName) => {
-    navigation.navigate('Store', { storeName: storeName , status: status });
+    navigation.navigate('Store', { storeName: storeName , status: status,email: email });
   };
 
   useEffect(() => {

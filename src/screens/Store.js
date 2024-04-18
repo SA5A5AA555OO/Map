@@ -1,14 +1,13 @@
 import { View, Image, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-import React, { useState, useEffect } from "react";
+import firebase from 'firebase/app'; 
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, getDoc } from 'firebase/firestore/lite';
-import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
+import { getFirestore } from 'firebase/firestore';
+import React, { useState, useEffect } from "react";
+import {  collection, doc, query, where, getDoc, updateDoc, getDocs } from 'firebase/firestore';
 import { useRoute } from '@react-navigation/native';
+import { Alert } from 'react-native';
 import Donate2 from '../screens/Donate2';
 import Take1 from '../screens/Take1';
-import { Icon } from '@rneui/themed';
-
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
@@ -24,6 +23,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
+
+// 获取文档的引用await getDocs(query(collection(db, 'user'), where('email', '==', email)));
 const Store = ({ navigation }) => {
   const handleButtonPress = (storeName) => {
     navigation.navigate('Donate2', { storeName: storeName });
@@ -31,6 +32,35 @@ const Store = ({ navigation }) => {
   const handleButtonPress2 = (storeName) => {
     navigation.navigate('Take1', { storeName: storeName });
   };
+  const handleButtonPress3 = async (email, storeName) => {
+    const querySnapshot = await getDocs(query(collection(db, 'user'), where('email', '==', email)));
+    if (!querySnapshot.empty) {
+        const userDocRef = querySnapshot.docs[0].ref;
+        try {
+            await updateDoc(userDocRef, {
+                favorite: storeName,
+            });
+            showAlert(); // 显示修改成功的提示
+            navigation.navigate('Home', { status });
+        } catch (error) {
+            console.error('Error updating document: ', error);
+        }
+    } else {
+        console.error('No documents found for query');
+    }
+};
+const showAlert = () => {
+  Alert.alert('成功加入最愛');
+};
+
+
+
+  
+  
+  
+  
+  
+  
   const route = useRoute();
   const { status, email } = route.params;
   const { storeName } = route.params;
@@ -55,7 +85,7 @@ const Store = ({ navigation }) => {
         setButtons([
           { text: '捐贈待用餐', onPress: () => handleButtonPress(storeName) },
           { text: '領取待用餐', onPress: () => handleButtonPress2(storeName) },
-          { text: '加入最愛' }
+          { text: '加入最愛', onPress: ()=> handleButtonPress3(email, storeName) }
         ]);
         break;
       case "2":
