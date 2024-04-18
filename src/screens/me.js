@@ -45,19 +45,32 @@ const Me = ({ navigation, route }) => {
     switch (status) {
       case "1":
         setButtons([
-          { text: '最愛店家', onPress: () => navigation.navigate('Favorite') },
+          { text: '最愛店家', onPress: () => navigation.navigate('Favorite', { email,status }) },
           { text: '領取資訊', onPress: () => navigation.navigate('Record', { email }) },
           { text: '捐贈資訊', onPress: () => navigation.navigate('MyDonate', { email }) },
           { text: '修改個人資料', onPress: () => navigation.navigate('EditProfile') },
           { text: '登出', onPress: () => handleLogout() }
         ]);
         break;
-        case "2":
+      case "2":
         setButtons([
           { text: '登出', onPress: () => handleLogout() }
         ]);
         break;
-        case "3":
+      case "3":
+        setButtons([
+          { text: '登出', onPress: () => handleLogout() }
+        ]);
+        break;
+      case "4":
+        setButtons([
+          { text: '審核店家', onPress: () => navigation.navigate('VerifyStore') },
+          { text: '查看店家', onPress: () => navigation.navigate('CheckStore') },
+          { text: '查看使用者', onPress: () => navigation.navigate('CheckUser') },
+          { text: '登出', onPress: () => handleLogout() }
+        ]);
+        break;
+      case "5":
         setButtons([
           { text: '登出', onPress: () => handleLogout() }
         ]);
@@ -67,13 +80,13 @@ const Me = ({ navigation, route }) => {
           { text: '登入', onPress: () => navigation.navigate('Login') }
         ]);
         break;
-    } 
+    }
   }, [status]);
 
   useEffect(() => {
     // console.log(`(Me)62 useEffect  routestatus:${routeStatus}   status:${status}   email:${email}   routeEmail:${routeEmail}`)
     // 確認 email和status不為空才執行
-    if(email != "" || status !="") fetchUserData();
+    if (email != "" || status != "") fetchUserData();
     // 判斷是否已經登入
     auth.onAuthStateChanged(user => {
       if (user) {
@@ -87,15 +100,15 @@ const Me = ({ navigation, route }) => {
         // setStatus('');
       }
     });
-  }, [routeEmail,routeStatus]); // 當 email或status 發生變化時重新執行效果
-  
+  }, [routeEmail, routeStatus]); // 當 email或status 發生變化時重新執行效果
+
 
   const fetchUserData = async () => {
     // console.log(`(Me)82 fetchUserData email ${email} status ${status}`)
     try {
       // if (!email || !status) {
-        // console.error('fetchUserData 函數收到無效的參數:', email, status);
-        // return;
+      // console.error('fetchUserData 函數收到無效的參數:', email, status);
+      // return;
       // }
       const usersCollection = collection(db, 'user');
       const q = query(usersCollection, where('email', '==', email));
@@ -104,11 +117,11 @@ const Me = ({ navigation, route }) => {
       if (!querySnapshot.empty) {
         const userData = querySnapshot.docs[0].data();
         setUserData(userData);
-      } else { 
+      } else {
         console.log('找不到符合條件的使用者');
       }
     } catch (error) {
-      console.error('獲取使用者資料時發生錯誤：', error); 
+      console.error('獲取使用者資料時發生錯誤：', error);
     }
   };
 
@@ -121,9 +134,9 @@ const Me = ({ navigation, route }) => {
         setStatus('0');
         // console.log(`(Me)logout clear data email ${email} status ${status}`)
         setIsLoggedIn(false);
-          navigation.navigate('Home', { email: "000@gmail.com", status: "0" });
-          navigation.navigate('Map', { email: "000@gmail.com", status: "0" });
-          navigation.navigate('Me', { email: "000@gmail.com", status: "0" });
+        navigation.navigate('Home', { email: "000@gmail.com", status: "0" });
+        navigation.navigate('Map', { email: "000@gmail.com", status: "0" });
+        navigation.navigate('Me', { email: "000@gmail.com", status: "0" });
       })
       .catch(error => console.error('登出時發生錯誤：', error));
   };
@@ -138,6 +151,10 @@ const Me = ({ navigation, route }) => {
         <Text style={styles.headerText} >您好,{userData ? userData.username : '請登入'}</Text>
 
       </View>
+      {status == "5" && (
+        <Text style={styles.hintText}>待管理者驗證營業證明後才可使用功能</Text>
+
+      )}
       {buttons.map((button, index) => (
         <TouchableOpacity key={index} onPress={button.onPress} style={styles.buttonContainer}>
           <Text style={styles.buttonText}>{button.text}</Text>
@@ -194,6 +211,13 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white', // 文本颜色
+    fontWeight: 'bold',
+    textAlign: 'center', // 文本居中
+    fontSize: 20,
+
+  },
+  hintText: {
+    marginBottom: 10,
     fontWeight: 'bold',
     textAlign: 'center', // 文本居中
     fontSize: 20,

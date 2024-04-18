@@ -80,7 +80,6 @@ const RegesterScreen = ({ navigation }) => {
                     value={password}
                     placeholder="密碼"
                     onChangeText={setPassword}
-                    secureTextEntry={true}
                 />
                 <TouchableOpacity onPress={handleRegister} style={styles.button}>
                     <Text style={styles.buttonText}>註冊</Text>
