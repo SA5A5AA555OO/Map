@@ -9,6 +9,7 @@ import RegesterScreen from "../screens/RegesterScreen";
 import RegesterScreenButton from "../screens/RegesterScreenButton";
 import RegesterChoose from "../screens/RegesterChoose";
 import RegesterScreen2 from "../screens/RegesterScreen2";
+import RegesterScreen3 from "../screens/RegesterScreen3";
 import RegesterScreenButton2 from "../screens/RegesterScreenButton2";
 import Ref from "../screens/Ref";
 import RefTodayFood from "../screens/RefTodayFood";
@@ -66,6 +67,7 @@ const MainStack = () => {
         <Stack.Screen name="RegesterButton2" component={RegesterScreenButton2} />
         <Stack.Screen name="RegesterChoose" component={RegesterChoose} />
         <Stack.Screen name="Regester2" component={RegesterScreen2} />
+        <Stack.Screen name="Regester3" component={RegesterScreen3} />
         <Stack.Screen name="Ref" component={Ref} />
         <Stack.Screen name="RefTodayFood" component={RefTodayFood} />
         <Stack.Screen name="Meal" component={Meal} />

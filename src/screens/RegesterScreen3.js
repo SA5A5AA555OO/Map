@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRoute } from '@react-navigation/native';
 import { Text, TextInput, View, Button, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreenButton from '../screens/RegesterScreenButton'
@@ -6,6 +7,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, getDoc, query, where, getDocs, addDoc } from 'firebase/firestore/lite';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { firebase } from "@react-native-firebase/firestore";
+import { cleanSingle } from 'react-native-image-crop-picker';
 const firebaseConfig = {
     apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
     authDomain: "sa5a5aa555oo.firebaseapp.com",
@@ -21,27 +23,19 @@ const db = getFirestore(app);
 const auth = getAuth(app); // 使用 getAuth 獲取 Firebase 身份驗證物件
 
 const RegesterScreen2 = ({ navigation }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
-    const [phone, setPhone] = useState('');
-    const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
+    const route = useRoute();
+    const { email, password, phone, name, address } = route.params;
+    const [good_name, setGood_name] = useState('');
+    const [good_price, setGood_price] = useState('');
+    const [latitude, setLatitude] = useState('');
+    const [longitude, setLongitude] = useState('');
+    const [opentime, setOpentime] = useState('');
+    const [closetime, setClosetime] = useState('');
     const handleRegister = async () => {
         try {
-            if (password == passwordConfirm) {
-            // 使用 Firebase 身份驗證進行註冊
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-
-            // 發送驗證郵件
-            await sendEmailVerification(user);
-
             // 顯示註冊成功提示訊息
-            // Alert.alert('註冊成功', '請檢查您的電子郵件收件箱以完成驗證。');
-            navigation.navigate('Regester3',{ email, password, phone, name, address });
-            }
-            else{Alert.alert('密碼輸入不一致');}
+            Alert.alert('註冊成功', '請檢查您的電子郵件收件箱以完成驗證。');
+            navigation.navigate('RegesterButton2', { good_name, good_price, latitude, longitude, opentime, closetime,email, password, phone, name, address });
         } catch (error) {
             // 顯示註冊失敗的錯誤訊息
             Alert.alert('註冊失敗', error.message);
@@ -49,47 +43,46 @@ const RegesterScreen2 = ({ navigation }) => {
     };
     return (
         <View style={styles.container}>
-            <Image style={styles.logo1} source={require('map/asset/register1.jpg')} />
+            <Image style={styles.logo1} source={require('map/asset/register2.jpg')} />
             <View style={styles.wrapper}>
-                <Text></Text>
                 <TextInput
                     style={styles.input}
-                    value={name}
-                    placeholder="店家名稱"
-                    onChangeText={setName}
+                    value={good_name}
+                    placeholder="待用餐點名稱"
+                    onChangeText={setGood_name}
                 />
                 <TextInput
                     style={styles.input}
-                    value={phone}
-                    placeholder="電話"
-                    onChangeText={setPhone}
+                    value={good_price}
+                    placeholder="待用餐點價錢"
+                    onChangeText={setGood_price}
                 />
                 <TextInput
                     style={styles.input}
-                    value={address}
-                    placeholder="地址"
-                    onChangeText={setAddress}
+                    value={opentime}
+                    placeholder="營業時間"
+                    onChangeText={setOpentime}
                 />
                 <TextInput
                     style={styles.input}
-                    value={email}
-                    placeholder="信箱"
-                    onChangeText={setEmail}
+                    value={closetime}
+                    placeholder="打烊時間"
+                    onChangeText={setClosetime}
                 />
                 <TextInput
                     style={styles.input}
-                    value={password}
-                    placeholder="密碼"
-                    onChangeText={setPassword}
+                    value={latitude}
+                    placeholder="經度(請至googlemap尋找準確經緯度)"
+                    onChangeText={setLatitude}
                 />
                 <TextInput
                     style={styles.input}
-                    value={passwordConfirm}
-                    placeholder="再次輸入密碼"
-                    onChangeText={setPasswordConfirm}
+                    value={longitude}
+                    placeholder="緯度(請至googlemap尋找準確經緯度)"
+                    onChangeText={setLongitude}
                 />
                 <TouchableOpacity onPress={handleRegister} style={styles.button}>
-                    <Text style={styles.buttonText}>繼續</Text>
+                    <Text style={styles.buttonText}>註冊</Text>
                 </TouchableOpacity>
             </View>
         </View>
