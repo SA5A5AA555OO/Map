@@ -27,10 +27,10 @@ const db = getFirestore(app);
 // 获取文档的引用await getDocs(query(collection(db, 'user'), where('email', '==', email)));
 const Store = ({ navigation }) => {
   const handleButtonPress = (storeName) => {
-    navigation.navigate('Donate2', { storeName: storeName });
+    navigation.navigate('Donate2', { storeName: storeName,status:status });
   };
   const handleButtonPress2 = (storeName) => {
-    navigation.navigate('Take1', { storeName: storeName });
+    navigation.navigate('Take1', { storeName: storeName,status:status });
   };
   const handleButtonPress3 = async (email, storeName) => {
     const querySnapshot = await getDocs(query(collection(db, 'user'), where('email', '==', email)));
@@ -53,14 +53,6 @@ const showAlert = () => {
   Alert.alert('成功加入最愛');
 };
 
-
-
-  
-  
-  
-  
-  
-  
   const route = useRoute();
   const { status, email } = route.params;
   const { storeName } = route.params;
@@ -83,8 +75,8 @@ const showAlert = () => {
     switch (status) {
       case "1":
         setButtons([
-          { text: '捐贈待用餐', onPress: () => handleButtonPress(storeName) },
-          { text: '領取待用餐', onPress: () => handleButtonPress2(storeName) },
+          { text: '捐贈待用餐', onPress: () => handleButtonPress(storeName,status) },
+          { text: '領取待用餐', onPress: () => handleButtonPress2(storeName,status) },
           { text: '加入最愛', onPress: ()=> handleButtonPress3(email, storeName) }
         ]);
         break;

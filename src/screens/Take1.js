@@ -35,14 +35,24 @@ const Take1 = ({navigation}) =>{
         getData(db); // 將 db 傳遞給 getData 函數
       }, []);
   const route = useRoute();
-  const { storeName } = route.params;
+  const { storeName,status } = route.params;
     const handleButtonPress = () => {
-      navigation.navigate('Take2', { storeName: storeName });
+      navigation.navigate('Take2', { storeName: storeName,status:status });
     };
     const [count, setCount] = useState(0);
   const handleOperation = (value) => {
     setCount(count + value);
   };
+  const [storeImageUrl, setStoreImageUrl] = useState(null);
+
+useEffect(() => {
+    const getImageUrl = async () => {
+        const imageRef = ref(storage, `meal/${storeName}.jpg`);
+        const imageUrl = await getDownloadURL(imageRef);
+        setStoreImageUrl(imageUrl);
+    };
+    getImageUrl();
+}, [storeName]);
     return(
         <View style={styles.container}>
              <Text style={styles.headerText}>{ storeName }</Text>
@@ -51,9 +61,7 @@ const Take1 = ({navigation}) =>{
               style={styles.logo1}
                source={require('map/asset/step1.jpg')}/>
                <Text></Text>
-            <Image
-              style={styles.logo}
-               source={require('map/asset/素食的店.jpg')}/>
+               {storeImageUrl && <Image style={styles.logo} source={{ uri: storeImageUrl }} />}
            
           
 

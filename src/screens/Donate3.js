@@ -6,7 +6,7 @@ import { useRoute } from '@react-navigation/native';
 
 const Donate3 = ({navigation}) =>{
   const route = useRoute();
-  const { storeName } = route.params;
+  const { storeName ,status} = route.params;
       return (
         <View style={styles.container}>
             <Text style={styles.headerText}>{storeName}</Text>
@@ -19,7 +19,7 @@ const Donate3 = ({navigation}) =>{
               style={styles.logo}
                source={require('map/asset/感謝捐贈.jpg')}/>
                <Text></Text>
-           <TouchableOpacity onPress={() =>navigation.navigate('Home')}>
+           <TouchableOpacity onPress={() =>navigation.navigate('Home',{ status:status })}>
                         <Text style={styles.link}>回主頁</Text>
                     </TouchableOpacity>
         </View>
