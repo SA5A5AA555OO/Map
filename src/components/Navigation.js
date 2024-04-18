@@ -9,6 +9,7 @@ import RegesterScreen from "../screens/RegesterScreen";
 import RegesterScreenButton from "../screens/RegesterScreenButton";
 import RegesterChoose from "../screens/RegesterChoose";
 import RegesterScreen2 from "../screens/RegesterScreen2";
+import RegesterScreenButton2 from "../screens/RegesterScreenButton2";
 import Ref from "../screens/Ref";
 import RefTodayFood from "../screens/RefTodayFood";
 import Meal from "../screens/Meal";
@@ -37,8 +38,9 @@ import Introduction from "../screens/Introduction";
 import Introduction2 from "../screens/Introduction2";
 import Test from "../screens/Test";
 import ForgetPassword from "../screens/ForgetPassword"
-
-
+import VerifyStore from "../screens/VerifyStore"
+import CheckStore from "../screens/CheckStore"
+import CheckSUser from "../screens/CheckUser"
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -61,6 +63,7 @@ const MainStack = () => {
         <Stack.Screen name="RefAdjust" component={RefAdjust} />
         <Stack.Screen name="Regester" component={RegesterScreen} />
         <Stack.Screen name="RegesterButton" component={RegesterScreenButton} />
+        <Stack.Screen name="RegesterButton2" component={RegesterScreenButton2} />
         <Stack.Screen name="RegesterChoose" component={RegesterChoose} />
         <Stack.Screen name="Regester2" component={RegesterScreen2} />
         <Stack.Screen name="Ref" component={Ref} />
@@ -78,6 +81,9 @@ const MainStack = () => {
         <Stack.Screen name="Introduction2" component={Introduction2} />
         <Stack.Screen name="Test" component={Test} />
         <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
+        <Stack.Screen name="VerifyStore" component={VerifyStore} />
+        <Stack.Screen name="CheckStore" component={CheckStore} />
+        <Stack.Screen name="CheckUser" component={CheckSUser} />
       </Stack.Navigator>
     );
   };

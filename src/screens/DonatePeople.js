@@ -51,7 +51,7 @@ const DonatePeople = ({navigation}) =>{
           <DataTable.Header>
             <DataTable.Title>姓名</DataTable.Title>
             <DataTable.Title>電話</DataTable.Title>
-            <DataTable.Title>捐贈書量</DataTable.Title>
+            <DataTable.Title>捐贈數量</DataTable.Title>
           </DataTable.Header>
   
           {pickupData.map((item, index) => (
