@@ -37,12 +37,21 @@ const Donate2 = ({ navigation }) => {
         getData(db); // 將 db 傳遞給 getData 函數
       }, []);
   //
-  
+  const [storeImageUrl, setStoreImageUrl] = useState(null);
+
+useEffect(() => {
+    const getImageUrl = async () => {
+        const imageRef = ref(storage, `meal/${storeName}.jpg`);
+        const imageUrl = await getDownloadURL(imageRef);
+        setStoreImageUrl(imageUrl);
+    };
+    getImageUrl();
+}, [storeName]);
   
 const route = useRoute();
-const { storeName } = route.params;
+const { storeName,status } = route.params;
   const handleButtonPress = (storeName) => {
-    navigation.navigate('Donate1', { storeName: storeName ,count: count  });
+    navigation.navigate('Donate1', { storeName: storeName ,count: count,status:status  });
   };
   const [count, setCount] = useState(0);
   const handleOperation = (value) => {
@@ -55,7 +64,7 @@ const { storeName } = route.params;
       <Text></Text>
       <Image style={styles.logo1} source={require('map/asset/Dstep1.jpg')} />
       <Text></Text>
-      <Image style={styles.logo} source={require('map/asset/素食的店.jpg')} />
+      {storeImageUrl && <Image style={styles.logo} source={{ uri: storeImageUrl }} />}
 
       <View style={styles.detailsContainer}>
         <View style={styles.rowContainer}>
@@ -74,10 +83,11 @@ const { storeName } = route.params;
         </View>
         <Text style={styles.totalText}>總計${userData ? userData.good_price * count : 'Loading...'}</Text>
         <Text></Text>
-        <TouchableOpacity onPress={() => handleButtonPress(storeName)} style={styles.donateButton}>
+        <TouchableOpacity onPress={() => handleButtonPress(storeName,status)} style={styles.donateButton}>
           <Text style={styles.buttonText}>捐贈</Text>
         </TouchableOpacity>
       </View>
+
     </View>
   );
 };

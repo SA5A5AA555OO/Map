@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const Donate1 = ({navigation}) =>{
   const route = useRoute();
-      const { storeName, count  } = route.params;
+      const { storeName, count,status  } = route.params;
       const [name, setName] = useState('');
       const [phone, setPhone] = useState('');
       const [email, setEmail] = useState('');
@@ -34,7 +34,7 @@ const Donate1 = ({navigation}) =>{
             count: count
           });
           console.log('Document written with ID: ', docRef.id);
-          navigation.navigate('Donate3', { storeName: storeName });
+          navigation.navigate('Donate3', { storeName: storeName,status:status });
         } catch (e) {
           console.error('Error adding document: ', e);
         }

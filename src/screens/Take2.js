@@ -5,7 +5,7 @@ import { useRoute } from '@react-navigation/native';
 
 const Take2 = ({navigation}) =>{
   const route = useRoute();
-  const { storeName } = route.params;
+  const { storeName,status } = route.params;
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -16,7 +16,7 @@ const Take2 = ({navigation}) =>{
       return;
     }
 
-    navigation.navigate('Take3', { storeName: storeName, name: name, phone: phone, email: email });
+    navigation.navigate('Take3', { storeName: storeName, name: name, phone: phone, email: email ,status:status});
   };
   
     return(

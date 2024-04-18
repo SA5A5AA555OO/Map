@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const Take3 = ({navigation}) =>{
   const route = useRoute();
-  const { storeName,name,phone,email } = route.params;
+  const { storeName,name,phone,email,status } = route.params;
   const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 9000) + 1000);
   useEffect(() => {
     const uploadData = async () => {
@@ -49,7 +49,7 @@ const Take3 = ({navigation}) =>{
             <TouchableOpacity  style={styles.buttonContainer}>
                   <Text style={styles.buttonText}>領取編號 {randomNumber}</Text>
                 </TouchableOpacity>
-           <TouchableOpacity onPress={() =>navigation.navigate('Home')}>
+           <TouchableOpacity onPress={() =>navigation.navigate('Home',{status:status})}>
                         <Text style={styles.link}>回主頁</Text>
                     </TouchableOpacity>
                     
