@@ -33,7 +33,7 @@ const HomeScreen = ({ navigation }) => {
                 setButtons([{ text: '店家資訊', onPress: () => navigation.navigate('Shop',{  email: email }) }]);
                 break;
             default:
-                setButtons([]);
+                setButtons([{ text: '介紹', onPress: () => navigation.navigate('Introduction', {  status: status }) }]);
                 break;
         }
     }, [status]);

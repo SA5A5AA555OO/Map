@@ -23,32 +23,34 @@ const auth = getAuth(app); // 使用 getAuth 獲取 Firebase 身份驗證物件
 const RegesterScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
     const [phone, setPhone] = useState('');
     const [name, setName] = useState('');
     const handleRegister = async () => {
         try {
-            // 使用 Firebase 身份驗證進行註冊
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
+            if (password == passwordConfirm) {
+                // 使用 Firebase 身份驗證進行註冊
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
 
-            // 發送驗證郵件
-            await sendEmailVerification(user);
+                // 發送驗證郵件
+                await sendEmailVerification(user);
 
-            // // 將用戶資料儲存到 Firestore 中
-            // await addDoc(collection(db, 'user'), {
-            //     username: name,
-            //     phone: phone,
-            //     email: email,
-            //     password: password,
-            //     status: "0",
-            // });
+                // // 將用戶資料儲存到 Firestore 中
+                // await addDoc(collection(db, 'user'), {
+                //     username: name,
+                //     phone: phone,
+                //     email: email,
+                //     password: password,
+                //     status: "0",
+                // });
 
-            // 顯示註冊成功提示訊息
-            Alert.alert('註冊成功', '請檢查您的電子郵件收件箱以完成驗證。');
+                // 顯示註冊成功提示訊息
+                Alert.alert('註冊成功', '請檢查您的電子郵件收件箱以完成驗證。');
 
-
-
-            navigation.navigate('RegesterButton',{email,password,phone,name});
+                navigation.navigate('RegesterButton', { email, password, phone, name });
+            }
+            else { Alert.alert('密碼輸入不一致'); }
         } catch (error) {
             // 顯示註冊失敗的錯誤訊息
             Alert.alert('註冊失敗', error.message);
@@ -80,6 +82,12 @@ const RegesterScreen = ({ navigation }) => {
                     value={password}
                     placeholder="密碼"
                     onChangeText={setPassword}
+                />
+                <TextInput
+                    style={styles.input}
+                    value={passwordConfirm}
+                    placeholder="再次輸入密碼"
+                    onChangeText={setPasswordConfirm}
                 />
                 <TouchableOpacity onPress={handleRegister} style={styles.button}>
                     <Text style={styles.buttonText}>註冊</Text>
