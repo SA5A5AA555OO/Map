@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import Donate3 from '../screens/Donate3';
 import { initializeApp } from 'firebase/app';
 import { useRoute } from '@react-navigation/native';
-import { getFirestore } from 'firebase/firestore';
-import { collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, doc, getDoc, query, where, getDocs, addDoc } from 'firebase/firestore/lite';
 const firebaseConfig = {
   apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
 authDomain: "sa5a5aa555oo.firebaseapp.com",
@@ -19,10 +18,10 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const Donate1 = ({navigation}) =>{
   const route = useRoute();
-      const { storeName, count,status  } = route.params;
+      const { storeName, count,status ,email } = route.params;
       const [name, setName] = useState('');
       const [phone, setPhone] = useState('');
-      const [email, setEmail] = useState('');
+      const [userData, setUserData] = useState(null);
 
       const handleButtonPress = async (storeName) => {
         try {
@@ -39,6 +38,28 @@ const Donate1 = ({navigation}) =>{
           console.error('Error adding document: ', e);
         }
       };
+
+      useEffect(() => {
+        fetchUserData();
+      }, []);
+      const fetchUserData = async () => {
+        try {
+          const usersCollection = collection(db, 'user');
+          const q = query(usersCollection, where('email', '==', email));
+          const querySnapshot = await getDocs(q);
+      
+          if (!querySnapshot.empty) {
+            const userData = querySnapshot.docs[0].data();
+            setUserData(userData);
+            setName(userData.username); // 將userData的username設置為name的初始值
+            setPhone(userData.phone);   // 將userData的phone設置為phone的初始值
+          } else {
+            console.log('找不到符合條件的使用者');
+          }
+        } catch (error) {
+          console.error('獲取使用者資料時發生錯誤：', error);
+        }
+      };
     return(
         <View style={styles.container}>
              <Text style={styles.headerText}>{storeName}</Text>
@@ -50,24 +71,21 @@ const Donate1 = ({navigation}) =>{
                <Text ></Text>
                <Text ></Text>
                <View style={styles.wrapper}>
-        <TextInput
-          style={styles.input} 
-          placeholder="姓名"
+               <TextInput
+          style={styles.input}
+          placeholder={name}
           value={name}
-          onChangeText={setName}
-        />
+          onChangeText={setName} />
         <TextInput
-          style={styles.input} 
-          placeholder="電話"
+          style={styles.input}
+          placeholder={phone}
           value={phone}
-          onChangeText={setPhone}
-        />
+          onChangeText={setPhone} />
         <TextInput
-          style={styles.input} 
-          placeholder="信箱"
+          style={styles.input}
+          placeholder={email}
           value={email}
-          onChangeText={setEmail}
-        />
+          />
             <Text>捐贈數量:{count}       總價:</Text>
             <Text></Text>
             

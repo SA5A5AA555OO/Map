@@ -1,9 +1,9 @@
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import HomeScreen from './HomeScreen';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, doc, getDocs, where,query, updateDoc } from 'firebase/firestore/lite';
+import { useRoute } from '@react-navigation/native';
 const firebaseConfig = {
   apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
 authDomain: "sa5a5aa555oo.firebaseapp.com",
@@ -25,29 +25,57 @@ const ShopImf = ({ navigation }) => {
   const [store_phone, setstore_phone] = useState('');
   const [closetime, setclosetime] = useState('');
   const [opentime, setopentime] = useState('');
-
-
-  const handleButtonPress = async () => {
+  const route = useRoute();
+  const { username,status } = route.params || { username: '用戶' };
+  const [userData, setUserData] = useState(null);
+  useEffect(() => {
+    fetchUserData();
+}, []);
+  const fetchUserData = async () => {
     try {
-      await addStoreData(store_name, provide, store_address, store_phone,closetime,opentime);
-      navigation.navigate('Home');
+      const userQuery = query(collection(db, 'store'), where('store_name', '==', username));
+      const querySnapshot = await getDocs(userQuery);
+      if (!querySnapshot.empty) {
+        const docRef = doc(db, 'user', querySnapshot.docs[0].id);
+        const userData = querySnapshot.docs[0].data();
+        setstore_name(userData.store_name); 
+        setprovide(userData.provide); 
+        setstore_address(userData.store_address); 
+        setstore_phone(userData.store_phone); 
+        setclosetime(userData.closetime); 
+        setopentime(userData.opentime);
+      } else {
+        console.log('找不到符合條件的使用者');
+      }
     } catch (error) {
-      console.error('Error adding document: ', error);
+      console.error('獲取使用者資料時發生錯誤：', error);
     }
   };
-
-  const addStoreData = async (name, provide, address, phone,closetime,opentime) => {
-    await addDoc(collection(db, 'store'), {
-      store_name: name,
-      provide: provide,
-      store_address: address,
-      store_phone: phone,
-      closetime: closetime,
-      opentime: opentime,
-
-    });
-    console.log('Document added successfully!');
+  const handleButtonPress = async () => {
+    try {
+      const userQuery = query(collection(db, 'store'), where('store_name', '==', username));
+      const querySnapshot = await getDocs(userQuery);
+      if (!querySnapshot.empty) {
+        const docRef = doc(db, 'store', querySnapshot.docs[0].id);
+        await updateDoc(docRef, {
+          store_name: store_name,
+          provide: provide,
+          store_address: store_address,
+          store_phone: store_phone,
+          closetime: closetime,
+          opentime: opentime,
+        });
+        console.log('Document updated successfully!');
+        navigation.navigate('Home',{status:status});
+      } else {
+        console.log('找不到符合條件的使用者');
+      }
+    } catch (error) {
+      console.error('更新文檔時發生錯誤：', error);
+    }
   };
+  
+  
 
   
   return(
@@ -58,6 +86,7 @@ const ShopImf = ({ navigation }) => {
           value={store_name}
           placeholder ="店家名稱"
           onChangeText={Text =>setstore_name(Text)}
+          editable={false}
           />
           <TextInput
           style={styles.input} 

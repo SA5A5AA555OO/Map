@@ -29,11 +29,11 @@ const Shop = ({navigation}) =>{
         navigation.navigate('DonatePeople',{ username: userData ? userData.username : '用戶' });
       };
       const handleButtonPress3 = () => {
-        navigation.navigate('ShopImf');
+        navigation.navigate('ShopImf',{ username: userData ? userData.username : '用戶',status:status });
       };
       const [userData, setUserData] = useState(null);
       const route = useRoute();
-      const { email } = route.params || { email: '' };
+      const { email,status } = route.params || { email: '' };
       useEffect(() => {
         // 確認 email 不為空才執行
         email && fetchUserData();
@@ -64,9 +64,9 @@ const Shop = ({navigation}) =>{
             <Text style={styles.buttonText}>查看捐贈數量</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleButtonPress3} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>公布資訊</Text>
+            <Text style={styles.buttonText}>修改店家資訊</Text>
           </TouchableOpacity>
-            <Text>{userData ? userData.username : '用戶'}</Text>
+            
 
            
         </View>

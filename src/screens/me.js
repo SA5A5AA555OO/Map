@@ -48,7 +48,7 @@ const Me = ({ navigation, route }) => {
           { text: '最愛店家', onPress: () => navigation.navigate('Favorite', { email,status }) },
           { text: '領取資訊', onPress: () => navigation.navigate('Record', { email }) },
           { text: '捐贈資訊', onPress: () => navigation.navigate('MyDonate', { email }) },
-          { text: '修改個人資料', onPress: () => navigation.navigate('EditProfile') },
+          { text: '修改個人資料', onPress: () => navigation.navigate('EditProfile',{email,status}) },
           { text: '登出', onPress: () => handleLogout() }
         ]);
         break;
