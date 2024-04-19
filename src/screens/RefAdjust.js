@@ -1,8 +1,7 @@
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
+import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image, ScrollView} from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { collection, doc, updateDoc } from 'firebase/firestore';
+import { getFirestore, collection, doc, getDoc, where,query, updateDoc } from 'firebase/firestore/lite';
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
 import { Alert } from 'react-native';
 import React, { useState, useEffect, } from 'react';
 
@@ -36,9 +35,9 @@ const RefAdjust = ({ navigation }) => {
     const storeDocRef = doc(db, 'fridges', 'jtJgYOmcTgBJAfbhR5WD'); 
     try {
       await updateDoc(storeDocRef, {
-        time: time,
-        address: address,
-        phone: phone,
+        start_time: time,
+        fridge_address: address,
+        fridge_phone: phone,
         milk_quantity: milk,
         cookies_quantity: cookies,
         friut_quantity: friut,
@@ -54,10 +53,42 @@ const RefAdjust = ({ navigation }) => {
   const showAlert = () => {
     Alert.alert('修改成功');
   };
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    fetchUserData();
+}, []);
+
+const fetchUserData = async () => {
+  try {
+    const userQuery = doc(db, 'fridges', 'jtJgYOmcTgBJAfbhR5WD');
+    const userDocSnap = await getDoc(userQuery);
+    if (userDocSnap.exists()) {
+      const userData = userDocSnap.data();
+      settime(userData.start_time); // 更新開放領取持間
+      setaddress(userData.fridge_address); // 更新地址
+      setphone(userData.fridge_phone); // 更新電話
+      setmilk(userData.milk_quantity); // 更新牛奶數量
+      setcookies(userData.cookies_quantity); // 更新餅乾數量
+      setfriut(userData.friut_quantity); // 更新水果數量
+      setbread(userData.bread_quantity); // 更新麵包數量
+    } else {
+      console.log('找不到符合條件的使用者');
+    }
+  } catch (error) {
+    console.error('獲取使用者資料時發生錯誤：', error);
+  }
+};
+
 
   return (
     <View style={styles.container}>
-      <View style={styles.wrapper}>
+      
+      <View style={styles.wrapper}><ScrollView>
+        <Text></Text>
+        <Text></Text>
         <TextInput
           style={styles.input}
           value={time}
@@ -76,40 +107,44 @@ const RefAdjust = ({ navigation }) => {
           placeholder="電話"
           onChangeText={text => setphone(text)}
         />
+        <Text>牛奶數量</Text>
         <TextInput
           style={styles.input}
           value={milk}
           placeholder="牛奶數量"
           onChangeText={text => setmilk(text)}
-          secureTextEntry={true}
+          
         />
+        <Text>餅乾數量</Text>
         <TextInput
           style={styles.input}
           value={cookies}
           placeholder="餅乾數量"
           onChangeText={text => setcookies(text)}
-          secureTextEntry={true}
+          s
         />
+        <Text>水果數量</Text>
         <TextInput
           style={styles.input}
           value={friut}
           placeholder="水果數量"
           onChangeText={text => setfriut(text)}
-          secureTextEntry={true}
+          
         />
+        <Text>麵包數量</Text>
         <TextInput
           style={styles.input}
           value={bread}
           placeholder="麵包數量"
           onChangeText={text => setbread(text)}
-          secureTextEntry={true}
+      
         />
         
         <TouchableOpacity onPress={handleButtonPress} style={styles.button}>
           <Text style={styles.buttonText}>修改</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', marginTop: 20 }}></View>
-      </View>
+      </ScrollView></View>
     </View>
   );
 };

@@ -49,9 +49,9 @@ useEffect(() => {
 }, [storeName]);
   
 const route = useRoute();
-const { storeName,status } = route.params;
+const { storeName,status,email } = route.params;
   const handleButtonPress = (storeName) => {
-    navigation.navigate('Donate1', { storeName: storeName ,count: count,status:status  });
+    navigation.navigate('Donate1', { storeName: storeName ,count: count,status:status,email:email  });
   };
   const [count, setCount] = useState(0);
   const handleOperation = (value) => {

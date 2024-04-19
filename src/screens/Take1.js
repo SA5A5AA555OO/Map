@@ -35,9 +35,9 @@ const Take1 = ({navigation}) =>{
         getData(db); // 將 db 傳遞給 getData 函數
       }, []);
   const route = useRoute();
-  const { storeName,status } = route.params;
+  const { storeName,status,email } = route.params;
     const handleButtonPress = () => {
-      navigation.navigate('Take2', { storeName: storeName,status:status });
+      navigation.navigate('Take2', { storeName: storeName,status:status,email:email });
     };
     const [count, setCount] = useState(0);
   const handleOperation = (value) => {
