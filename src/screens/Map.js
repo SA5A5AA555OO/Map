@@ -24,10 +24,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const CustomMarker = ({ coordinate, title, icon }) => (
-    <Marker coordinate={coordinate} title={title}>
+const CustomMarker = ({ coordinate, title,  }) => (
+    <Marker coordinate={coordinate} title={title} pinColor="skyblue">
         <View style={{ alignItems: 'center' }}>
-            <Image source={icon} style={{ width: 30, height: 30 }} />
+            
         </View>
     </Marker>
 );
@@ -114,7 +114,7 @@ const Map = ({ navigation }) => {
                         return (
                             <Marker //標記地點
                                 key={marker.id}
-                                pinColor="skyblue"
+                                // pinColor="skyblue"
                                 coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
                                 title={marker.title}
                                 description={`距離: ${parseFloat(distance).toFixed(1)} km 走路時間: ${Math.round(duration)} 分鐘`}
@@ -123,13 +123,6 @@ const Map = ({ navigation }) => {
                         )
                     })
                 }
-                {/* <Marker //標記地點
-                    pinColor="skyblue"
-                    coordinate={{ latitude: 25.036536324078433, longitude: 121.43183548002627 }}
-                    title={'食享冰箱'}
-                    description={`距離: ${parseFloat(distance).toFixed(1)} km 走路時間: ${Math.round(duration)} 分鐘`}
-                    onPress={handleButtonPress1}
-                /> */}
                 {store.map((store) => (
                     <Marker
                         key={store.store_name}

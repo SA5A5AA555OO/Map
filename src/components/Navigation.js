@@ -40,6 +40,7 @@ import Introduction2 from "../screens/Introduction2";
 import Test from "../screens/Test";
 import ForgetPassword from "../screens/ForgetPassword"
 import VerifyStore from "../screens/VerifyStore"
+import VerifyStore2 from "../screens/VerifyStore2"
 import CheckStore from "../screens/CheckStore"
 import CheckSUser from "../screens/CheckUser"
 
@@ -84,6 +85,7 @@ const MainStack = () => {
         <Stack.Screen name="Test" component={Test} />
         <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
         <Stack.Screen name="VerifyStore" component={VerifyStore} />
+        <Stack.Screen name="VerifyStore2" component={VerifyStore2} />
         <Stack.Screen name="CheckStore" component={CheckStore} />
         <Stack.Screen name="CheckUser" component={CheckSUser} />
       </Stack.Navigator>

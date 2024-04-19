@@ -1,10 +1,10 @@
-import { Text, TextInput, View, Button, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
+import { Text, TextInput, View, Button, TouchableOpacity, StyleSheet, Image, ScrollView, Alert } from 'react-native';
 import HomeScreen from './HomeScreen';
 import React, { useState, useEffect } from "react";
 import { DataTable } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, query, where, getDocs, updateDoc } from 'firebase/firestore/lite';
+import { getFirestore, collection, doc, query, where, getDocs, updateDoc,addDoc } from 'firebase/firestore/lite';
 const firebaseConfig = {
   apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
   authDomain: "sa5a5aa555oo.firebaseapp.com",
@@ -21,7 +21,7 @@ const db = getFirestore(app);
 
 const TakePeople = ({ navigation }) => {
   const route = useRoute();
-  const { username } = route.params || { username: '用戶' };
+  const { email } = route.params
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const TakePeople = ({ navigation }) => {
   const fetchUserData = async () => {
     try {
       const pickupsCollection = collection(db, 'user');
-      const q = query(pickupsCollection, where('status', '==', "1"));
+      const q = query(pickupsCollection, where('email', '==', email));
       const querySnapshot = await getDocs(q);
 
       const data = [];
@@ -45,21 +45,39 @@ const TakePeople = ({ navigation }) => {
     }
   };
 
-  // const handlePickup = async (randomNumber) => {
-  //   try {
-  //     const pickupsCollection = collection(db, 'pickup');
-  //     const q = query(pickupsCollection, where('randomNumber', '==', randomNumber));
-  //     const querySnapshot = await getDocs(q);
-  //     querySnapshot.forEach(async (snapshot) => {
-  //       const docRef = doc(db, 'pickup', snapshot.id);
-  //       await updateDoc(docRef, { take: true });
-  //       console.log('Updated taken to true');
-  //       fetchUserData(); 
-  //     });
-  //   } catch (error) {
-  //     console.error('Error updating document:', error);
-  //   }
-  // };
+  const handleVerify = async (email) => {
+    try {
+      const pickupsCollection = collection(db, 'user');
+      const q = query(pickupsCollection, where('email', '==', email));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (snapshot) => {
+        const docRef = doc(db, 'user', snapshot.id);
+        await updateDoc(docRef, { status: "3" });
+        console.log('Updated taken to true');
+        fetchUserData(); 
+        Alert.alert("審核通過!")
+        
+        const userData = snapshot.data();
+        await addDoc(collection(db, 'store'), {
+          store_name: userData.username,
+          store_phone: userData.phone,
+          store_address: userData.address,
+          store_email: userData.email,
+          good_name: userData.good_name,
+          good_price: userData.good_price,
+          latitude: userData.latitude,
+          longitude: userData.longitude,
+          opentime: userData.opentime,
+          closetime: userData.closetime,
+          provide:"0",
+          
+      });
+      navigation.navigate('VerifyStore');
+    });
+    } catch (error) {
+      console.error('Error updating document:', error);
+    }
+  };
 
 
 
@@ -68,36 +86,42 @@ const TakePeople = ({ navigation }) => {
 
 
   return (
-    <View style={styles.container}><ScrollView>
-      <Text style={styles.headerText}>查看使用者</Text>
+    <View style={styles.container}>
+      <Text style={styles.headerText}>審核店家</Text>
       <Text></Text>
 
       {userData.map((item, index) => (
         <View key={index}>
-          
+           <View style={styles.line} />
+           <Text></Text>
+          <ScrollView>
             <View style={styles.row}>
-              <Image
-                style={styles.logo}
-                source={require("map/asset/food.jpg")}
-              />
               <View>
                 <Text style={styles.leftText}>姓名:{item.username}</Text>
                 <Text style={styles.detail}>帳號:{item.email}</Text>
                 <Text style={styles.detail}>電話:{item.phone}</Text>
-                {/* <TouchableOpacity
+                <Text style={styles.detail}>地址:{item.address}</Text>
+                <Text style={styles.detail}>待用餐點名稱:{item.good_name}</Text>
+                <Text style={styles.detail}>待用餐點價錢:{item.good_price}</Text>
+                <Text style={styles.detail}>營業時間:{item.opentime}</Text>
+                <Text style={styles.detail}>打烊時間:{item.closetime}</Text>
+                <Text style={styles.detail}>經度:{item.latitude}</Text>
+                <Text style={styles.detail}>緯度:{item.longitude}</Text>
+                <View style={{height:20}} />
+                <TouchableOpacity
                   style={styles.button}
-                  onPress={() => handlePickup(item.randomNumber)}>
+                  onPress={() => handleVerify(item.email)}>
                   <Text style={styles.buttonText}>審核通過</Text>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
               </View>
             </View>
             <Text></Text>
-            <View style={styles.line} />
+            
             <Text></Text>
-          
+          </ScrollView>
         </View>
       ))}
-    </ScrollView></View>
+    </View>
   );
 };
 const styles = StyleSheet.create({
@@ -140,12 +164,12 @@ const styles = StyleSheet.create({
   },
   leftText: {
     fontSize: 25,
-    paddingLeft: 15,
+    paddingLeft: 22,
   },
 
   detail: {
     fontSize: 20,
-    paddingLeft: 15,
+    paddingLeft: 22,
   },
   text: {
     fontSize: 20,
@@ -172,9 +196,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   button: {
+    marginLeft: 95,
     backgroundColor: '#E6A984', // 自定义按钮颜色
     padding: 17,
     borderRadius: 20,
+    width: 200,
   },
 });
 

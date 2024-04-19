@@ -27,10 +27,16 @@ const HomeScreen = ({ navigation }) => {
                 ]);
                 break;
             case "2":
-                setButtons([{ text: '修改冰箱資訊', onPress: () => navigation.navigate('RefAdjust', {  status: status }) }]);
+                setButtons([
+                  { text: '介紹', onPress: () => navigation.navigate('Introduction', {  status: status }) },
+                  { text: '修改冰箱資訊', onPress: () => navigation.navigate('RefAdjust', {  status: status }) }
+              ]);
                 break;
             case "3":
-                setButtons([{ text: '店家資訊', onPress: () => navigation.navigate('Shop',{  email: email }) }]);
+                setButtons([
+                  { text: '介紹', onPress: () => navigation.navigate('Introduction', {  status: status }) },
+                  { text: '店家資訊', onPress: () => navigation.navigate('Shop',{  email: email,status:status }) }
+                ]);
                 break;
             default:
                 setButtons([{ text: '介紹', onPress: () => navigation.navigate('Introduction', {  status: status }) }]);
