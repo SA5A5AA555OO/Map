@@ -45,22 +45,26 @@ const TakePeople = ({ navigation }) => {
     }
   };
 
-  const handleVerify = async (email) => {
-    try {
-      const pickupsCollection = collection(db, 'user');
-      const q = query(pickupsCollection, where('email', '==', email));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach(async (snapshot) => {
-        const docRef = doc(db, 'user', snapshot.id);
-        await updateDoc(docRef, { status: "3" });
-        console.log('Updated taken to true');
-        fetchUserData(); 
-        Alert.alert("審核通過!")
-      });
-    } catch (error) {
-      console.error('Error updating document:', error);
-    }
+  const handleButtonPress = (email) => {
+    navigation.navigate('VerifyStore2', {name:username,email: email });
   };
+  
+  // const handleVerify = async (email) => {
+  //   try {
+  //     const pickupsCollection = collection(db, 'user');
+  //     const q = query(pickupsCollection, where('email', '==', email));
+  //     const querySnapshot = await getDocs(q);
+  //     querySnapshot.forEach(async (snapshot) => {
+  //       const docRef = doc(db, 'user', snapshot.id);
+  //       await updateDoc(docRef, { status: "3" });
+  //       console.log('Updated taken to true');
+  //       fetchUserData(); 
+  //       Alert.alert("審核通過!")
+  //     });
+  //   } catch (error) {
+  //     console.error('Error updating document:', error);
+  //   }
+  // };
 
 
 
@@ -69,18 +73,15 @@ const TakePeople = ({ navigation }) => {
 
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container}><ScrollView>
       <Text style={styles.headerText}>審核店家</Text>
       <Text></Text>
 
       {userData.map((item, index) => (
         <View key={index}>
-          <ScrollView>
+          
             <View style={styles.row}>
-              <Image
-                style={styles.logo}
-                source={require("map/asset/food.jpg")}
-              />
+
               <View>
                 <Text style={styles.leftText}>姓名:{item.username}</Text>
                 <Text style={styles.detail}>帳號:{item.email}</Text>
@@ -89,18 +90,18 @@ const TakePeople = ({ navigation }) => {
                 <View style={{height:10}} />
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={() => handleVerify(item.email)}>
-                  <Text style={styles.buttonText}>審核通過</Text>
+                  onPress={() => handleButtonPress(item.email)}>
+                  <Text style={styles.buttonText}>詳情</Text>
                 </TouchableOpacity>
               </View>
             </View>
             <Text></Text>
             <View style={styles.line} />
             <Text></Text>
-          </ScrollView>
+          
         </View>
       ))}
-    </View>
+    </ScrollView></View>
   );
 };
 const styles = StyleSheet.create({
@@ -143,12 +144,12 @@ const styles = StyleSheet.create({
   },
   leftText: {
     fontSize: 25,
-    paddingLeft: 15,
+    paddingLeft: 22,
   },
 
   detail: {
     fontSize: 20,
-    paddingLeft: 15,
+    paddingLeft: 22,
   },
   text: {
     fontSize: 20,
@@ -175,9 +176,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   button: {
+    marginLeft: 95,
     backgroundColor: '#E6A984', // 自定义按钮颜色
     padding: 17,
     borderRadius: 20,
+    width: 200,
   },
 });
 

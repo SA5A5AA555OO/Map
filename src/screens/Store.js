@@ -27,21 +27,28 @@ const db = getFirestore(app);
 // 获取文档的引用await getDocs(query(collection(db, 'user'), where('email', '==', email)));
 const Store = ({ navigation }) => {
   const handleButtonPress = (storeName) => {
-    navigation.navigate('Donate2', { storeName: storeName,status:status });
+    navigation.navigate('Donate2', { storeName: storeName,status:status,email:email });
   };
   const handleButtonPress2 = (storeName) => {
-    navigation.navigate('Take1', { storeName: storeName,status:status });
+    navigation.navigate('Take1', { storeName: storeName,status:status,email:email });
   };
   const handleButtonPress3 = async (email, storeName) => {
     const querySnapshot = await getDocs(query(collection(db, 'user'), where('email', '==', email)));
     if (!querySnapshot.empty) {
         const userDocRef = querySnapshot.docs[0].ref;
         try {
-            await updateDoc(userDocRef, {
-                favorite: storeName,
-            });
-            showAlert(); // 显示修改成功的提示
-            navigation.navigate('Home', { status });
+            const userData = querySnapshot.docs[0].data();
+            const favoriteStores = userData.favorite || []; // 如果用户没有最爱列表，则默认为空数组
+            if (!favoriteStores.includes(storeName)) { // 检查店铺是否已经在最爱列表中
+                favoriteStores.push(storeName); // 将店铺添加到最爱列表中
+                await updateDoc(userDocRef, {
+                    favorite: favoriteStores,
+                });
+                Alert.alert('成功加入最愛');
+                navigation.navigate('Home', { status });
+            } else {
+                console.log('Store already in favorites');
+            }
         } catch (error) {
             console.error('Error updating document: ', error);
         }
@@ -49,9 +56,7 @@ const Store = ({ navigation }) => {
         console.error('No documents found for query');
     }
 };
-const showAlert = () => {
-  Alert.alert('成功加入最愛');
-};
+
 
   const route = useRoute();
   const { status, email } = route.params;
@@ -61,10 +66,12 @@ const showAlert = () => {
   const [userData, setUserData] = useState(null);
   const getData = async (db) => {
     const userCollection = collection(db, "store");
-    const userDoc = doc(userCollection, storeName);
-    const userDocSnap = await getDoc(userDoc);
-    if (userDocSnap.exists()) {
-      setUserData(userDocSnap.data());
+    const q = query(userCollection, where("store_name", "==", storeName));
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      querySnapshot.forEach((doc) => {
+        setUserData(doc.data());
+      });
     } else {
       console.log("Document not found");
     }

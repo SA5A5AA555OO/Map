@@ -30,8 +30,8 @@ const TakePeople = ({ navigation }) => {
 
   const fetchUserData = async () => {
     try {
-      const pickupsCollection = collection(db, 'user');
-      const q = query(pickupsCollection, where('status', '==', "3"));
+      const pickupsCollection = collection(db, 'store');
+      const q = query(pickupsCollection, ('store_name'));
       const querySnapshot = await getDocs(q);
 
       const data = [];
@@ -68,23 +68,25 @@ const TakePeople = ({ navigation }) => {
 
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container}><ScrollView>
       <Text style={styles.headerText}>查看店家</Text>
       <Text></Text>
 
       {userData.map((item, index) => (
         <View key={index}>
-          <ScrollView>
+          
             <View style={styles.row}>
-              <Image
-                style={styles.logo}
-                source={require("map/asset/food.jpg")}
-              />
               <View>
-                <Text style={styles.leftText}>姓名:{item.username}</Text>
-                <Text style={styles.detail}>帳號:{item.email}</Text>
-                <Text style={styles.detail}>電話:{item.phone}</Text>
-                <Text style={styles.detail}>地址:{item.address}</Text>
+              <Text style={styles.leftText}>姓名:{item.store_name}</Text>
+                <Text style={styles.detail}>帳號:{item.store_email}</Text>
+                <Text style={styles.detail}>電話:{item.store_phone}</Text>
+                <Text style={styles.detail}>地址:{item.store_address}</Text>
+                <Text style={styles.detail}>待用餐點名稱:{item.good_name}</Text>
+                <Text style={styles.detail}>待用餐點價錢:{item.good_price}</Text>
+                <Text style={styles.detail}>營業時間:{item.opentime}</Text>
+                <Text style={styles.detail}>打烊時間:{item.closetime}</Text>
+                <Text style={styles.detail}>經度:{item.latitude}</Text>
+                <Text style={styles.detail}>緯度:{item.longitude}</Text>
                 <View style={{height:10}} />
                 {/* <TouchableOpacity
                   style={styles.button}
@@ -96,10 +98,10 @@ const TakePeople = ({ navigation }) => {
             <Text></Text>
             <View style={styles.line} />
             <Text></Text>
-          </ScrollView>
+          
         </View>
       ))}
-    </View>
+    </ScrollView></View>
   );
 };
 const styles = StyleSheet.create({
@@ -142,12 +144,12 @@ const styles = StyleSheet.create({
   },
   leftText: {
     fontSize: 25,
-    paddingLeft: 15,
+    paddingLeft: 22,
   },
 
   detail: {
     fontSize: 20,
-    paddingLeft: 15,
+    paddingLeft: 22,
   },
   text: {
     fontSize: 20,
@@ -174,9 +176,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   button: {
+    marginLeft: 95,
     backgroundColor: '#E6A984', // 自定义按钮颜色
     padding: 17,
     borderRadius: 20,
+    width: 200,
   },
 });
 
