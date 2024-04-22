@@ -22,8 +22,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
-
 // 获取文档的引用await getDocs(query(collection(db, 'user'), where('email', '==', email)));
 const Store = ({ navigation }) => {
   const handleButtonPress = (storeName) => {
@@ -32,38 +30,46 @@ const Store = ({ navigation }) => {
   const handleButtonPress2 = (storeName) => {
     navigation.navigate('Take1', { storeName: storeName,status:status,email:email });
   };
-  const handleButtonPress3 = async (email, storeName) => {
+  const handleButtonPress3 = async (email,storeName) => {
     const querySnapshot = await getDocs(query(collection(db, 'user'), where('email', '==', email)));
     if (!querySnapshot.empty) {
-        const userDocRef = querySnapshot.docs[0].ref;
-        try {
-            const userData = querySnapshot.docs[0].data();
-            const favoriteStores = userData.favorite || []; // 如果用户没有最爱列表，则默认为空数组
-            if (!favoriteStores.includes(storeName)) { // 检查店铺是否已经在最爱列表中
-                favoriteStores.push(storeName); // 将店铺添加到最爱列表中
-                await updateDoc(userDocRef, {
-                    favorite: favoriteStores,
-                });
-                Alert.alert('成功加入最愛');
-                navigation.navigate('Home', { status });
-            } else {
-                console.log('Store already in favorites');
-            }
-        } catch (error) {
-            console.error('Error updating document: ', error);
+      const userDocRef = querySnapshot.docs[0].ref;
+      try {
+        const userData = querySnapshot.docs[0].data();
+        let favoriteStores = userData.favorite || [];
+        if (!favoriteStores.includes(storeName)) {
+          favoriteStores.push(storeName);
+          await updateDoc(userDocRef, { favorite: favoriteStores });
+          Alert.alert('成功加入最愛');
+          setFav(1);
+          // navigation.navigate('Home', { status });
+          console.log("fav:"+fav)
+        } else {
+          favoriteStores = favoriteStores.filter(item => item !== storeName);
+          await updateDoc(userDocRef, { favorite: favoriteStores });
+          setFav('');
+          Alert.alert('成功移除最愛');
+          // navigation.navigate('Home', { status });
+          console.log("fav:"+fav)
         }
+      } catch (error) {
+        console.error('Error updating document: ', error);
+      }
     } else {
-        console.error('No documents found for query');
+      console.error('No documents found for query');
     }
-};
+  };
 
 
-  const route = useRoute();
+const route = useRoute();
   const { status, email } = route.params;
+  const { fav: routeFav } = route.params || { fav: '' }; // 從路由參數中獲取 email
   const { storeName } = route.params;
   const [buttons, setButtons] = useState([]);
-
+  const [fav, setFav] =useState(routeFav);
   const [userData, setUserData] = useState(null);
+
+  
   const getData = async (db) => {
     const userCollection = collection(db, "store");
     const q = query(userCollection, where("store_name", "==", storeName));
@@ -84,7 +90,7 @@ const Store = ({ navigation }) => {
         setButtons([
           { text: '捐贈待用餐', onPress: () => handleButtonPress(storeName,status) },
           { text: '領取待用餐', onPress: () => handleButtonPress2(storeName,status) },
-          { text: '加入最愛', onPress: ()=> handleButtonPress3(email, storeName) }
+          { text: fav ? '移除最愛' : '加入最愛', onPress: () => handleButtonPress3(email, storeName) }
         ]);
         break;
       case "2":
@@ -95,7 +101,7 @@ const Store = ({ navigation }) => {
         setButtons([]);
         break;
     }
-  }, [status]);
+  }, [status,fav]);
 
   useEffect(() => {
     getData(db); // 將 db 傳遞給 getData 函數
