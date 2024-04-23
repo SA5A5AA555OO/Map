@@ -176,7 +176,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
         backgroundColor: '#FDFBF1',
-        paddingTop: 20,
     },
     headerText: {
         fontSize: 0,
