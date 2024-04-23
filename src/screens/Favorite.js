@@ -1,7 +1,7 @@
-import { View, Image, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, Image, Text, ScrollView, StyleSheet, TouchableOpacity, TextInpu,Alert } from 'react-native';
 import React, { useState, useEffect } from "react";
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, getDocs, query, where, } from 'firebase/firestore/lite';
+import { getFirestore, collection, doc, getDocs, query, where,updateDoc, } from 'firebase/firestore/lite';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import HomeScreen from './HomeScreen';
 import { useRoute } from '@react-navigation/native';
@@ -24,9 +24,31 @@ const db = getFirestore(app);
 const Favorite = ({ navigation }) => {
   const route = useRoute();
   const { email, status } = route.params;
+  const [fav,setFav] = useState([]);
 
   const handleButtonPress = (storeName) => {
-    navigation.navigate('Store', { status: status, email: email, storeName: storeName });
+    navigation.navigate('Store', { status: status, email: email, storeName: storeName, fav:1 });
+  };
+
+  const handleDelete = async (storeName) => {
+    const querySnapshot = await getDocs(query(collection(db, 'user'), where('email', '==', email)));
+    if (!querySnapshot.empty) {
+      const userDocRef = querySnapshot.docs[0].ref;
+      try {
+        const userData = querySnapshot.docs[0].data();
+        let favoriteStores = userData.favorite || [];
+          favoriteStores = favoriteStores.filter(item => item !== storeName);
+          await updateDoc(userDocRef, { favorite: favoriteStores });
+          setFav('');
+          Alert.alert('成功移除最愛');
+          // navigation.navigate('Home', { status });
+          console.log("fav:"+fav)
+      } catch (error) {
+        console.error('Error updating document: ', error);
+      }
+    } else {
+      console.error('No documents found for query');
+    }
   };
 
   const [favoriteList, setFavoriteList] = useState([]);
@@ -38,7 +60,7 @@ const Favorite = ({ navigation }) => {
         const userDoc = querySnapshot.docs[0];
         const favoriteValue = userDoc.data().favorite || [];
         setFavoriteList(favoriteValue);
-        console.log('Favorite:', favoriteValue);
+        // console.log('Favorite:', favoriteValue);
       } else {
         console.log('No documents found for query');
       }
@@ -61,9 +83,9 @@ const Favorite = ({ navigation }) => {
         if (!querySnapshot.empty) {
           const storeDoc = querySnapshot.docs.map(doc => doc.data());
           storeDocs.push(...storeDoc);
-          console.log('Store Data:', storeDoc);
+          // console.log('Store Data:', storeDoc);
         } else {
-          console.log('No documents found for query');
+          // console.log('No documents found for query');
         }
       }
       setStoreData(storeDocs);
@@ -95,6 +117,12 @@ const Favorite = ({ navigation }) => {
                 <Text style={styles.detail}>今日提供份數:   {store.provide}</Text>
                 <Text style={styles.detail}>品項:{store.good_name}</Text>
                 <Text style={styles.detail}>電話:{store.store_phone}</Text>
+                <Text></Text>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => handleDelete(store.store_name)}>
+                  <Text style={styles.buttonText}>刪除</Text>
+                </TouchableOpacity>
               </View></View>
             <Text></Text>
             <View style={styles.line} />
@@ -171,10 +199,17 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
   },
   buttonText: {
-    color: 'white', // 文本颜色
+    color: 'white', // 按钮文本颜色
     fontWeight: 'bold',
-    textAlign: 'center', // 文本居中
-
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  button: {
+    marginLeft: 95,
+    backgroundColor: '#E6A984', // 自定义按钮颜色
+    padding: 17,
+    borderRadius: 20,
+    width: 200,
   },
 });
 

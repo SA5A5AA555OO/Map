@@ -1,7 +1,7 @@
 import { View, Image, Text, ScrollView, StyleSheet , TouchableOpacity ,TextInput} from 'react-native';
 import React, { useState ,useEffect} from "react";
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, getDocs } from 'firebase/firestore/lite';
+import { getFirestore, collection, doc, getDocs,query,where } from 'firebase/firestore/lite';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import Store from '../screens/Store';
 import { useRoute } from '@react-navigation/native';
@@ -27,11 +27,30 @@ const Meal = ({ navigation }) => {
   const [imageUrls, setImageUrls] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
+  const [fav, setFav] = useState('');
 
-  const handleButtonPress = (storeName) => {
-    navigation.navigate('Store', { storeName: storeName , status: status,email: email });
+  const handleButtonPress = async (storeName) => {
+    const querySnapshot = await getDocs(query(collection(db, 'user'), where('email', '==', email)));
+    if (!querySnapshot.empty) {
+      const userDocRef = querySnapshot.docs[0].ref;
+      try {
+        const userData = querySnapshot.docs[0].data();
+        let favoriteStores = userData.favorite || [];
+        if (!favoriteStores.includes(storeName)) {
+          navigation.navigate('Store', { storeName: storeName , status: status,email: email,fav:'' });
+        } else {
+          navigation.navigate('Store', { storeName: storeName , status: status,email: email,fav:1 });
+        }
+        // navigation.navigate('Store', { storeName: storeName , status: status,email: email,fav:fav });
+      } catch (error) {
+        console.error('Error updating document: ', error);
+      }
+    } else {
+      console.error('No documents found for query');
+    }
+    
   };
-
+  
   useEffect(() => {
     const fetchStores = async () => {
       const storeCollection = collection(db, 'store');
