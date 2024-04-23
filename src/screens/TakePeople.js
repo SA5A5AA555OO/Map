@@ -116,8 +116,8 @@ const styles = StyleSheet.create({
     
   },
   headerText: {
+    textAlign: 'center',
       fontSize: 40,
-      paddingLeft: 138,
     },
     
   logo: {
