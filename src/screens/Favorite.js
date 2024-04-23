@@ -39,10 +39,8 @@ const Favorite = ({ navigation }) => {
         let favoriteStores = userData.favorite || [];
           favoriteStores = favoriteStores.filter(item => item !== storeName);
           await updateDoc(userDocRef, { favorite: favoriteStores });
-          setFav('');
           Alert.alert('成功移除最愛');
-          // navigation.navigate('Home', { status });
-          console.log("fav:"+fav)
+          searchFavorite(email); // 重新查詢最新的資料並更新本地狀態
       } catch (error) {
         console.error('Error updating document: ', error);
       }
@@ -50,6 +48,7 @@ const Favorite = ({ navigation }) => {
       console.error('No documents found for query');
     }
   };
+  
 
   const [favoriteList, setFavoriteList] = useState([]);
 
@@ -105,6 +104,7 @@ const Favorite = ({ navigation }) => {
         <Text></Text>
         {storeData.map((store, index) => (
           <View key={index}>
+          <View style={styles.row}>
             <View style={styles.row}>
               <Image
                 style={styles.logo}
@@ -114,16 +114,21 @@ const Favorite = ({ navigation }) => {
                 <TouchableOpacity onPress={() => handleButtonPress(store.store_name)} style={{ alignSelf: 'flex-start' }}>
                   <Text style={styles.leftText}>{store.store_name}</Text>
                 </TouchableOpacity>
-                <Text style={styles.detail}>今日提供份數:   {store.provide}</Text>
+                <Text style={styles.detail}>今日提供份數: {store.provide}</Text>
                 <Text style={styles.detail}>品項:{store.good_name}</Text>
                 <Text style={styles.detail}>電話:{store.store_phone}</Text>
                 <Text></Text>
+                
+              </View>
+            </View>
+            <View style={styles.buttonWrapper}>
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => handleDelete(store.store_name)}>
                   <Text style={styles.buttonText}>刪除</Text>
                 </TouchableOpacity>
-              </View></View>
+              </View>
+              </View>
             <Text></Text>
             <View style={styles.line} />
             <Text></Text>
@@ -148,6 +153,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
 
 
+  },
+  buttonWrapper: {
+    marginTop: 45, 
   },
   headerText: {
     fontSize: 35,
@@ -205,11 +213,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   button: {
-    marginLeft: 95,
+    marginLeft: 20,
     backgroundColor: '#E6A984', // 自定义按钮颜色
-    padding: 17,
+    padding: 10,
     borderRadius: 20,
-    width: 200,
+    width: 80,
+    height: 55,
   },
 });
 

@@ -86,7 +86,7 @@ const EditProfile = ({navigation}) =>{
             style={styles.input} 
             value={email}
             placeholder ="信箱"
-            
+            editable={false}
             />
             
            <TouchableOpacity onPress={handleButtonPress} style={styles.button}>

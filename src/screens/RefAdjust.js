@@ -88,19 +88,21 @@ const fetchUserData = async () => {
       
       <View style={styles.wrapper}><ScrollView>
         <Text></Text>
-        <Text></Text>
+        <Text>開放領取時間</Text>
         <TextInput
           style={styles.input}
           value={time}
           placeholder="開放領取持間"
           onChangeText={text => settime(text)}
         />
+        <Text>地址</Text>
         <TextInput
           style={styles.input}
           value={address}
           placeholder="地址"
           onChangeText={text => setaddress(text)}
         />
+        <Text>電話</Text>
         <TextInput
           style={styles.input}
           value={phone}
