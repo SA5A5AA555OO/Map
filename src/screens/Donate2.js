@@ -1,7 +1,7 @@
 import { View, Image, Text, ScrollView, StyleSheet , TouchableOpacity ,TextInput} from 'react-native';
 import React, { useState ,useEffect} from "react";
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, getDoc, where,query } from 'firebase/firestore/lite';
+import { getFirestore, collection, doc, getDocs, where,query } from 'firebase/firestore/lite';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import { useRoute } from '@react-navigation/native';
 const firebaseConfig = {
@@ -22,16 +22,18 @@ const storage = getStorage(app);
 const Donate2 = ({ navigation }) => {
   //查詢資料
   const [userData, setUserData] = useState(null);
-      const getData = async (db) => {
-        const userCollection = collection(db, "store");
-        const userDoc = doc(userCollection, storeName);
-        const userDocSnap = await getDoc(userDoc);
-        if (userDocSnap.exists()) {
-          setUserData(userDocSnap.data());
-        } else {
-          console.log("Document not found");
-        }
-      };
+  const getData = async (db) => {
+    const userCollection = collection(db, "store");
+    const q = query(userCollection, where("store_name", "==", storeName));
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      querySnapshot.forEach((doc) => {
+        setUserData(doc.data());
+      });
+    } else {
+      console.log("Document not found");
+    }
+  };
     
       useEffect(() => {
         getData(db); // 將 db 傳遞給 getData 函數
@@ -53,9 +55,11 @@ const { storeName,status,email } = route.params;
   const handleButtonPress = (storeName) => {
     navigation.navigate('Donate1', { storeName: storeName ,count: count,status:status,email:email  });
   };
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const handleOperation = (value) => {
-    setCount(count + value);
+    if (count + value >= 1) {
+      setCount(count + value);
+    }
   };
 
   return (

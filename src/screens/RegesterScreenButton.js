@@ -41,6 +41,7 @@ const RegesterScreenButton = ({ navigation }) => {
         email: email,
         password: password,
         status: "1",
+        favorite:"",
       });
       Alert.alert('驗證成功')
       navigation.navigate('Login');

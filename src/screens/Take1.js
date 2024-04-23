@@ -1,7 +1,7 @@
 import React, { useState ,useEffect} from "react";
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import Take2 from '../screens/Take2';
-import { getFirestore, collection, doc, getDoc, where,query } from 'firebase/firestore/lite';
+import { getFirestore, collection, doc, getDocs, where,query } from 'firebase/firestore/lite';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import { initializeApp } from 'firebase/app';
 import { useRoute } from '@react-navigation/native';
@@ -20,16 +20,18 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 const Take1 = ({navigation}) =>{
   const [userData, setUserData] = useState(null);
-      const getData = async (db) => {
-        const userCollection = collection(db, "store");
-        const userDoc = doc(userCollection, storeName);
-        const userDocSnap = await getDoc(userDoc);
-        if (userDocSnap.exists()) {
-          setUserData(userDocSnap.data());
-        } else {
-          console.log("Document not found");
-        }
-      };
+  const getData = async (db) => {
+    const userCollection = collection(db, "store");
+    const q = query(userCollection, where("store_name", "==", storeName));
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      querySnapshot.forEach((doc) => {
+        setUserData(doc.data());
+      });
+    } else {
+      console.log("Document not found");
+    }
+  };
     
       useEffect(() => {
         getData(db); // 將 db 傳遞給 getData 函數
