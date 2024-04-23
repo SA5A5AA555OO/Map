@@ -48,8 +48,9 @@ const Meal = ({ navigation }) => {
     } else {
       console.error('No documents found for query');
     }
-    
+
   };
+
   
   useEffect(() => {
     const fetchStores = async () => {
@@ -66,10 +67,13 @@ const Meal = ({ navigation }) => {
     const storageRef = ref(storage, 'meal');
     listAll(storageRef)
       .then((res) => {
-        return Promise.all(res.items.map(itemRef => getDownloadURL(itemRef)));
+        return Promise.all(res.items.map(itemRef => {
+          const storeName = itemRef.name.split('.')[0];
+          return getDownloadURL(itemRef).then(url => ({ storeName, url }));
+        }));
       })
-      .then((urls) => {
-        setImageUrls(urls);
+      .then((storeImages) => {
+        setImageUrls(storeImages);
         setLoading(false);
       })
       .catch((error) => {
@@ -77,6 +81,7 @@ const Meal = ({ navigation }) => {
         setLoading(false);
       });
   }, [storage]);
+
 
   if (loading) {
     return <Text>Loading...</Text>;
@@ -94,30 +99,30 @@ const Meal = ({ navigation }) => {
           <Text></Text>
           <Image style={styles.logo2} source={require('map/asset/search.png')} />
         </View>
-        {imageUrls.map((url, index) => {
-          const storeName = stores[index].store_name;
-          if (!storeName.includes(searchText) && searchText !== '') {
-            return null;
-          }
+        {imageUrls.map((image, index) => {
+  const storeName = image.storeName;
+  if (!storeName || (searchText !== '' && !storeName.includes(searchText))) {
+    return null;
+  }
 
-          return (
-            <View key={index}>
-              <Image source={{ uri: url }} style={styles.logo} />
-              <View style={styles.storeContainer}>
-                <TouchableOpacity onPress={() => handleButtonPress(storeName)} style={{ alignSelf: 'flex-start' }}>
-                  <Text style={styles.leftText}>{storeName}</Text>
-                </TouchableOpacity>
-                <Text style={styles.detail}>今日提供份數: {stores[index].provide}</Text>
-                <Text style={styles.detail}>地址: {stores[index].store_address}</Text>
-                <Text style={styles.detail}>電話: {stores[index].store_phone}</Text>
-                {/* Add other store details here */}
-              </View>
-              <Text></Text>
-            </View>
-          );
-        })}
-      </ScrollView>
+  return (
+    <View key={index}>
+      <Image source={{ uri: image.url }} style={styles.logo} />
+      <View style={styles.storeContainer}>
+        <TouchableOpacity onPress={() => handleButtonPress(storeName)} style={{ alignSelf: 'flex-start' }}>
+          <Text style={styles.leftText}>{storeName}</Text>
+        </TouchableOpacity>
+        <Text style={styles.detail}>今日提供份數: {stores[index].provide}</Text>
+        <Text style={styles.detail}>地址: {stores[index].store_address}</Text>
+        <Text style={styles.detail}>電話: {stores[index].store_phone}</Text>
+               
+      </View>
+      <Text></Text>
     </View>
+  );
+})}
+      </ScrollView>
+    </View> 
   );
 };
 const styles = StyleSheet.create({

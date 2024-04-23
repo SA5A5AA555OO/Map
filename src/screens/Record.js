@@ -87,10 +87,7 @@ const [userData, setUserData] = useState(null);
           )}
         </View>
       ));
-    
-    
-    
-    } else if (selected === 'received') {
+    } else if (selected === 'received' && userData) {
       return userData.map((data, index) => (
         <View key={index}>
           {data.take === true && (
@@ -113,7 +110,8 @@ const [userData, setUserData] = useState(null);
           )}
         </View>
       ));
-  };}
+    }
+  };
       return (
         <View style={styles.container}>
         <View style={styles.row}>

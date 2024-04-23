@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   headerText: {
-    fontSize: 35,
+    fontSize: 28,
 
   },
   logo: {

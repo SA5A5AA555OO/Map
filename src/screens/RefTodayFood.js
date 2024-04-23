@@ -43,7 +43,7 @@ const RefTodayFood = () => {
         輔仁大學食享冰箱
       </Text>
       <View style={{alignSelf: 'flex-start'}}>
-        <Text style={styles.detail}>今日開放領取時間:13:30</Text>
+        <Text style={styles.detail}>今日開放領取時間:{userData ? userData.start_time : 'Loading...'}</Text>
       </View>
       <Text />
       <Text />
