@@ -105,6 +105,12 @@ const Meal = ({ navigation }) => {
     return null;
   }
 
+  // Find the corresponding store data based on storeName
+  const store = stores.find(store => store.store_name === storeName);
+  if (!store) {
+    return null; // If store data is not found, skip rendering
+  }
+
   return (
     <View key={index}>
       <Image source={{ uri: image.url }} style={styles.logo} />
@@ -112,15 +118,16 @@ const Meal = ({ navigation }) => {
         <TouchableOpacity onPress={() => handleButtonPress(storeName)} style={{ alignSelf: 'flex-start' }}>
           <Text style={styles.leftText}>{storeName}</Text>
         </TouchableOpacity>
-        <Text style={styles.detail}>剩餘提供份數: {stores[index].provide}</Text>
-        <Text style={styles.detail}>地址: {stores[index].store_address}</Text>
-        <Text style={styles.detail}>電話: {stores[index].store_phone}</Text>
+        <Text style={styles.detail}>剩餘提供份數: {store.provide}</Text>
+        <Text style={styles.detail}>地址: {store.store_address}</Text>
+        <Text style={styles.detail}>電話: {store.store_phone}</Text>
                
       </View>
       <Text></Text>
     </View>
   );
 })}
+
       </ScrollView>
     </View> 
   );
