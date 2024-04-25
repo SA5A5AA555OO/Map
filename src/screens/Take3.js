@@ -1,5 +1,6 @@
 import React, { useState ,useEffect} from "react";
 import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
+import {  doc, getDocs, where,query,updateDoc } from 'firebase/firestore/lite';
 import HomeScreen from '../screens/HomeScreen';
 import { initializeApp } from 'firebase/app';
 import { useRoute } from '@react-navigation/native';
@@ -21,24 +22,59 @@ const Take3 = ({navigation}) =>{
   const route = useRoute();
   const { storeName,name,phone,email,status } = route.params;
   const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 9000) + 1000);
-  useEffect(() => {
-    const uploadData = async () => {
-      try {
-        const docRef = await addDoc(collection(db, "pickup"), {
-          storeName: storeName,
-          name: name,
-          phone: phone,
-          email: email,
-          randomNumber: randomNumber,
-          take: false
-        });
-        console.log("Document written with ID: ", docRef.id);
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
-    };
-    uploadData();
-  }, []);
+  const [userData, setUserData] = useState(null);
+  const getData = async (db) => {
+    const userCollection = collection(db, "store");
+    const q = query(userCollection, where("store_name", "==", storeName));
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      querySnapshot.forEach((doc) => {
+        setUserData(doc.data());
+      });
+    } else {
+      console.log("Document not found");
+    }
+  };
+    
+      useEffect(() => {
+        getData(db); // 將 db 傳遞給 getData 函數
+      }, []);
+      
+      const uploadData = async () => {
+        try {
+          const docRef = await addDoc(collection(db, "pickup"), {
+            storeName: storeName,
+            name: name,
+            phone: phone,
+            email: email,
+            randomNumber: randomNumber,
+            take: false,
+          });
+          console.log("Document written with ID: ", docRef.id);
+    
+          // 更新 store 集合中的 provide 欄位
+          const storeCollection = collection(db, "store");
+          const q = query(storeCollection, where("store_name", "==", storeName));
+          const querySnapshot = await getDocs(q);
+          if (!querySnapshot.empty) {
+            const docToUpdate = querySnapshot.docs[0];
+            await updateDoc(docToUpdate.ref, {
+              provide: docToUpdate.data().provide - 1,
+            });
+            console.log("Document updated in store collection");
+          } else {
+            console.log("Document not found in store collection");
+          }
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
+      };
+    
+      useEffect(() => {
+        uploadData();
+      }, []);
+
+  
     return (
         <View style={styles.container}>
             <Text style={styles.headerText}>{ storeName }</Text>
@@ -52,7 +88,7 @@ const Take3 = ({navigation}) =>{
            <TouchableOpacity onPress={() =>navigation.navigate('Home',{status:status})}>
                         <Text style={styles.link}>回主頁</Text>
                     </TouchableOpacity>
-                    
+                   
         </View>
      
       );
