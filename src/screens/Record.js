@@ -114,6 +114,7 @@ const [userData, setUserData] = useState(null);
   };
       return (
         <View style={styles.container}>
+          <ScrollView>
         <View style={styles.row}>
           <TouchableOpacity
             style={[
@@ -140,7 +141,8 @@ const [userData, setUserData] = useState(null);
             <Text></Text>
         <View style={styles.contentContainer}>{renderContent()}</View>
         
-      </View>
+      
+      </ScrollView></View>
       );
 };
 const styles = StyleSheet.create({

@@ -66,7 +66,7 @@ const Donate1 = ({navigation}) =>{
             <Text ></Text>
             <Image
               style={styles.logo1}
-               source={require('map/asset/step2.jpg')}/>
+               source={require('map/asset/Dstep2.jpg')}/>
                <Text></Text>
                <Text ></Text>
                <Text ></Text>
