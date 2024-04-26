@@ -143,7 +143,14 @@ const Me = ({ navigation, route }) => {
 
 
   return (
+    
     <View style={styles.container}>
+      <View style={styles.container1}>
+           <View style={styles.arc} />
+          </View>
+          <View style={styles.container2}>
+           <View style={styles.arc1} />
+          </View>
       <View style={styles.row}>
         <Image
           style={styles.logo}
@@ -223,6 +230,40 @@ const styles = StyleSheet.create({
     fontSize: 20,
 
   },
+  container1: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: 400,
+      height: 400,
+      overflow: 'hidden',
+    },
+    container2: {
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      width: 400,
+      height: 400,
+      overflow: 'hidden',
+    },
+    arc: {
+      width: 300,
+      height: 300,
+      borderRadius: 150,
+      backgroundColor: '#dde5b6', 
+      position: 'absolute',
+      left: -130,
+      top: -120
+    },
+    arc1: {
+      width: 300,
+      height: 300,
+      borderRadius: 150,
+      backgroundColor: '#FFFFBB',
+      position: 'absolute',
+      right: -130,
+      bottom: -120, 
+    },
 
 
 

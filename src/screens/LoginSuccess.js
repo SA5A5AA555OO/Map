@@ -93,22 +93,18 @@ const styles = StyleSheet.create({
     fontSize: 25
   },
 
-
-
-
   buttonContainer: {
-    backgroundColor: '#FCF3EC', // 自定义背景颜色
-    padding: 100,
-    borderRadius: 35, // 圆角效果
-    marginVertical: 100, // 设置垂直间距
-    width: '70%',
+    backgroundColor: '#FCF3EC', 
+    padding: 80,
+    borderRadius: 35, 
+    marginVertical: 200, 
     elevation: 20,
 
   },
   buttonText: {
-    color: 'gray', // 文本颜色
+    color: 'gray', 
     fontWeight: 'bold',
-    textAlign: 'center', // 文本居中
+    textAlign: 'center',
     fontSize: 30,
 
   },
