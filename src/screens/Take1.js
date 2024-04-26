@@ -38,13 +38,26 @@ const Take1 = ({navigation}) =>{
       }, []);
   const route = useRoute();
   const { storeName,status,email } = route.params;
-    const handleButtonPress = () => {
-      navigation.navigate('Take2', { storeName: storeName,status:status,email:email });
-    };
+  const handleButtonPress = async () => {
+    try {
+      const pickupQuery = query(collection(db, 'pickup'), where('email', '==', email), where('storeName', '==', storeName), where('take', '==', false));
+      const pickupQuerySnapshot = await getDocs(pickupQuery);
+      if (!pickupQuerySnapshot.empty) {
+        alert('一天只能領取一次');
+      } else {
+        navigation.navigate('Take2', { storeName: storeName,status:status,email:email });
+      }
+    } catch (error) {
+      console.error('查詢 pickup 資料時發生錯誤：', error);
+    }
+  };
+    
     const [count, setCount] = useState(0);
   const handleOperation = (value) => {
     setCount(count + value);
   };
+
+
   const [storeImageUrl, setStoreImageUrl] = useState(null);
 
 useEffect(() => {

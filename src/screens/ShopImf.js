@@ -102,9 +102,9 @@ const ShopImf = ({ navigation }) => {
           />
            <TextInput
           style={styles.input} 
-          value={store_phone}
-          placeholder ="電話"
-          onChangeText={Text =>setstore_phone(Text)}
+          value={store_phone.toString()} 
+          placeholder="電話"
+          onChangeText={text => setstore_phone(text)}
           />
           <TextInput
           style={styles.input} 

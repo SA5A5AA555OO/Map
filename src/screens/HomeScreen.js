@@ -48,7 +48,12 @@ const HomeScreen = ({ navigation }) => {
 
     return (
       <View style={styles.container}>
-          <View style={styles.topBlock}></View>
+          <View style={styles.container1}>
+           <View style={styles.arc} />
+          </View>
+          <View style={styles.container2}>
+           <View style={styles.arc1} />
+          </View>
           <Image
               style={styles.logo}
               source={require('map/asset/即食行樂2.jpg')} />
@@ -67,13 +72,13 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor:'#FDFBF1',
-      paddingTop:30,
+    
     },
     
     buttonContainer: {
       backgroundColor: '#E6A984', // 自定义背景颜色
       padding: 20,
-      borderRadius: 20, // 圆角效果
+      borderRadius: 30, // 圆角效果
       marginVertical: 10, // 设置垂直间距
       width:'80%'
     },
@@ -83,6 +88,40 @@ const styles = StyleSheet.create({
       textAlign: 'center', // 文本居中
       fontSize:20,
       
+    },
+    container1: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: 400,
+      height: 400,
+      overflow: 'hidden',
+    },
+    container2: {
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      width: 400,
+      height: 400,
+      overflow: 'hidden',
+    },
+    arc: {
+      width: 300,
+      height: 300,
+      borderRadius: 150,
+      backgroundColor: '#dde5b6', 
+      position: 'absolute',
+      left: -130,
+      top: -120
+    },
+    arc1: {
+      width: 300,
+      height: 300,
+      borderRadius: 150,
+      backgroundColor: '#FFFFBB',
+      position: 'absolute',
+      right: -130,
+      bottom: -120, 
     },
     logo: {
       width: 170,
