@@ -45,26 +45,6 @@ const TakePeople = ({ navigation }) => {
     }
   };
 
-  // const handlePickup = async (randomNumber) => {
-  //   try {
-  //     const pickupsCollection = collection(db, 'pickup');
-  //     const q = query(pickupsCollection, where('randomNumber', '==', randomNumber));
-  //     const querySnapshot = await getDocs(q);
-  //     querySnapshot.forEach(async (snapshot) => {
-  //       const docRef = doc(db, 'pickup', snapshot.id);
-  //       await updateDoc(docRef, { take: true });
-  //       console.log('Updated taken to true');
-  //       fetchUserData(); 
-  //     });
-  //   } catch (error) {
-  //     console.error('Error updating document:', error);
-  //   }
-  // };
-
-
-
-
-
 
 
   return (
@@ -85,8 +65,6 @@ const TakePeople = ({ navigation }) => {
                 <Text style={styles.detail}>待用餐點價錢:{item.good_price}</Text>
                 <Text style={styles.detail}>營業時間:{item.opentime}</Text>
                 <Text style={styles.detail}>打烊時間:{item.closetime}</Text>
-                <Text style={styles.detail}>經度:{item.latitude}</Text>
-                <Text style={styles.detail}>緯度:{item.longitude}</Text>
                 <View style={{height:10}} />
                 {/* <TouchableOpacity
                   style={styles.button}

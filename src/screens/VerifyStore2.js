@@ -21,7 +21,7 @@ const db = getFirestore(app);
 
 const TakePeople = ({ navigation }) => {
   const route = useRoute();
-  const { email } = route.params
+  const { email,status } = route.params
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
@@ -65,14 +65,12 @@ const TakePeople = ({ navigation }) => {
           store_email: userData.email,
           good_name: userData.good_name,
           good_price: userData.good_price,
-          latitude: userData.latitude,
-          longitude: userData.longitude,
           opentime: userData.opentime,
           closetime: userData.closetime,
           provide:"0",
           
       });
-      navigation.navigate('VerifyStore');
+      navigation.navigate('Me',{status:status});
     });
     } catch (error) {
       console.error('Error updating document:', error);
@@ -105,8 +103,6 @@ const TakePeople = ({ navigation }) => {
                 <Text style={styles.detail}>待用餐點價錢:{item.good_price}</Text>
                 <Text style={styles.detail}>營業時間:{item.opentime}</Text>
                 <Text style={styles.detail}>打烊時間:{item.closetime}</Text>
-                <Text style={styles.detail}>經度:{item.latitude}</Text>
-                <Text style={styles.detail}>緯度:{item.longitude}</Text>
                 <View style={{height:20}} />
                 <TouchableOpacity
                   style={styles.button}
