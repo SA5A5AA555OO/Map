@@ -7,6 +7,7 @@ import MapView, { Marker, Callout } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, getDocs } from 'firebase/firestore/lite';
+import Geocoder from 'react-native-geocoding';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import FjuRef from '../screens/FjuRef';
 import Store from '../screens/Store';
@@ -23,6 +24,7 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+Geocoder.init("AIzaSyBARwrOhviGWEHN94EDPR0Ojy - YftRlljA");
 
 const CustomMarker = ({ coordinate, title,  }) => (
     <Marker coordinate={coordinate} title={title} pinColor="skyblue">
@@ -53,15 +55,29 @@ const Map = ({ navigation }) => {
         const fetchStoreData = async () => {
             try {
                 const querySnapshot = await getDocs(collection(db, 'store'));
-                const storeData = querySnapshot.docs.map(doc => doc.data());
-                setStore(storeData);
+                const storeData = querySnapshot.docs.map(async doc => {
+                    const data = doc.data();
+                    // 使用 Geocoder 將地址轉換為經度和緯度
+                    const response = await Geocoder.from(data.store_address);
+                    const { lat, lng } = response.results[0].geometry.location;
+                    return {
+                        ...data,
+                        latitude: lat,
+                        longitude: lng
+                    };
+                });
+                // 等待所有數據轉換完成
+                const resolvedStoreData = await Promise.all(storeData);
+                setStore(resolvedStoreData);
             } catch (error) {
                 console.error('Error fetching store data:', error);
             }
         };
-
+    
         fetchStoreData();
     }, [db]);
+    
+
     const [markerslist, setMarkersList] = useState([
         {
             id: 1,

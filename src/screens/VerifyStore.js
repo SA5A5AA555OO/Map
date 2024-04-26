@@ -21,7 +21,7 @@ const db = getFirestore(app);
 
 const TakePeople = ({ navigation }) => {
   const route = useRoute();
-  const { username } = route.params || { username: '用戶' };
+  const { username,status } = route.params || { username: '用戶' };
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const TakePeople = ({ navigation }) => {
   };
 
   const handleButtonPress = (email) => {
-    navigation.navigate('VerifyStore2', {name:username,email: email });
+    navigation.navigate('VerifyStore2', {name:username,email: email ,status:status});
   };
   
   // const handleVerify = async (email) => {

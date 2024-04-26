@@ -27,15 +27,13 @@ const RegesterScreen2 = ({ navigation }) => {
     const { email, password, phone, name, address } = route.params;
     const [good_name, setGood_name] = useState('');
     const [good_price, setGood_price] = useState('');
-    const [latitude, setLatitude] = useState('');
-    const [longitude, setLongitude] = useState('');
     const [opentime, setOpentime] = useState('');
     const [closetime, setClosetime] = useState('');
     const handleRegister = async () => {
         try {
             // 顯示註冊成功提示訊息
             Alert.alert('註冊成功', '請檢查您的電子郵件收件箱以完成驗證。');
-            navigation.navigate('RegesterButton2', { good_name, good_price, latitude, longitude, opentime, closetime,email, password, phone, name, address });
+            navigation.navigate('RegesterButton2', { good_name, good_price, opentime, closetime,email, password, phone, name, address });
         } catch (error) {
             // 顯示註冊失敗的錯誤訊息
             Alert.alert('註冊失敗', error.message);
@@ -68,18 +66,6 @@ const RegesterScreen2 = ({ navigation }) => {
                     value={closetime}
                     placeholder="打烊時間"
                     onChangeText={setClosetime}
-                />
-                <TextInput
-                    style={styles.input}
-                    value={latitude}
-                    placeholder="經度(請至googlemap尋找準確經緯度)"
-                    onChangeText={setLatitude}
-                />
-                <TextInput
-                    style={styles.input}
-                    value={longitude}
-                    placeholder="緯度(請至googlemap尋找準確經緯度)"
-                    onChangeText={setLongitude}
                 />
                 <TouchableOpacity onPress={handleRegister} style={styles.button}>
                     <Text style={styles.buttonText}>註冊</Text>

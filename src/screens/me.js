@@ -64,7 +64,7 @@ const Me = ({ navigation, route }) => {
         break;
       case "4":
         setButtons([
-          { text: '審核店家', onPress: () => navigation.navigate('VerifyStore') },
+          { text: '審核店家', onPress: () => navigation.navigate('VerifyStore',{ status }) },
           { text: '查看店家', onPress: () => navigation.navigate('CheckStore') },
           { text: '查看使用者', onPress: () => navigation.navigate('CheckUser') },
           { text: '登出', onPress: () => handleLogout() }

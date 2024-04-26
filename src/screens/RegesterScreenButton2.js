@@ -27,7 +27,7 @@ const auth = getAuth(app); // 使用 getAuth 獲取 Firebase 身份驗證物件
 const RegesterScreenButton = ({ navigation }) => {
   const route = useRoute();
   const { email, password, phone, name, address } = route.params;
-  const { good_name, good_price, latitude, longitude, opentime, closetime } = route.params;
+  const { good_name, good_price, opentime, closetime } = route.params;
   const handleRegisterButton = async () => {
   try {
     // 使用 Firebase 的身份驗證進行登入
@@ -45,8 +45,6 @@ const RegesterScreenButton = ({ navigation }) => {
         status: "5",
         good_name: good_name,
         good_price: good_price,
-        latitude: latitude,
-        longitude: longitude,
         opentime: opentime,
         closetime: closetime,
       });
