@@ -9,6 +9,7 @@ const Donate3 = ({navigation}) =>{
   const { storeName ,status} = route.params;
       return (
         <View style={styles.container}>
+          <Text></Text>
             <Text style={styles.headerText}>{storeName}</Text>
             <Text></Text>
             <Image
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
     },
     link:{
         color:'#DA7746',
+        fontSize: 20,
     },
     logo1: {
       width: 350,

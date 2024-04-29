@@ -12,18 +12,24 @@ const FjuRef = ({navigation}) =>{
       };
       return (
         <View style={styles.container}>
+          <Image
+              style={styles.pic}
+               source={require('map/asset/map.jpg')}/> 
+               <View style={{ alignSelf: 'flex-start' }}>
             <Text style={styles.headerText}>輔仁大學食享冰箱</Text>
-            <View style={styles.line} />
-            <Text></Text>
+            </View>
+            
             <View style={{ alignSelf: 'flex-start' }}>
                <Text style={styles.detail}>今日開放領取時間:   1:30</Text>
                <Text style={styles.detail}>地址:新北市新莊區中正路510號</Text>
                <Text style={styles.detail}>電話:02-2905-2000</Text>
                <Text style={styles.red}>僅供輔大師生教職員領取</Text>
+               <Text></Text>
+               <Text></Text>
+               <Text></Text>
+               <Text></Text>
                </View>
-               <Image
-              style={styles.pic}
-               source={require('map/asset/map.jpg')}/> 
+               
                <TouchableOpacity onPress={handleButtonPress}style={styles.buttonContainer}>
                  <Text style={styles.buttonText}>查看今日物資</Text>
                </TouchableOpacity>
@@ -40,10 +46,12 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'flex-start',
       backgroundColor:'#FDFBF1',
-      paddingTop:20,
+      
     },
     headerText: {
         fontSize: 35,
+        paddingLeft:20,
+        fontWeight: 'bold',
       },
     logo: {
         width: 350,
@@ -51,8 +59,8 @@ const styles = StyleSheet.create({
         borderRadius: 30,
       },
       pic:{
-        width: 350,
-        height: 350,
+        width: 400,
+        height: 200,
         borderRadius: 10,
       
       },
@@ -84,9 +92,9 @@ const styles = StyleSheet.create({
     buttonContainer: {
       backgroundColor: '#E6A984', // 自定义背景颜色
       padding: 20,
-      borderRadius: 20, // 圆角效果
+      borderRadius: 25, // 圆角效果
       marginVertical: 10, // 设置垂直间距
-      width:'80%'
+      width:'65%'
     },
     buttonText: {
       color: 'white', // 文本颜色

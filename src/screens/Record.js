@@ -115,7 +115,12 @@ const [userData, setUserData] = useState(null);
       return (
         <View style={styles.container}>
           <ScrollView>
-        <View style={styles.row}>
+          <Image
+                style={styles.logo1}
+                source={require("map/asset/背景.jpg")}
+              />
+              <Text style={styles.imageText}>領取資訊</Text>
+        <View style={styles.row1}>
           <TouchableOpacity
             style={[
               styles.textContainer,
@@ -138,7 +143,7 @@ const [userData, setUserData] = useState(null);
             <Text style={styles.text}>已領取</Text>
           </TouchableOpacity>
         </View>
-            <Text></Text>
+            
         <View style={styles.contentContainer}>{renderContent()}</View>
         
       
@@ -149,7 +154,21 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor:'#FDFBF1',
-      paddingTop:20,
+ 
+    },
+    logo1: {
+      width: 400,
+      height: 250,
+      borderRadius: 50,
+      top: -70
+    
+    },
+    imageText: {
+      position: 'absolute',
+      top: 120, 
+      left: 20, 
+      fontSize: 35,
+      color: 'white',
     },
     textContainer: {
       flex: 1,
@@ -169,6 +188,10 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         
       },
+      row1:{
+       top:-30,
+        flexDirection: 'row',
+      },
       row:{
        
         flexDirection: 'row',
@@ -183,6 +206,7 @@ const styles = StyleSheet.create({
     leftText :{
         fontSize: 25,
         paddingLeft:15,
+        
     },
 
     detail:{
@@ -191,6 +215,7 @@ const styles = StyleSheet.create({
     },
    text:{
     fontSize:20,
+    
    },
     selected: {
       backgroundColor: '#FBE8CD', // 更改此處以設置所選項目的顏色

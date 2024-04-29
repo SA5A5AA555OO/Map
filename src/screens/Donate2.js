@@ -41,11 +41,23 @@ const Donate2 = ({ navigation }) => {
   //
   const [storeImageUrl, setStoreImageUrl] = useState(null);
 
-useEffect(() => {
+  useEffect(() => {
     const getImageUrl = async () => {
-        const imageRef = ref(storage, `meal/${storeName}.jpg`);
-        const imageUrl = await getDownloadURL(imageRef);
-        setStoreImageUrl(imageUrl);
+        const imageRefs = [
+            ref(storage, `meal/${storeName}.jpg`),
+            ref(storage, `meal/${storeName}.png`)
+        ];
+        const urls = await Promise.all(imageRefs.map(async (imageRef) => {
+            try {
+                return await getDownloadURL(imageRef);
+            } catch (error) {
+                return null;
+            }
+        }));
+        const validUrl = urls.find(url => url !== null);
+        if (validUrl) {
+            setStoreImageUrl(validUrl);
+        }
     };
     getImageUrl();
 }, [storeName]);
@@ -64,6 +76,8 @@ const { storeName,status,email } = route.params;
 
   return (
     <View style={styles.container}>
+      
+      <Text></Text>
       <Text style={styles.headerText}>{storeName}</Text>
       <Text></Text>
       <Image style={styles.logo1} source={require('map/asset/Dstep1.jpg')} />
@@ -86,6 +100,9 @@ const { storeName,status,email } = route.params;
           </View>
         </View>
         <Text style={styles.totalText}>總計${userData ? userData.good_price * count : 'Loading...'}</Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
         <Text></Text>
         <TouchableOpacity onPress={() => handleButtonPress(storeName,status)} style={styles.donateButton}>
           <Text style={styles.buttonText}>捐贈</Text>
@@ -145,9 +162,9 @@ const styles = StyleSheet.create({
   },
   donateButton: {
     backgroundColor: '#E6A984',
-    paddingVertical: 20,
-    paddingHorizontal: 40,
-    borderRadius: 30,
+    paddingVertical: 15,
+    paddingHorizontal: 100,
+    borderRadius: 20,
   },
   headerText: {
     fontSize: 40,

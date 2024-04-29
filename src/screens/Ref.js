@@ -11,17 +11,7 @@ const Ref = ({navigation}) =>{
         <View style={styles.container}>
            <ScrollView >
             
-            <View style={styles.row}>
-              <TextInput
-                style={styles.input} 
-                placeholder ="輸入店家名稱"
-                />
-                <Text></Text>
-                   <Image
-                    style={styles.logo2}
-                    source={require('map/asset/search.png')}/>
-           
-             </View>
+            
             
                 
             <Image

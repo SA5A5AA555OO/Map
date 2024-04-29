@@ -100,8 +100,12 @@ const Favorite = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Text style={styles.headerText}> 已儲存的店家</Text>
-        <Text></Text>
+      <Image
+                style={styles.logo1}
+                source={require("map/asset/背景.jpg")}
+              />
+      <Text style={styles.imageText}>已儲存的店家</Text>
+        
         {storeData.map((store, index) => (
           <View key={index}>
           <View style={styles.row}>
@@ -129,7 +133,7 @@ const Favorite = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
               </View>
-            <Text></Text>
+            
             <View style={styles.line} />
             <Text></Text>
           </View>
@@ -144,7 +148,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FDFBF1',
-    paddingTop: 20,
+    
   },
   textContainer: {
     flex: 1,
@@ -166,11 +170,12 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 100,
+    top:10
 
   },
   row: {
-
     flexDirection: 'row',
+    top:-20,
   },
   line: {
     borderBottomWidth: 1,
@@ -178,11 +183,18 @@ const styles = StyleSheet.create({
     borderBottomStyle: 'solid',
     width: 350,
     alignSelf: 'center',
+    top:-30
   },
   leftText: {
     fontSize: 30,
     paddingLeft: 15,
     color: '#DA7746',
+  },
+  logo1: {
+    width: 400,
+    height: 250,
+    borderRadius: 50,
+    top: -60
   },
 
   detail: {
@@ -205,6 +217,7 @@ const styles = StyleSheet.create({
     marginVertical: 10, // 设置垂直间距
     width: '20%',
     marginLeft: 'auto',
+    
   },
   buttonText: {
     color: 'white', // 按钮文本颜色
@@ -219,6 +232,14 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: 80,
     height: 55,
+    top:-30
+  },
+  imageText: {
+    position: 'absolute',
+    top: 130, 
+    left: 20, 
+    fontSize: 35,
+    color: 'white',
   },
 });
 

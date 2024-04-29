@@ -69,6 +69,11 @@ const EditProfile = ({navigation}) =>{
     
     return(
         <View style={styles.container}>
+          <Image
+                style={styles.logo1}
+                source={require("map/asset/背景.jpg")}
+              />
+              <Text style={styles.imageText}>修改資料</Text>
         <View style={styles.wrapper}>
             <TextInput
             style={styles.input} 
@@ -110,12 +115,26 @@ const styles =StyleSheet.create({
   justifyContent:'center',},
   wrapper:{
       width:'80%',
-      
+      top:-30
+  },
+  imageText: {
+    position: 'absolute',
+    top: 130, 
+    left: 20, 
+    fontSize: 35,
+    color: 'white',
   },
   button: {
       backgroundColor: '#E6A984', // 自定义按钮颜色
       padding: 20,
       borderRadius: 20,
+    },
+    logo1: {
+      width: 400,
+      height: 250,
+      borderRadius: 50,
+      top: -140
+    
     },
     buttonText: {
       color: 'white', // 按钮文本颜色
