@@ -109,9 +109,10 @@ const route = useRoute();
   return (
     <View style={styles.container}><Image
         style={styles.pic}
-        source={require('map/asset/map.jpg')} />
+        source={require('map/asset/背景.jpg')} />
+        <Text style={styles.imageText}>{route.params.storeName}</Text>
         <View style={{ alignSelf: 'flex-start' }}>
-      <Text style={styles.headerText}>{route.params.storeName}</Text>
+      <Text style={styles.imageText}>{route.params.storeName}</Text>
       </View>
       <Text></Text>
       <View style={{ alignSelf: 'flex-start' }}>
@@ -120,6 +121,11 @@ const route = useRoute();
         <Text style={styles.detail}>電話:{userData ? userData.store_phone : 'Loading...'}</Text>
         <Text style={styles.detail}>提供品項:{userData ? userData.good_name : 'Loading...'}</Text>
         <Text style={styles.detail}>提供數量:{userData ? userData.provide : 'Loading...'}</Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
         <Text></Text>
         <Text></Text>
         <Text></Text>
@@ -159,6 +165,13 @@ const styles = StyleSheet.create({
     width: 400,
     height: 200,
   
+  },
+  imageText: {
+    position: 'absolute',
+    top: 130, 
+    left: 20, 
+    fontSize: 35,
+    color: 'white',
   },
   row: {
     flexDirection: 'row',

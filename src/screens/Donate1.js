@@ -60,6 +60,7 @@ const Donate1 = ({navigation}) =>{
           console.error('獲取使用者資料時發生錯誤：', error);
         }
       };
+      
     return(
         <View style={styles.container}>
           <Text></Text>
