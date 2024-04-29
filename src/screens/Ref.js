@@ -12,8 +12,8 @@ const Ref = ({navigation}) =>{
            <ScrollView >
             
             
-            
-                
+           <Text></Text>
+            <Text></Text>
             <Image
               style={styles.logo}
                source={require('map/asset/ref.jpg')}/>

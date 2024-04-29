@@ -124,6 +124,7 @@ const TabNavigator = () => {
                 name="Home"
                 component={HomeScreen}
                 options={{
+                    headerShown: false,
                     tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center', top: 10 }}>
                             <Image
@@ -146,6 +147,7 @@ const TabNavigator = () => {
                 name="Map"
                 component={Map}
                 options={{
+                    headerShown: false,
                     tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center', top: 10 }}>
                             <Image
@@ -168,6 +170,7 @@ const TabNavigator = () => {
                 name="Me"
                 component={Me}
                 options={{
+                    headerShown: false,
                     tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center', top: 10 }}>
                             <Image
