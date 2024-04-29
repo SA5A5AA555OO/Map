@@ -14,9 +14,10 @@ const FjuRef = ({navigation}) =>{
         <View style={styles.container}>
           <Image
               style={styles.pic}
-               source={require('map/asset/map.jpg')}/> 
+               source={require('map/asset/背景.jpg')}/> 
+               <Text style={styles.imageText}>輔仁大學食享冰箱</Text>
                <View style={{ alignSelf: 'flex-start' }}>
-            <Text style={styles.headerText}>輔仁大學食享冰箱</Text>
+            <Text style={styles.imageText}>輔仁大學食享冰箱</Text>
             </View>
             
             <View style={{ alignSelf: 'flex-start' }}>
@@ -24,6 +25,11 @@ const FjuRef = ({navigation}) =>{
                <Text style={styles.detail}>地址:新北市新莊區中正路510號</Text>
                <Text style={styles.detail}>電話:02-2905-2000</Text>
                <Text style={styles.red}>僅供輔大師生教職員領取</Text>
+               <Text></Text>
+               <Text></Text>
+               <Text></Text>
+               <Text></Text>
+               <Text></Text>
                <Text></Text>
                <Text></Text>
                <Text></Text>
@@ -48,6 +54,13 @@ const styles = StyleSheet.create({
       backgroundColor:'#FDFBF1',
       
     },
+    imageText: {
+      position: 'absolute',
+      top: 130, 
+      left: 20, 
+      fontSize: 35,
+      color: 'white',
+    },
     headerText: {
         fontSize: 35,
         paddingLeft:20,
@@ -58,12 +71,13 @@ const styles = StyleSheet.create({
         height: 200,
         borderRadius: 30,
       },
-      pic:{
+      pic: {
         width: 400,
-        height: 200,
-        borderRadius: 10,
-      
+        height: 250,
+        borderRadius: 50,
+        top: -50
       },
+      
     leftText :{
         fontSize: 30,
         left:20,
@@ -72,12 +86,14 @@ const styles = StyleSheet.create({
       fontSize: 20,
       left:20,
       padding:5,
-      color:'red'
+      color:'red',
+      top:-50
     },
     detail:{
         fontSize: 20,
         left:20,
         padding:5,
+        top:-50
     },
     line: {
         borderBottomWidth: 1, // 线的宽度
