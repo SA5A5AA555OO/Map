@@ -52,6 +52,7 @@ const Take2 = ({navigation}) =>{
   
     return(
         <View style={styles.container}>
+          <Text></Text>
              <Text style={styles.headerText}>{ storeName }</Text>
             <Text ></Text>
             <Image

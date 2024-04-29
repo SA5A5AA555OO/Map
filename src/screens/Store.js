@@ -104,38 +104,35 @@ const route = useRoute();
   }, [status,fav]);
 
   useEffect(() => {
-    getData(db); // 將 db 傳遞給 getData 函數
-    // console.log(`(store)73 useEffect  status:${status}   email:${email}`)
+    getData(db); 
   }, []);
   return (
-    <View style={styles.container}>
-      <Text style={styles.headerText}>{route.params.storeName}</Text>
-      <View style={styles.line} />
-      <View style={{ alignSelf: 'flex-start' }}>
-        <Text style={styles.detail}>營業時間:{userData ? userData.opentime : 'Loading...'}</Text>
-        <Text style={styles.detail}>地址:{userData ? userData.store_address : 'Loading...'}</Text>
-        <Text style={styles.detail}>電話:{userData ? userData.store_phone : 'Loading...'}</Text>
-      </View>
-      <Image
+    <View style={styles.container}><Image
         style={styles.pic}
         source={require('map/asset/map.jpg')} />
-      {buttons.map((button, index) => (
-        <TouchableOpacity key={index} onPress={button.onPress} style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>{button.text}</Text>
-        </TouchableOpacity>
-      ))}
-      {/* <TouchableOpacity onPress={() => handleButtonPress(storeName)} style={styles.buttonContainer}>
-                  <Text style={styles.buttonText}>捐贈待用餐</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleButtonPress2(storeName)} style={styles.buttonContainer}>
-                  <Text style={styles.buttonText}>領取待用餐</Text>
-                </TouchableOpacity>
-               <TouchableOpacity  style={styles.buttonContainer}>
-                 <Text style={styles.buttonText}>加入最愛</Text>
-               </TouchableOpacity> */}
-
-
-
+        <View style={{ alignSelf: 'flex-start' }}>
+      <Text style={styles.headerText}>{route.params.storeName}</Text>
+      </View>
+      <Text></Text>
+      <View style={{ alignSelf: 'flex-start' }}>
+        <Text style={styles.detail}>營業時間:{userData ? userData.opentime : 'Loading...'} ~ {userData ? userData.closetime : 'Loading...'}</Text>
+        <Text style={styles.detail}>地址:{userData ? userData.store_address : 'Loading...'}</Text>
+        <Text style={styles.detail}>電話:{userData ? userData.store_phone : 'Loading...'}</Text>
+        <Text style={styles.detail}>提供品項:{userData ? userData.good_name : 'Loading...'}</Text>
+        <Text style={styles.detail}>提供數量:{userData ? userData.provide : 'Loading...'}</Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+        <Text></Text>
+      </View>
+      <View style={styles.row}>
+       {buttons.map((button, index) => (
+       <TouchableOpacity key={index} onPress={button.onPress} style={[styles.buttonContainer, index > 0 && { marginLeft: 10 }]}>
+         <Text style={styles.buttonText}>{button.text}</Text>
+       </TouchableOpacity>
+        ))}
+      </View>
     </View>
 
   );
@@ -149,7 +146,9 @@ const styles = StyleSheet.create({
 
   },
   headerText: {
+    fontWeight: 'bold',
     fontSize: 40,
+    left: 20,
   },
   logo: {
     width: 350,
@@ -157,10 +156,13 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   pic: {
-    width: 350,
-    height: 350,
-    borderRadius: 10,
-
+    width: 400,
+    height: 200,
+  
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   leftText: {
     fontSize: 30,
@@ -181,9 +183,9 @@ const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: '#E6A984',
     padding: 20,
-    borderRadius: 30, // 圆角效果
+    borderRadius: 20, // 圆角效果
     marginVertical: 5, // 设置垂直间距
-    width: '80%'
+    width: '30%'
   },
   buttonText: {
     color: 'white', // 文本颜色

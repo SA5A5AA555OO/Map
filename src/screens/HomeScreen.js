@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
       backgroundColor: '#E6A984', // 自定义背景颜色
       padding: 20,
-      borderRadius: 30, // 圆角效果
+      borderRadius: 20, // 圆角效果
       marginVertical: 10, // 设置垂直间距
       width:'80%'
     },

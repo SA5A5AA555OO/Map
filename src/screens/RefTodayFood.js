@@ -39,9 +39,11 @@ const RefTodayFood = () => {
     }, []);
   return (
     <View style={styles.container}>
-      <Text style={[styles.leftText, {alignSelf: 'flex-start'}]}>
-        輔仁大學食享冰箱
-      </Text>
+      <Image
+                style={styles.logo1}
+                source={require("map/asset/背景.jpg")}
+              />
+       <Text style={styles.imageText}>輔仁大學食享冰箱</Text>
       <View style={{alignSelf: 'flex-start'}}>
         <Text style={styles.detail}>今日開放領取時間:{userData ? userData.start_time : 'Loading...'}</Text>
       </View>
@@ -51,6 +53,7 @@ const RefTodayFood = () => {
         <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
           <View>
             <Image style={styles.pic} source={require('map/asset/吐司.png')} />
+            <View style={styles.square}></View>
             <Text style={styles.detail}>麵包:{userData ? userData.bread_quantity : 'Loading...'}份</Text>
           </View>
           <View style={{marginLeft: 60}}>
@@ -87,13 +90,26 @@ const styles = StyleSheet.create({
       backgroundColor:'#FDFBF1',
       paddingTop:20,
     },
+    imageText: {
+      position: 'absolute',
+      top: 130, 
+      left: 20, 
+      fontSize: 35,
+      color: 'white',
+    },
+    logo1: {
+      width: 400,
+      height: 250,
+      borderRadius: 50,
+      top: -70
+    },
     
     pic: {
         width: 130,
         height: 130,
         borderRadius: 100,
         backgroundColor:'white',
-        
+        top:-60
       },
     leftText :{
         fontSize: 30,
@@ -101,7 +117,8 @@ const styles = StyleSheet.create({
     },
     detail:{
         fontSize: 20,
-        left:20
+        left:20,
+        top:-60
     },
 
   });

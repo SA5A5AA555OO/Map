@@ -62,14 +62,29 @@ const Take1 = ({navigation}) =>{
 
 useEffect(() => {
     const getImageUrl = async () => {
-        const imageRef = ref(storage, `meal/${storeName}.jpg`);
-        const imageUrl = await getDownloadURL(imageRef);
+        const imageRefs = [
+            ref(storage, `meal/${storeName}.jpg`),
+            ref(storage, `meal/${storeName}.png`)
+        ];
+
+        let imageUrl = null;
+
+        for (const imageRef of imageRefs) {
+            try {
+                imageUrl = await getDownloadURL(imageRef);
+                break; // Found a valid URL, no need to continue the loop
+            } catch (error) {
+                // Image does not exist, continue to the next one
+            }
+        }
+
         setStoreImageUrl(imageUrl);
     };
     getImageUrl();
 }, [storeName]);
     return(
         <View style={styles.container}>
+          <Text></Text>
              <Text style={styles.headerText}>{ storeName }</Text>
             <Text ></Text>
             <Image
