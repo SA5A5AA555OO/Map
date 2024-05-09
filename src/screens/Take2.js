@@ -79,7 +79,7 @@ const Take2 = ({ navigation }) => {
           placeholder={email}
           value={email}
         />
-        <Picker
+        {/* <Picker
           selectedValue={pickupTime}
           style={styles.input}
           onValueChange={(itemValue, itemIndex) => setPickupTime(itemValue)}
@@ -89,7 +89,7 @@ const Take2 = ({ navigation }) => {
           <Picker.Item label="14:00" value="14:00" />
           <Picker.Item label="15:00" value="15:00" />
           
-        </Picker>
+        </Picker> */}
 
 
         <Text ></Text>
