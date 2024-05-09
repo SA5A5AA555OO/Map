@@ -112,7 +112,6 @@ const route = useRoute();
         source={require('map/asset/背景.jpg')} />
         <Text style={styles.imageText}>{route.params.storeName}</Text>
         <View style={{ alignSelf: 'flex-start' }}>
-      <Text style={styles.imageText}>{route.params.storeName}</Text>
       </View>
       <Text></Text>
       <View style={{ alignSelf: 'flex-start' }}>
@@ -121,7 +120,7 @@ const route = useRoute();
         <Text style={styles.detail}>電話:{userData ? userData.store_phone : 'Loading...'}</Text>
         <Text style={styles.detail}>提供品項:{userData ? userData.good_name : 'Loading...'}</Text>
         <Text style={styles.detail}>提供數量:{userData ? userData.provide : 'Loading...'}</Text>
-        <Text></Text>
+        <Text style={styles.red}>限當天領取且一次限領取一份</Text>
         <Text></Text>
         <Text></Text>
         <Text></Text>
@@ -176,6 +175,11 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  red:{
+    fontSize: 20,
+    left:20,
+    color:'red',
   },
   leftText: {
     fontSize: 30,

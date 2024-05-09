@@ -48,7 +48,7 @@ const Take3 = ({navigation}) =>{
             phone: phone,
             email: email,
             randomNumber: randomNumber,
-            take: false,
+            take: 1,
             pickupTime:pickupTime
           });
           console.log("Document written with ID: ", docRef.id);

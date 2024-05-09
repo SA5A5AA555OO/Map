@@ -104,7 +104,7 @@ const Favorite = ({ navigation }) => {
                 style={styles.logo1}
                 source={require("map/asset/背景.jpg")}
               />
-      <Text style={styles.imageText}>已儲存的店家</Text>
+      <Text style={styles.imageText}>最愛店家</Text>
         
         {storeData.map((store, index) => (
           <View key={index}>
