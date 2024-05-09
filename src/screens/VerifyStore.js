@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
-const TakePeople = ({ navigation }) => {
+const VerifyStore = ({ navigation }) => {
   const route = useRoute();
   const { username,status } = route.params || { username: '用戶' };
   const [userData, setUserData] = useState([]);
@@ -45,27 +45,27 @@ const TakePeople = ({ navigation }) => {
     }
   };
 
-  const handleButtonPress = (email) => {
-    navigation.navigate('VerifyStore2', {name:username,email: email ,status:status});
-  };
-  
-  // const handleVerify = async (email) => {
-  //   try {
-  //     const pickupsCollection = collection(db, 'user');
-  //     const q = query(pickupsCollection, where('email', '==', email));
-  //     const querySnapshot = await getDocs(q);
-  //     querySnapshot.forEach(async (snapshot) => {
-  //       const docRef = doc(db, 'user', snapshot.id);
-  //       await updateDoc(docRef, { status: "3" });
-  //       console.log('Updated taken to true');
-  //       fetchUserData(); 
-  //       Alert.alert("審核通過!")
-  //     });
-  //   } catch (error) {
-  //     console.error('Error updating document:', error);
-  //   }
-  // };
+  const handleButtonPress = async (email,username) => {
+    const querySnapshot = await getDocs(query(collection(db, 'user'), where('email', '==', email)));
+    if (!querySnapshot.empty) {
+      const userDocRef = querySnapshot.docs[0].ref;
+      try {
+        const userData = querySnapshot.docs[0].data();
+        let favoriteStores = userData.favorite || [];
+        if (!favoriteStores.includes(email)) {
+          navigation.navigate('VerifyStore2', { username: username , status: status,email: email});
+        } else {
+          navigation.navigate('VerifyStore2', { username: username , status: status,email: email});
+        }
+        
+      } catch (error) {
+        console.error('Error updating document: ', error);
+      }
+    } else {
+      console.error('No documents found for query');
+    }
 
+  };
 
 
 
@@ -90,7 +90,7 @@ const TakePeople = ({ navigation }) => {
                 <View style={{height:10}} />
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={() => handleButtonPress(item.email)}>
+                  onPress={() => handleButtonPress(item.email,item.username)}>
                   <Text style={styles.buttonText}>詳情</Text>
                 </TouchableOpacity>
               </View>
@@ -184,4 +184,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TakePeople;
+export default VerifyStore;

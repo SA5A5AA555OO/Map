@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import { DataTable } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, query, where, getDocs, updateDoc,addDoc } from 'firebase/firestore/lite';
+import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
+import { getFirestore, collection, doc, query, where, getDocs, updateDoc, addDoc } from 'firebase/firestore/lite';
 const firebaseConfig = {
   apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
   authDomain: "sa5a5aa555oo.firebaseapp.com",
@@ -17,12 +18,15 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 
-const TakePeople = ({ navigation }) => {
+const VerifyStore2 = ({ navigation }) => {
   const route = useRoute();
-  const { email,status } = route.params
+  const { email, status, name, username } = route.params
   const [userData, setUserData] = useState([]);
+  const [userImages, setUserImages] = useState([]);
+
 
   useEffect(() => {
     fetchUserData();
@@ -35,8 +39,18 @@ const TakePeople = ({ navigation }) => {
       const querySnapshot = await getDocs(q);
 
       const data = [];
+      const images = [];
       querySnapshot.forEach(doc => {
         data.push(doc.data());
+        const username = doc.data().username;
+        findImagesByUsername(username)
+          .then(imageUrls => {
+            images.push({ username, imageUrls });
+            setUserImages([...images]);
+          })
+          .catch(error => {
+            console.error('查找图片时出错：', error);
+          });
       });
 
       setUserData(data);
@@ -54,9 +68,9 @@ const TakePeople = ({ navigation }) => {
         const docRef = doc(db, 'user', snapshot.id);
         await updateDoc(docRef, { status: "3" });
         console.log('Updated taken to true');
-        fetchUserData(); 
+        fetchUserData();
         Alert.alert("審核通過!")
-        
+
         const userData = snapshot.data();
         await addDoc(collection(db, 'store'), {
           store_name: userData.username,
@@ -67,15 +81,46 @@ const TakePeople = ({ navigation }) => {
           good_price: userData.good_price,
           opentime: userData.opentime,
           closetime: userData.closetime,
-          provide:"0",
-          
+          provide: "0",
+
+        });
+        navigation.navigate('Me', { status: status });
       });
-      navigation.navigate('Me',{status:status});
-    });
     } catch (error) {
       console.error('Error updating document:', error);
     }
   };
+  const findImagesByUsername = async (username) => {
+    try {
+      const imagesRef = ref(storage, 'meal'); // 假设图片存储在 'images' 目录下
+      const files = await listAll(imagesRef);
+
+      const imageUrls = [];
+      for (const file of files.items) {
+        const fileName = file.name;
+        if (fileName.includes(username)) {
+          const imageUrl = await getDownloadURL(file);
+          imageUrls.push(imageUrl);
+        }
+      }
+
+      return imageUrls;
+    } catch (error) {
+      console.error('查找图片时出错：', error);
+      return [];
+    }
+  };
+
+  console.log("username: " + username)
+  console.log("name: " + name);
+  console.log("email: " + email);
+  findImagesByUsername(username)
+    .then(imageUrls => {
+      console.log('包含用戶名的圖片', imageUrls);
+    })
+    .catch(error => {
+      console.error('尋找圖片時出錯', error);
+    });
 
 
 
@@ -90,8 +135,8 @@ const TakePeople = ({ navigation }) => {
 
       {userData.map((item, index) => (
         <View key={index}>
-           <View style={styles.line} />
-           <Text></Text>
+          <View style={styles.line} />
+          <Text></Text>
           <ScrollView>
             <View style={styles.row}>
               <View>
@@ -103,16 +148,38 @@ const TakePeople = ({ navigation }) => {
                 <Text style={styles.detail}>待用餐點價錢:{item.good_price}</Text>
                 <Text style={styles.detail}>營業時間:{item.opentime}</Text>
                 <Text style={styles.detail}>打烊時間:{item.closetime}</Text>
-                <View style={{height:20}} />
+                <View style={styles.row1}>
+                  {userImages.map((image, idx) => {
+                    if (image.username === item.username) {
+                      return (
+                        <View  key={idx}>
+                          {image.imageUrls.map((url, i) => (
+                            <Image key={i} 
+                            source={{ uri: url }} 
+                            style={styles.image} 
+                            resizeMode="contain"
+                            />
+                          ))}
+                        </View>
+                      );
+                    }
+                  })}
+                </View>
+                <View style={{ height: 20 }} />
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => handleVerify(item.email)}>
                   <Text style={styles.buttonText}>審核通過</Text>
                 </TouchableOpacity>
+                <Text></Text>
+                <Text></Text>
+                <Text></Text>
+                <Text></Text>
+                <Text></Text>
               </View>
             </View>
             <Text></Text>
-            
+
             <Text></Text>
           </ScrollView>
         </View>
@@ -148,8 +215,15 @@ const styles = StyleSheet.create({
 
   },
   row: {
-
     flexDirection: 'row',
+  },
+  row1: {
+    flexDirection: 'row',
+    paddingLeft: 40,
+  },
+  image: {
+    width: 300,
+    height: 400,
   },
   line: {
     borderBottomWidth: 1,
@@ -200,4 +274,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TakePeople;
+export default VerifyStore2;

@@ -20,7 +20,6 @@ const db = getFirestore(app);
 
 const ShopImf = ({ navigation }) => {
   const [store_name, setstore_name] = useState('');
-  const [provide, setprovide] = useState('');
   const [store_address, setstore_address] = useState('');
   const [store_phone, setstore_phone] = useState('');
   const [closetime, setclosetime] = useState('');
@@ -39,7 +38,6 @@ const ShopImf = ({ navigation }) => {
         const docRef = doc(db, 'user', querySnapshot.docs[0].id);
         const userData = querySnapshot.docs[0].data();
         setstore_name(userData.store_name); 
-        setprovide(userData.provide); 
         setstore_address(userData.store_address); 
         setstore_phone(userData.store_phone); 
         setclosetime(userData.closetime); 
@@ -59,7 +57,6 @@ const ShopImf = ({ navigation }) => {
         const docRef = doc(db, 'store', querySnapshot.docs[0].id);
         await updateDoc(docRef, {
           store_name: store_name,
-          provide: provide,
           store_address: store_address,
           store_phone: store_phone,
           closetime: closetime,
@@ -81,6 +78,7 @@ const ShopImf = ({ navigation }) => {
   return(
       <View style={styles.container}>
       <View style={styles.wrapper}>
+        <Text>店家名稱</Text>
           <TextInput
           style={styles.input} 
           value={store_name}
@@ -88,30 +86,29 @@ const ShopImf = ({ navigation }) => {
           onChangeText={Text =>setstore_name(Text)}
           editable={false}
           />
-          <TextInput
-          style={styles.input} 
-          value={provide}
-          placeholder ="提供數量"
-          onChangeText={Text =>setprovide(Text)}
-          />
+          
+          <Text>地址</Text>
           <TextInput
           style={styles.input} 
           value={store_address}
           placeholder ="地址"
           onChangeText={Text =>setstore_address(Text)}
           />
+          <Text>電話</Text>
            <TextInput
           style={styles.input} 
           value={store_phone.toString()} 
           placeholder="電話"
           onChangeText={text => setstore_phone(text)}
           />
+          <Text>營業時間</Text>
           <TextInput
           style={styles.input} 
           value={opentime}
           placeholder ="營業時間"
           onChangeText={Text =>setopentime(Text)}
           />
+          <Text>結束時間</Text>
           <TextInput
           style={styles.input} 
           value={closetime}

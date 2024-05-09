@@ -68,7 +68,7 @@ const TakePeople = ({navigation}) =>{
   
       return (
         <View style={styles.container}>
-        <Text style={styles.headerText}>{username}</Text>
+        <Text style={styles.headerText}>{username}領取名單</Text>
         <Text></Text>
       
         {pickupData.map((item, index) => (
@@ -83,6 +83,7 @@ const TakePeople = ({navigation}) =>{
                   <Text style={styles.leftText}>姓名:{item.name}</Text>
                   <Text style={styles.detail}>領取號碼:{item.randomNumber}</Text>
                   <Text style={styles.detail}>電話:{item.phone}</Text>
+                  <Text style={styles.detail}>抵達時間:{item.pickupTime}</Text>
                 </View>
                 <TouchableOpacity
               style={styles.buttonContainer}
@@ -121,8 +122,8 @@ const styles = StyleSheet.create({
     },
     
   logo: {
-      width: 63,
-      height: 63,
+      width: 86,
+      height: 86,
       borderRadius: 100,
       
     },
@@ -163,6 +164,7 @@ const styles = StyleSheet.create({
     width:'18%',
     marginLeft: 'auto',
     marginRight:10,
+    height:65
   },
   buttonText: {
     color: 'white', 

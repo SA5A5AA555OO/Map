@@ -16,7 +16,7 @@ const RegesterChoose = ({navigation}) =>{
             <Text style={{ fontSize: 40 }}>註冊</Text>
             <View style={styles.topBlock}></View>
           <TouchableOpacity onPress={handleButtonPress} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>消費者</Text>
+            <Text style={styles.buttonText}>一般使用者</Text>
           </TouchableOpacity>
           <TouchableOpacity  onPress={handleButtonPress2} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>店家</Text>

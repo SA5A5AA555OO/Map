@@ -22,15 +22,18 @@ const Donate1 = ({navigation}) =>{
       const [name, setName] = useState('');
       const [phone, setPhone] = useState('');
       const [userData, setUserData] = useState(null);
-
+      const [dateTime, setDateTime] = useState('');
       const handleButtonPress = async (storeName) => {
         try {
+          const currentTime = new Date().toISOString();
           const docRef = await addDoc(collection(db, 'donate'), {
             storeName: storeName,
             name: name,
             phone: phone,
             email: email,
-            count: count
+            count: count,
+            dateTime: dateTime,
+            pay: true,
           });
           console.log('Document written with ID: ', docRef.id);
           navigation.navigate('Donate3', { storeName: storeName,status:status });
@@ -38,6 +41,25 @@ const Donate1 = ({navigation}) =>{
           console.error('Error adding document: ', e);
         }
       };
+      const handleButtonPress1 = async (storeName) => {
+        try {
+          const currentTime = new Date().toISOString();
+          const docRef = await addDoc(collection(db, 'donate'), {
+            storeName: storeName,
+            name: name,
+            phone: phone,
+            email: email,
+            count: count,
+            dateTime: dateTime,
+            pay: false,
+          });
+          console.log('Document written with ID: ', docRef.id);
+          navigation.navigate('Home', { storeName: storeName,status:status });
+        } catch (e) {
+          console.error('Error adding document: ', e);
+        }
+      };
+
 
       useEffect(() => {
         fetchUserData();
@@ -60,7 +82,10 @@ const Donate1 = ({navigation}) =>{
           console.error('獲取使用者資料時發生錯誤：', error);
         }
       };
-      
+      useEffect(() => {
+        const currentDate = new Date().toLocaleString(); // 获取当前日期和时间
+        setDateTime(currentDate);
+      }, []);
     return(
         <View style={styles.container}>
           <Text></Text>
@@ -92,7 +117,11 @@ const Donate1 = ({navigation}) =>{
             <Text></Text>
             
         <TouchableOpacity onPress={() => handleButtonPress(storeName)}  style={styles.button}>
-                  <Text style={styles.buttonText}>前往付款</Text>
+                  <Text style={styles.buttonText}>線上付款</Text>
+                </TouchableOpacity>
+                <Text></Text>
+                <TouchableOpacity onPress={() => handleButtonPress1(storeName)}  style={styles.button}>
+                  <Text style={styles.buttonText}>至店家現金付款</Text>
                 </TouchableOpacity>
             <View style={{flexDirection:'row', marginTop:20}}></View>
 

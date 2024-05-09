@@ -1,3 +1,7 @@
+plugins {
+  id 'com.android.application'
+  id 'com.google.gms.google-services' 
+}
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 
@@ -81,9 +85,11 @@ android {
     defaultConfig {
         applicationId "com.map"
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        // targetSdkVersion rootProject.ext.targetSdkVersion
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
     }
     signingConfigs {
         debug {
@@ -140,10 +146,6 @@ dependencies {
     // Add the dependency for the Cloud Storage library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-storage")
-}
-plugins {
-  id 'com.android.application'
-  id 'com.google.gms.google-services' 
 }
 
 

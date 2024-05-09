@@ -53,45 +53,45 @@ const MainStack = () => {
     return (
       <Stack.Navigator> 
         <Stack.Screen name="Tabs" component={TabNavigator}options={{ headerShown: false }}/>
-        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="FjuRef" component={FjuRef} options={{ headerShown: false }}/>
-        <Stack.Screen name="Favorite" component={Favorite}options={{ headerShown: false }} />
-        <Stack.Screen name="Record" component={Record} options={{ headerShown: false }}/>
-        <Stack.Screen name="EditProfile" component={EditProfile} options={{ headerShown: false }}/>
-        <Stack.Screen name="Shop" component={Shop}options={{ headerShown: false }} />
-        <Stack.Screen name="TakePeople" component={TakePeople} options={{ headerShown: false }}/>
-        <Stack.Screen name="DonatePeople" component={DonatePeople} options={{ headerShown: false }}/>
-        <Stack.Screen name="ShopImf" component={ShopImf} options={{ headerShown: false }}/>
+        <Stack.Screen name="Login" component={LoginScreen} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="FjuRef" component={FjuRef} options={{headerTransparent: true, headerTintColor: 'white', headerTitle: ''}}/>
+        <Stack.Screen name="Favorite" component={Favorite}options={{headerTransparent: true, headerTintColor: 'white', headerTitle: ''}} />
+        <Stack.Screen name="Record" component={Record} options={{headerTransparent: true, headerTintColor: 'white', headerTitle: ''}}/>
+        <Stack.Screen name="EditProfile" component={EditProfile} options={{headerTransparent: true, headerTintColor: 'white', headerTitle: ''}}/>
+        <Stack.Screen name="Shop" component={Shop}options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}} />
+        <Stack.Screen name="TakePeople" component={TakePeople} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="DonatePeople" component={DonatePeople} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="ShopImf" component={ShopImf} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
         <Stack.Screen name="LoginSuccess" component={LoginSuccess} options={{ headerShown: false }}/>
-        <Stack.Screen name="MyDonate" component={MyDonate} options={{ headerShown: false }}/>
-        <Stack.Screen name="RefAdjust" component={RefAdjust} options={{ headerShown: false }}/>
-        <Stack.Screen name="Regester" component={RegesterScreen}options={{ headerShown: false }} />
-        <Stack.Screen name="RegesterButton" component={RegesterScreenButton} options={{ headerShown: false }}/>
-        <Stack.Screen name="RegesterButton2" component={RegesterScreenButton2} options={{ headerShown: false }}/>
-        <Stack.Screen name="RegesterChoose" component={RegesterChoose} options={{ headerShown: false }}/>
-        <Stack.Screen name="Regester2" component={RegesterScreen2} options={{ headerShown: false }}/>
-        <Stack.Screen name="Regester3" component={RegesterScreen3} options={{ headerShown: false }}/>
-        <Stack.Screen name="Ref" component={Ref} options={{ headerShown: false }}/>
-        <Stack.Screen name="RefTodayFood" component={RefTodayFood} options={{ headerShown: false }}/>
-        <Stack.Screen name="Meal" component={Meal} options={{ headerShown: false }}/>
-        <Stack.Screen name="Store" component={Store} options={{ headerShown: false }}/>
-        <Stack.Screen name="Donate1" component={Donate1} options={{ headerShown: false }}/>
-        <Stack.Screen name="Donate2" component={Donate2} options={{ headerShown: false }}/>
-        <Stack.Screen name="Donate3" component={Donate3} options={{ headerShown: false }}/>
-        <Stack.Screen name="Take1" component={Take1} options={{ headerShown: false }}/>
-        <Stack.Screen name="Take2" component={Take2} options={{ headerShown: false }}/>
-        <Stack.Screen name="Take3" component={Take3} options={{ headerShown: false }}/>
-        <Stack.Screen name="GoogleMap" component={GoogleMap} options={{ headerShown: false }}/>
-        <Stack.Screen name="Introduction" component={Introduction} options={{ headerShown: false }}/>
-        <Stack.Screen name="Introduction2" component={Introduction2} options={{ headerShown: false }}/>
-        <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{ headerShown: false }}/>
-        <Stack.Screen name="VerifyStore" component={VerifyStore} options={{ headerShown: false }}/>
-        <Stack.Screen name="VerifyStore2" component={VerifyStore2} options={{ headerShown: false }}/>
-        <Stack.Screen name="CheckStore" component={CheckStore} options={{ headerShown: false }}/>
-        <Stack.Screen name="CheckUser" component={CheckSUser} options={{ headerShown: false }}/>
-        <Stack.Screen name="Test" component={Test} options={{ headerShown: false }}/>
-        <Stack.Screen name="Test1" component={Test1} options={{ headerShown: false }}/>
-        <Stack.Screen name="Test2" component={Test2} options={{ headerShown: false }}/>
+        <Stack.Screen name="MyDonate" component={MyDonate} options={{headerTransparent: true, headerTintColor: 'white', headerTitle: ''}}/>
+        <Stack.Screen name="RefAdjust" component={RefAdjust} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Regester" component={RegesterScreen}options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}} />
+        <Stack.Screen name="RegesterButton" component={RegesterScreenButton} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="RegesterButton2" component={RegesterScreenButton2} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="RegesterChoose" component={RegesterChoose} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Regester2" component={RegesterScreen2} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Regester3" component={RegesterScreen3} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Ref" component={Ref} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="RefTodayFood" component={RefTodayFood} options={{headerTransparent: true, headerTintColor: 'white', headerTitle: ''}}/>
+        <Stack.Screen name="Meal" component={Meal} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Store" component={Store} options={{headerTransparent: true, headerTintColor: 'white', headerTitle: ''}}/>
+        <Stack.Screen name="Donate1" component={Donate1} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Donate2" component={Donate2} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Donate3" component={Donate3} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Take1" component={Take1} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Take2" component={Take2} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Take3" component={Take3} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="GoogleMap" component={GoogleMap} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Introduction" component={Introduction} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Introduction2" component={Introduction2} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="VerifyStore" component={VerifyStore} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="VerifyStore2" component={VerifyStore2} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="CheckStore" component={CheckStore} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="CheckUser" component={CheckSUser} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Test" component={Test} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Test1" component={Test1} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Test2" component={Test2} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
       </Stack.Navigator>
     );
   };
@@ -137,7 +137,7 @@ const TabNavigator = () => {
                                 }}
                             />
                             <Text
-                                style={{ color: focused ? '#E6A984' : 'E6A984', fontSize: 12 }}>
+                                style={{ color: focused ? '#E6A984' : '#E6A984', fontSize: 12 }}>
                             </Text>
                         </View>
                     ),
@@ -160,7 +160,7 @@ const TabNavigator = () => {
                                 }}
                             />
                             <Text
-                                style={{ color: focused ? '#E6A984' : 'E6A984', fontSize: 12 }}>
+                                style={{ color: focused ? '#E6A984' : '#E6A984', fontSize: 12 }}>
                             </Text>
                         </View>
                     ),
@@ -183,7 +183,7 @@ const TabNavigator = () => {
                                 }}
                             />
                             <Text
-                                style={{ color: focused ? '#E6A984' : 'E6A984', fontSize: 12 }}>
+                                style={{ color: focused ? '#E6A984' : '#E6A984', fontSize: 12 }}>
                             </Text>
                         </View>
                     ),
