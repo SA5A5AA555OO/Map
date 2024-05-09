@@ -52,44 +52,53 @@ const { email } = route.params || { email: '' };
   };
   const renderContent = () => {
     if (selected === 'notReceived' && userData) {
-      return userData.map((data, index) => (
-        
-        <View key={index}>
-          <View style={styles.row}>
-            <Image
-              style={styles.logo}
-              source={require("map/asset/food.jpg")}
-            />
-            
-            <View>
-              <Text style={styles.leftText}>{data.storeName}</Text>
-              <Text style={styles.detail}>捐贈數量:{data.count}</Text>
+      return userData
+        .filter((data) => !data.pay) 
+        .map((data, index) => (
+          <View key={index}>
+            <View style={styles.row}>
+              <Image
+                style={styles.logo}
+                source={require("map/asset/food.jpg")}
+              />
+              <View>
+                <Text style={styles.leftText}>{data.storeName}</Text>
+                <Text style={styles.detail}>捐贈數量:{data.count}</Text>
+                <Text style={styles.detail}>{data.dateTime}</Text>
+              </View>
+              <TouchableOpacity style={styles.buttonContainer}>
+                <Text style={styles.buttonText}>付款</Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.buttonContainer}>
-              <Text style={styles.buttonText}>付款</Text>
-            </TouchableOpacity>
+            <Text></Text>
+            <View style={styles.line} />
+            <Text></Text>
           </View>
-          <Text></Text>
-          <View style={styles.line} />
-          <Text></Text>
-        </View>
-      ));
-    } else if (selected === 'received') {
-      return <View><View style={styles.row}>
-      <Image
-     style={styles.logo}
-     source={require('map/asset/food.jpg')}/>
-       <View>
-       <Text style={styles.leftText}>素食的店</Text>
-       <Text style={styles.detail}>捐贈數量 : 1</Text>
-       </View>
-       <TouchableOpacity  style={styles.buttonContainer}>
-      <Text style={styles.buttonText}>回饋</Text>
-    </TouchableOpacity>
-       </View>
-       <Text></Text>
-       <View style={styles.line} />
-    </View>
+        ));
+    } else if (selected === 'received' && userData) {
+      return userData
+        .filter((data) => data.pay) 
+        .map((data, index) => (
+          <View key={index}>
+            <View style={styles.row}>
+              <Image
+                style={styles.logo}
+                source={require("map/asset/food.jpg")}
+              />
+              <View>
+                <Text style={styles.leftText}>{data.storeName}</Text>
+                <Text style={styles.detail}>捐贈數量:{data.count}</Text>
+                <Text style={styles.detail}>{data.dateTime}</Text>
+              </View>
+              <TouchableOpacity style={styles.buttonContainer}>
+                <Text style={styles.buttonText}>回饋</Text>
+              </TouchableOpacity>
+            </View>
+            <Text></Text>
+            <View style={styles.line} />
+            <Text></Text>
+          </View>
+        ));
     }
   };
   
@@ -209,6 +218,7 @@ const styles = StyleSheet.create({
       marginVertical: 10, // 设置垂直间距
       width:'20%',
       marginLeft: 'auto',
+      height:50
     },
     buttonText: {
       color: 'white', // 文本颜色

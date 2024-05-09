@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TextInput, View, Button, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
-import LoginScreen from '../screens/LoginScreen';
+import { Text, TextInput, View, Button, TouchableOpacity, StyleSheet, Alert, Image, PermissionsAndroid } from 'react-native';
 import RegisterScreenButton from '../screens/RegesterScreenButton'
+import { launchImageLibrary } from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, getDoc, query, where, getDocs, addDoc } from 'firebase/firestore/lite';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { firebase } from "@react-native-firebase/firestore";
+
 const firebaseConfig = {
     apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
     authDomain: "sa5a5aa555oo.firebaseapp.com",
@@ -27,21 +29,97 @@ const RegesterScreen2 = ({ navigation }) => {
     const [phone, setPhone] = useState('');
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
+    const [image, setImage] = useState(null);
+    
+      
+    // const requestStoragePermission = async () => {
+    //     try {
+    //       const granted = await PermissionsAndroid.request(
+    //         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+    //         {
+    //           title: '存儲權限',
+    //           message: '應用程式需要訪問您的存儲空間以保存照片。',
+    //           buttonNeutral: '稍後再詢問',
+    //           buttonNegative: '拒絕',
+    //           buttonPositive: '允許',
+    //         },
+    //       );
+    //       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    //         console.log('存儲權限已獲取');
+    //       } else {
+    //         console.log('存儲權限被拒絕');
+    //       }
+    //     } catch (err) {
+    //       console.warn(err);
+    //     }
+    //   };
+
+    // const handleChoosePhoto = () => {
+    //     const options = {
+    //         title: '選擇圖片',
+    //         storageOptions: {
+    //             skipBackup: true,
+    //             path: 'images',
+    //         },
+    //     };
+
+    //     ImagePicker.showImagePicker(options, (response) => {
+    //         if (response.didCancel) {
+    //             console.log('User cancelled image picker');
+    //         } else if (response.error) {
+    //             console.log('ImagePicker Error: ', response.error);
+    //         } else {
+    //             // 更新選取的圖片
+    //             setImage(response.uri);
+    //         }
+    //     });
+    // };
+
+    // const openImagePicker = () => {
+    //     const options = {
+    //         mediaType: 'photo',
+    //         includeBase64: false,
+    //         maxHeight: 2000,
+    //         maxWidth: 2000,
+    //     };
+
+    //     launchImageLibrary(options, (response) => {
+    //         if (response.didCancel) {
+    //             console.log('User cancelled image picker');
+    //         } else if (response.error) {
+    //             console.log('Image picker error: ', response.error);
+    //         } else {
+    //             let imageUri = response.uri || response.assets?.[0]?.uri;
+    //             setSelectedImage(imageUri);
+    //         }
+    //     });
+    // };
+
+    const choosePhotoFromLibrary = () => {
+    ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true
+          }).then(image => {
+            console.log(image);
+          });
+    }
+
     const handleRegister = async () => {
         try {
             if (password == passwordConfirm) {
-            // 使用 Firebase 身份驗證進行註冊
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
+                // 使用 Firebase 身份驗證進行註冊
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
 
-            // 發送驗證郵件
-            await sendEmailVerification(user);
+                // 發送驗證郵件
+                await sendEmailVerification(user);
 
-            // 顯示註冊成功提示訊息
-            // Alert.alert('註冊成功', '請檢查您的電子郵件收件箱以完成驗證。');
-            navigation.navigate('Regester3',{ email, password, phone, name, address });
+                // 顯示註冊成功提示訊息
+                // Alert.alert('註冊成功', '請檢查您的電子郵件收件箱以完成驗證。');
+                navigation.navigate('Regester3', { email, password, phone, name, address });
             }
-            else{Alert.alert('密碼輸入不一致');}
+            else { Alert.alert('密碼輸入不一致'); }
         } catch (error) {
             // 顯示註冊失敗的錯誤訊息
             Alert.alert('註冊失敗', error.message);
@@ -51,7 +129,14 @@ const RegesterScreen2 = ({ navigation }) => {
         <View style={styles.container}>
             <Image style={styles.logo1} source={require('map/asset/register1.jpg')} />
             <View style={styles.wrapper}>
+                {/* 選取照片按鈕 */}
+                {/* <TouchableOpacity onPress={requestStoragePermission} style={styles.button}>
+                    <Text style={styles.buttonText}>要求存取照片權限</Text>
+                </TouchableOpacity> */}
+                {/* 顯示選取的圖片 */}
+                {image && <Image source={{ uri: image }} style={styles.image} />}
                 <Text></Text>
+                <Button title="選照片" onPress={choosePhotoFromLibrary} />
                 <TextInput
                     style={styles.input}
                     value={name}
@@ -137,4 +222,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default RegesterScreen2;
+export default RegesterScreen2; 

@@ -20,7 +20,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const Take3 = ({navigation}) =>{
   const route = useRoute();
-  const { storeName,name,phone,email,status } = route.params;
+  const { storeName,name,phone,email,status,pickupTime } = route.params;
   const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 9000) + 1000);
   const [userData, setUserData] = useState(null);
   const getData = async (db) => {
@@ -49,6 +49,7 @@ const Take3 = ({navigation}) =>{
             email: email,
             randomNumber: randomNumber,
             take: false,
+            pickupTime:pickupTime
           });
           console.log("Document written with ID: ", docRef.id);
     

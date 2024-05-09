@@ -35,11 +35,11 @@ const CustomMarker = ({ coordinate, title,  }) => (
 );
 
 const Map = ({ navigation }) => {
-    const markerCoordinate = { latitude: 25.0335130275009, longitude: 121.43384983277525 };
+    const markerCoordinate = { latitude: 25.036958289139726, longitude: 121.43208636411046 };
     const markerTitle = '您的位置';
     const customIcon = require('map/asset/location.png'); //您的位置 圖片
 
-    const [origin, setOrigin] = useState({ latitude: 25.0335130275009, longitude: 121.43384983277525 });
+    const [origin, setOrigin] = useState({ latitude: 25.036958289139726, longitude: 121.43208636411046 });
     const [destination, setDestination] = useState(null);
 
     const [distance, setDistance] = useState(null);
@@ -81,8 +81,8 @@ const Map = ({ navigation }) => {
     const [markerslist, setMarkersList] = useState([
         {
             id: 1,
-            latitude: 25.036536324078433,//經度
-            longitude: 121.43183548002627,//緯度
+            latitude: 25.03623140917994,//經度
+            longitude: 121.43192887449766,//緯度
             title: '食享冰箱',
             description: '點擊食享冰箱'
         },
@@ -91,7 +91,7 @@ const Map = ({ navigation }) => {
     const handleButtonPressFridge = (markerId) => {
         if (markerId === 1) {
             navigation.navigate('FjuRef');
-            setDestination({ latitude: 25.036536324078433, longitude: 121.43183548002627 });
+            setDestination({ latitude: 25.03623140917994, longitude: 121.43192887449766 });
         }
     };
 
