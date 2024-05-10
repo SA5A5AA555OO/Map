@@ -90,7 +90,7 @@ const DonatePeople = ({navigation}) =>{
                   source={require("map/asset/food.jpg")}
                 />
                 <View>
-                  <Text style={styles.leftText}>姓名:{item.name}</Text>
+                  <Text style={styles.detail}>姓名:{item.name}</Text>
                   <Text style={styles.detail}>捐贈數量:{item.count}</Text>
                   <Text style={styles.detail}>電話:{item.phone}</Text>
                   <Text style={styles.detail}>{item.dateTime}</Text>
@@ -174,10 +174,10 @@ const styles = StyleSheet.create({
     paddingTop:20,
     borderRadius: 30, 
     marginVertical: 10, 
-    width:'18%',
+    width:'20%',
     marginLeft: 'auto',
     marginRight:10,
-    height:65
+    height:60
   },
   buttonText: {
     color: 'white', 

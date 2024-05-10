@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, TextInput, View, Button, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Picker from '@react-native-picker/picker';
+import DropDownPicker from 'react-native-dropdown-picker';
 import Take3 from '../screens/Donate3';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, getDoc, query, where, getDocs } from 'firebase/firestore/lite';
@@ -28,7 +29,7 @@ const Take2 = ({ navigation }) => {
   const [pickupTime, setPickupTime] = useState('');
   const handleButtonPress = () => {
 
-    navigation.navigate('Take3', { storeName: storeName, name: name, phone: phone, email: email, status: status, pickupTime: pickupTime });
+    navigation.navigate('Take3', { storeName: storeName, name: name, phone: phone, email: email, status: status, pickupTime: value });
   };
   useEffect(() => {
     fetchUserData();
@@ -51,6 +52,18 @@ const Take2 = ({ navigation }) => {
       console.error('獲取使用者資料時發生錯誤：', error);
     }
   };
+
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    { label: '12:00', value: '12:00' },
+    { label: '12:30', value: '12:30' },
+    { label: '13:00', value: '13:00' },
+    { label: '13:30', value: '13:30' },
+    { label: '14:00', value: '14:00' },
+    { label: '14:30', value: '14:30' },
+    { label: '15:00', value: '15:00' },
+  ]);
 
   return (
     <View style={styles.container}>
@@ -79,18 +92,24 @@ const Take2 = ({ navigation }) => {
           placeholder={email}
           value={email}
         />
-        {/* <Picker
-          selectedValue={pickupTime}
-          style={styles.input}
-          onValueChange={(itemValue, itemIndex) => setPickupTime(itemValue)}
-          
-        >
-          <Picker.Item label="13:00" value="13:00" />
-          <Picker.Item label="14:00" value="14:00" />
-          <Picker.Item label="15:00" value="15:00" />
-          
-        </Picker> */}
-
+        <Text style={styles.red}>限當天領取</Text>
+        <DropDownPicker
+          open={open}
+          value={value}
+          items={items}
+          setOpen={setOpen}
+          setValue={setValue}
+          setItems={setItems}
+          placeholder="選擇領取時間"
+          containerStyle={{ height: 40 }}
+          style={{ backgroundColor: '#fafafa' }}
+          itemStyle={{
+            justifyContent: 'flex-start'
+          }}
+          dropDownStyle={{ backgroundColor: '#fafafa' }}
+          onChangeItem={item => setPickupTime(item.value)}
+          isRequired={true}
+        />
 
         <Text ></Text>
         <Text ></Text>
@@ -99,10 +118,6 @@ const Take2 = ({ navigation }) => {
           <Text style={styles.buttonText}>取得領取編號</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: 'row', marginTop: 20 }}></View>
-
-
-
-
 
       </View>
     </View>
@@ -132,6 +147,11 @@ const styles = StyleSheet.create({
     left: 20,
 
 
+  },
+  red:{
+    fontSize: 14,
+    height:25,
+    left:5,
   },
   button: {
     backgroundColor: '#E6A984', // 自定义按钮颜色

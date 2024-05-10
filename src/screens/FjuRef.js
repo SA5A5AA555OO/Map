@@ -17,7 +17,7 @@ const FjuRef = ({navigation}) =>{
                source={require('map/asset/背景.jpg')}/> 
                <Text style={styles.imageText}>輔仁大學食享冰箱</Text>
                <View style={{ alignSelf: 'flex-start' }}>
-            <Text style={styles.imageText}>輔仁大學食享冰箱</Text>
+            
             </View>
             
             <View style={{ alignSelf: 'flex-start' }}>
