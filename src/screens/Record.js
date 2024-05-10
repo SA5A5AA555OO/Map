@@ -21,7 +21,7 @@ const db = getFirestore(app);
 const Record = ({navigation}) =>{
   const route = useRoute();
 const { email } = route.params || { email: '' };
-  const [selected, setSelected] = useState('notReceived');
+  const [selected, setSelected] = useState('notYetReceived');
   const showTip = () => {
     Alert.alert('領取成功')
 }
@@ -64,10 +64,34 @@ const [userData, setUserData] = useState(null);
     setSelected(option);
   };
   const renderContent = () => {
-    if (selected === 'notReceived' && userData) {
+    if (selected === 'notYetReceived' && userData) {
       return userData.map((data, index) => (
         <View key={index}>
-          {data.take === false && (
+          {data.take === 1 && (
+            <ScrollView>
+              <View style={styles.row}>
+                <Image
+                  style={styles.logo}
+                  source={require("map/asset/food.jpg")}
+                />
+                <View>
+                  <Text style={styles.leftText}>{data.storeName}</Text>
+                  <Text style={styles.detail}>領取號碼:{data.randomNumber}</Text>
+                  <Text style={styles.detail}>領取時間:{data.pickupTime}</Text>
+                </View>
+                
+              </View>
+              <Text></Text>
+              <View style={styles.line} />
+              <Text></Text>
+            </ScrollView>
+          )}
+        </View>
+      ));
+    } else if (selected === 'received' && userData) {
+      return userData.map((data, index) => (
+        <View key={index}>
+          {data.take === 2 && (
             <ScrollView>
               <View style={styles.row}>
                 <Image
@@ -87,11 +111,14 @@ const [userData, setUserData] = useState(null);
           )}
         </View>
       ));
-    } else if (selected === 'received' && userData) {
+    }
+    else if (selected === 'notReceived' && userData) {
       return userData.map((data, index) => (
         <View key={index}>
-          {data.take === true && (
+          {data.take === 3 && (
             <ScrollView>
+              <Text style={styles.red}>超過三次未領取即停用帳號</Text>
+              <Text></Text>
               <View style={styles.row}>
                 <Image
                   style={styles.logo}
@@ -124,14 +151,13 @@ const [userData, setUserData] = useState(null);
           <TouchableOpacity
             style={[
               styles.textContainer,
-              selected === 'notReceived' ? styles.selected : null,
+              selected === 'notYetReceived' ? styles.selected : null,
             ]}
-            onPress={() => handlePress('notReceived')}
+            onPress={() => handlePress('notYetReceived')}
             activeOpacity={0.5}
           >
             <Text style={styles.text}>尚未領取</Text>
           </TouchableOpacity>
-  
           <TouchableOpacity
             style={[
               styles.textContainer,
@@ -141,6 +167,16 @@ const [userData, setUserData] = useState(null);
             activeOpacity={0.5} 
           >
             <Text style={styles.text}>已領取</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.textContainer,
+              selected === 'notReceived' ? styles.selected : null,
+            ]}
+            onPress={() => handlePress('notReceived')}
+            activeOpacity={0.5}
+          >
+            <Text style={styles.text}>未領取</Text>
           </TouchableOpacity>
         </View>
             
@@ -213,6 +249,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         paddingLeft:15,
     },
+    red:{
+      fontSize: 20,
+      paddingLeft:20,
+      color: "red",
+  },
    text:{
     fontSize:20,
     

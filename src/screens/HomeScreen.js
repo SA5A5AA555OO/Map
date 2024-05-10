@@ -8,6 +8,7 @@ import Map from './Map';
 import Shop from '../screens/Shop';
 import Introduction from '../screens/Introduction';
 import { useNavigation } from '@react-navigation/native';
+import { black } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 
 const HomeScreen = ({ navigation }) => {
@@ -76,14 +77,13 @@ const styles = StyleSheet.create({
     },
     
     buttonContainer: {
-      backgroundColor: '#E6A984', // 自定义背景颜色
+      backgroundColor: '#FBE8CD', // 自定义背景颜色
       padding: 20,
       borderRadius: 20, // 圆角效果
       marginVertical: 10, // 设置垂直间距
       width:'80%'
     },
     buttonText: {
-      color: 'white', // 文本颜色
       fontWeight: 'bold',
       textAlign: 'center', // 文本居中
       fontSize:20,
