@@ -34,6 +34,9 @@ const Shop = ({navigation}) =>{
       const handleButtonPress4 = () => {
         navigation.navigate('Test',{ username: userData ? userData.username : '用戶',status:status });
       };
+      const handleButtonPress5 = () => {
+        navigation.navigate('Test1',{ username: userData ? userData.username : '用戶',status:status });
+      };
       const [userData, setUserData] = useState(null);
       const route = useRoute();
       const { email,status } = route.params || { email: '' };
@@ -67,10 +70,13 @@ const Shop = ({navigation}) =>{
             <Text style={styles.buttonText}>確認現金付款</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleButtonPress3} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>修改店家資訊</Text>
+            <Text style={styles.buttonText}>修改資訊</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleButtonPress4} style={styles.buttonContainer}>
             <Text style={styles.buttonText}>調整待用餐數量</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleButtonPress5} style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>後台資訊</Text>
           </TouchableOpacity>
             
             

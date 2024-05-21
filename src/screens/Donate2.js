@@ -4,24 +4,30 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, getDocs, where,query } from 'firebase/firestore/lite';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import { useRoute } from '@react-navigation/native';
+
 const firebaseConfig = {
   apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
-authDomain: "sa5a5aa555oo.firebaseapp.com",
-databaseURL: "https://sa5a5aa555oo-default-rtdb.asia-southeast1.firebasedatabase.app",
-projectId: "sa5a5aa555oo",
-storageBucket: "sa5a5aa555oo.appspot.com",
-messagingSenderId: "602378113582",
-appId: "1:602378113582:web:c6b308cc039586506ec5bf",
-measurementId: "G-NS22NW5C8F"
+  authDomain: "sa5a5aa555oo.firebaseapp.com",
+  databaseURL: "https://sa5a5aa555oo-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sa5a5aa555oo",
+  storageBucket: "sa5a5aa555oo.appspot.com",
+  messagingSenderId: "602378113582",
+  appId: "1:602378113582:web:c6b308cc039586506ec5bf",
+  measurementId: "G-NS22NW5C8F"
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-
 const Donate2 = ({ navigation }) => {
-  //查詢資料
   const [userData, setUserData] = useState(null);
+  const [storeImageUrl, setStoreImageUrl] = useState(null);
+  const [count, setCount] = useState(1);
+
+  const route = useRoute();
+  const { storeName, status, email } = route.params;
+
   const getData = async (db) => {
     const userCollection = collection(db, "store");
     const q = query(userCollection, where("store_name", "==", storeName));
@@ -35,39 +41,36 @@ const Donate2 = ({ navigation }) => {
     }
   };
     
-      useEffect(() => {
-        getData(db); // 將 db 傳遞給 getData 函數
-      }, []);
-  //
-  const [storeImageUrl, setStoreImageUrl] = useState(null);
+  useEffect(() => {
+    getData(db);
+  }, []);
 
   useEffect(() => {
     const getImageUrl = async () => {
-        const imageRefs = [
-            ref(storage, `meal/${storeName}.jpg`),
-            ref(storage, `meal/${storeName}.png`)
-        ];
-        const urls = await Promise.all(imageRefs.map(async (imageRef) => {
-            try {
-                return await getDownloadURL(imageRef);
-            } catch (error) {
-                return null;
-            }
-        }));
-        const validUrl = urls.find(url => url !== null);
-        if (validUrl) {
-            setStoreImageUrl(validUrl);
+      const imageRefs = [
+        ref(storage, `meal/${storeName}.jpg`),
+        ref(storage, `meal/${storeName}.png`)
+      ];
+      const urls = await Promise.all(imageRefs.map(async (imageRef) => {
+        try {
+          return await getDownloadURL(imageRef);
+        } catch (error) {
+          return null;
         }
+      }));
+      const validUrl = urls.find(url => url !== null);
+      if (validUrl) {
+        setStoreImageUrl(validUrl);
+      }
     };
     getImageUrl();
-}, [storeName]);
-  
-const route = useRoute();
-const { storeName,status,email } = route.params;
-  const handleButtonPress = (storeName) => {
-    navigation.navigate('Donate1', { storeName: storeName ,count: count,status:status,email:email  });
+  }, [storeName]);
+
+  const handleButtonPress = () => {
+    const total = userData ? userData.good_price * count : 0;
+    navigation.navigate('Donate1', { storeName, count, status, email, total });
   };
-  const [count, setCount] = useState(1);
+
   const handleOperation = (value) => {
     if (count + value >= 1) {
       setCount(count + value);
@@ -76,7 +79,6 @@ const { storeName,status,email } = route.params;
 
   return (
     <View style={styles.container}>
-      
       <Text></Text>
       <Text style={styles.headerText}>{storeName}</Text>
       <Text></Text>
@@ -86,7 +88,7 @@ const { storeName,status,email } = route.params;
 
       <View style={styles.detailsContainer}>
         <View style={styles.rowContainer}>
-          <Text style={styles.detail}>一份 ${userData ? userData.good_price : 'Loading...'}元       </Text>
+          <Text style={styles.detail}>一份 ${userData ? userData.good_price : 'Loading...'}元</Text>
           <View style={styles.counterContainer}>
             <TouchableOpacity style={styles.button} onPress={() => handleOperation(-1)}>
               <Text style={styles.buttonText}>-</Text>
@@ -95,8 +97,6 @@ const { storeName,status,email } = route.params;
             <TouchableOpacity style={styles.button} onPress={() => handleOperation(1)}>
               <Text style={styles.buttonText}>+</Text>
             </TouchableOpacity>
-            
-
           </View>
         </View>
         <Text style={styles.totalText}>總計${userData ? userData.good_price * count : 'Loading...'}</Text>
@@ -104,11 +104,10 @@ const { storeName,status,email } = route.params;
         <Text></Text>
         <Text></Text>
         <Text></Text>
-        <TouchableOpacity onPress={() => handleButtonPress(storeName,status)} style={styles.donateButton}>
+        <TouchableOpacity onPress={handleButtonPress} style={styles.donateButton}>
           <Text style={styles.buttonText}>捐贈</Text>
         </TouchableOpacity>
       </View>
-
     </View>
   );
 };
@@ -158,7 +157,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize:20
+    fontSize: 20,
   },
   donateButton: {
     backgroundColor: '#E6A984',
@@ -169,10 +168,9 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 40,
   },
-  totalText:{
+  totalText: {
     fontSize: 30,
-
-  }
+  },
 });
 
 export default Donate2;

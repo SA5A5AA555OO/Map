@@ -34,6 +34,7 @@ const RefAdjust = ({ navigation }) => {
   const handleButtonPress = async () => {
     const storeDocRef = doc(db, 'fridges', 'jtJgYOmcTgBJAfbhR5WD'); 
     try {
+      const currentTime = new Date().toLocaleString();
       await updateDoc(storeDocRef, {
         start_time: time,
         fridge_address: address,
@@ -41,7 +42,8 @@ const RefAdjust = ({ navigation }) => {
         milk_quantity: milk,
         cookies_quantity: cookies,
         friut_quantity: friut,
-        bread_quantity: bread
+        bread_quantity: bread,
+        adjustTime: currentTime
       });
       showAlert(); // 顯示修改成功的提示
       navigation.navigate('Home', { status });
