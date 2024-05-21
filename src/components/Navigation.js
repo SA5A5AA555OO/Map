@@ -45,6 +45,8 @@ import VerifyStore from "../screens/VerifyStore"
 import VerifyStore2 from "../screens/VerifyStore2"
 import CheckStore from "../screens/CheckStore"
 import CheckSUser from "../screens/CheckUser"
+import Pay from "../screens/Pay"
+import Notification from "../screens/Notification"
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -92,6 +94,7 @@ const MainStack = () => {
         <Stack.Screen name="Test" component={Test} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
         <Stack.Screen name="Test1" component={Test1} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
         <Stack.Screen name="Test2" component={Test2} options={{headerTransparent: true, headerTintColor: 'black', headerTitle: ''}}/>
+        <Stack.Screen name="Pay" component={Pay} options={{headerTransparent: true, headerTintColor: 'white', headerTitle: ''}}/>
       </Stack.Navigator>
     );
   };
@@ -152,6 +155,29 @@ const TabNavigator = () => {
                         <View style={{ alignItems: 'center', justifyContent: 'center', top: 10 }}>
                             <Image
                                 source={require('map/asset/map.png')}
+                                resizeMode="contain"
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: focused ? 'black' : '#5A545E', // 設置默認顏色
+                                }}
+                            />
+                            <Text
+                                style={{ color: focused ? '#E6A984' : '#E6A984', fontSize: 12 }}>
+                            </Text>
+                        </View>
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Notification"
+                component={Notification}
+                options={{
+                    headerShown: false,
+                    tabBarIcon: ({ focused }) => (
+                        <View style={{ alignItems: 'center', justifyContent: 'center', top: 10 }}>
+                            <Image
+                                source={require('map/asset/bell.png')}
                                 resizeMode="contain"
                                 style={{
                                     width: 25,

@@ -9,8 +9,12 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
+import com.map.ECPayPackage;
 import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
 import com.reactnativedocumentpicker.ReactNativeDocumentPickerPackage;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -26,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           packages.add(new ReactNativeFirebaseAppPackage());
           packages.add(new ReactNativeDocumentPickerPackage());
+          packages.add(new ECPayPackage()); // 正確添加 ECPayPackage
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           return packages;

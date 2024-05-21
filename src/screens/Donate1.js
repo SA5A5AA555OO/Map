@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image} from 'react-native';
+import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image,Alert} from 'react-native';
 import Donate3 from '../screens/Donate3';
 import { initializeApp } from 'firebase/app';
 import { useRoute } from '@react-navigation/native';
@@ -18,7 +18,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const Donate1 = ({navigation}) =>{
   const route = useRoute();
-      const { storeName, count,status ,email } = route.params;
+      const { storeName, count,status ,email,total } = route.params;
       const [name, setName] = useState('');
       const [phone, setPhone] = useState('');
       const [userData, setUserData] = useState(null);
@@ -36,7 +36,7 @@ const Donate1 = ({navigation}) =>{
             pay: true,
           });
           console.log('Document written with ID: ', docRef.id);
-          navigation.navigate('Donate3', { storeName: storeName,status:status });
+          navigation.navigate('Pay', { storeName: storeName,status:status,total:total });
         } catch (e) {
           console.error('Error adding document: ', e);
         }
@@ -53,6 +53,7 @@ const Donate1 = ({navigation}) =>{
             dateTime: dateTime,
             pay: false,
           });
+          Alert.alert('請至店家付款');
           console.log('Document written with ID: ', docRef.id);
           navigation.navigate('Home', { storeName: storeName,status:status });
         } catch (e) {
@@ -113,7 +114,7 @@ const Donate1 = ({navigation}) =>{
           placeholder={email}
           value={email}
           />
-            <Text>捐贈數量:{count}       總價:</Text>
+            <Text>捐贈數量:{count}       總價:{total}</Text>
             <Text></Text>
             
         <TouchableOpacity onPress={() => handleButtonPress(storeName)}  style={styles.button}>
