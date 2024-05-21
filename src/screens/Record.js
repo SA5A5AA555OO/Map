@@ -113,11 +113,17 @@ const [userData, setUserData] = useState(null);
       ));
     }
     else if (selected === 'notReceived' && userData) {
+      let hasShownWarning = false;
       return userData.map((data, index) => (
         <View key={index}>
+          {data.take === 3 && !hasShownWarning && (
+            <>
+              <Text style={styles.red}>超過三次未領取即停用帳號</Text>
+              {hasShownWarning = true}
+            </>
+          )}
           {data.take === 3 && (
             <ScrollView>
-              <Text style={styles.red}>超過三次未領取即停用帳號</Text>
               <Text></Text>
               <View style={styles.row}>
                 <Image
@@ -128,7 +134,6 @@ const [userData, setUserData] = useState(null);
                   <Text style={styles.leftText}>{data.storeName}</Text>
                   <Text style={styles.detail}>領取號碼:{data.randomNumber}</Text>
                 </View>
-                
               </View>
               <Text></Text>
               <View style={styles.line} />
@@ -138,6 +143,7 @@ const [userData, setUserData] = useState(null);
         </View>
       ));
     }
+    
   };
       return (
         <View style={styles.container}>
