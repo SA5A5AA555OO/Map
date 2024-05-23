@@ -35,14 +35,14 @@ const Notification = ({ navigation }) => {
         console.log("Document not found");
       }
 
-      const today = new Date().toISOString().split('T')[0]; // 获取当天日期 YYYY-MM-DD
-console.log("Today's date:", today); // 调试日志
-const donateCollection = collection(db, "donate");
-const q = query(donateCollection, where("date", "==", today)); // 查询捐赠日期等于今天的数据
-const querySnapshot = await getDocs(q);
-const donateList = querySnapshot.docs.map(doc => doc.data());
-console.log("Donations fetched:", donateList); // 调试日志
-setDonateData(donateList);
+      const today = new Date().toISOString().split('T')[0]; 
+      console.log("Today's date:", today); 
+      const donateCollection = collection(db, "donate");
+      const q = query(donateCollection, where("date", "==", today)); 
+      const querySnapshot = await getDocs(q);
+      const donateList = querySnapshot.docs.map(doc => doc.data());
+      console.log("Donations fetched:", donateList); 
+      setDonateData(donateList);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -67,17 +67,22 @@ setDonateData(donateList);
     if (selected === 'notReceived') {
       return (
         <View>
-          <View style={styles.row}>
-            <Image
-              style={styles.logo}
-              source={require("map/asset/food.jpg")}
-            />
-            <View>
-              <Text style={styles.leftText}>{userData ? userData.adjustTime : 'Loading...'}</Text>
-              <Text style={styles.detail}>麵包: {userData ? userData.bread_quantity : 'Loading...'} 份        牛奶: {userData ? userData.milk_quantity : 'Loading...'} 份 </Text>
-              <Text style={styles.detail}>餅乾: {userData ? userData.cookies_quantity : 'Loading...'} 份      水果: {userData ? userData.friut_quantity : 'Loading...'} 份</Text>
+          
+          {userData && userData.open ? (
+            <View style={styles.row}>
+              <Image
+                style={styles.logo}
+                source={require("map/asset/food.jpg")}
+              />
+              <View>
+                <Text style={styles.leftText}>{userData.adjustTime}</Text>
+                <Text style={styles.detail}>麵包: {userData.bread_quantity} 份        牛奶: {userData.milk_quantity} 份 </Text>
+                <Text style={styles.detail}>餅乾: {userData.cookies_quantity} 份      水果: {userData.fruit_quantity} 份</Text>
+              </View>
             </View>
-          </View>
+          ) : (
+            <Text style={styles.detail1}>今日已結束領取</Text>
+          )}
         </View>
       );
     } else if (selected === 'received') {
@@ -101,6 +106,9 @@ setDonateData(donateList);
               <Text></Text>
             </View>
           )) : <Text>沒有待用餐記錄</Text>}
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
         </View>
       );
     }
@@ -158,6 +166,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    top:-50
   },
   buttonWrapper: {
     marginTop: 45,
@@ -174,7 +183,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    top: -20,
+    top: -50,
   },
   line: {
     borderBottomWidth: 1,
@@ -182,7 +191,7 @@ const styles = StyleSheet.create({
     borderBottomStyle: 'solid',
     width: 350,
     alignSelf: 'center',
-    top: -30,
+    top: -50,
   },
   leftText: {
     fontSize: 24,
@@ -198,6 +207,11 @@ const styles = StyleSheet.create({
   detail: {
     fontSize: 20,
     paddingLeft: 15,
+  },
+  detail1: {
+    fontSize: 30,
+    paddingLeft: 80,
+    paddingTop: 100,
   },
   text: {
     fontSize: 20,
