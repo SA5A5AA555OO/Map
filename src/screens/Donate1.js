@@ -26,23 +26,14 @@ const Donate1 = ({navigation}) =>{
       const handleButtonPress = async (storeName) => {
         try {
           const currentTime = new Date().toISOString();
-          const docRef = await addDoc(collection(db, 'donate'), {
-            storeName: storeName,
-            name: name,
-            phone: phone,
-            email: email,
-            count: count,
-            dateTime: dateTime,
-            pay: true,
-          });
-          console.log('Document written with ID: ', docRef.id);
-          navigation.navigate('Pay', { storeName: storeName,status:status,total:total });
+          navigation.navigate('Pay', { storeName: storeName,status:status,total:total,name: name, phone:phone, dateTime:dateTime,email:email, count:count });
         } catch (e) {
           console.error('Error adding document: ', e);
         }
       };
       const handleButtonPress1 = async (storeName) => {
         try {
+          const currentDate = new Date().toISOString().split('T')[0];
           const currentTime = new Date().toISOString();
           const docRef = await addDoc(collection(db, 'donate'), {
             storeName: storeName,
@@ -51,9 +42,10 @@ const Donate1 = ({navigation}) =>{
             email: email,
             count: count,
             dateTime: dateTime,
+            date: currentDate,
             pay: false,
           });
-          Alert.alert('請至店家付款');
+          Alert.alert('請至店家付款,並可到捐贈資訊查看捐贈資料');
           console.log('Document written with ID: ', docRef.id);
           navigation.navigate('Home', { storeName: storeName,status:status });
         } catch (e) {

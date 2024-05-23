@@ -1,11 +1,9 @@
-import { View, Image, Text, ScrollView, StyleSheet, TouchableOpacity, TextInpu,Alert } from 'react-native';
-import React, { useState, useEffect } from "react";
+import { View, Image, Text, ScrollView, StyleSheet, TouchableOpacity, RefreshControl } from 'react-native';
+import React, { useState, useCallback } from "react";
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, getDoc, query, where,updateDoc, } from 'firebase/firestore/lite';
-import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
-import HomeScreen from './HomeScreen';
-import { useRoute } from '@react-navigation/native';
-import store from './Store';
+import { getFirestore, collection, doc, getDoc, query, where, getDocs } from 'firebase/firestore/lite';
+import { useFocusEffect } from '@react-navigation/native';
+
 const firebaseConfig = {
   apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
   authDomain: "sa5a5aa555oo.firebaseapp.com",
@@ -16,16 +14,18 @@ const firebaseConfig = {
   appId: "1:602378113582:web:c6b308cc039586506ec5bf",
   measurementId: "G-NS22NW5C8F"
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
-
 const Notification = ({ navigation }) => {
-    const [userData, setUserData] = useState(null);
-    
-  
-    const getData = async (db) => {
+  const [userData, setUserData] = useState(null);
+  const [donateData, setDonateData] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const [selected, setSelected] = useState('notReceived');
+
+  const getData = async () => {
+    try {
       const userCollection = collection(db, "fridges");
       const userDoc = doc(userCollection, "jtJgYOmcTgBJAfbhR5WD");
       const userDocSnap = await getDoc(userDoc);
@@ -34,72 +34,147 @@ const Notification = ({ navigation }) => {
       } else {
         console.log("Document not found");
       }
-    };
-  
-    useEffect(() => {
-      getData(db); // 將 db 傳遞給 getData 函數
-    }, []);
 
+      const today = new Date().toISOString().split('T')[0]; // 获取当天日期 YYYY-MM-DD
+console.log("Today's date:", today); // 调试日志
+const donateCollection = collection(db, "donate");
+const q = query(donateCollection, where("date", "==", today)); // 查询捐赠日期等于今天的数据
+const querySnapshot = await getDocs(q);
+const donateList = querySnapshot.docs.map(doc => doc.data());
+console.log("Donations fetched:", donateList); // 调试日志
+setDonateData(donateList);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getData();
+    }, [])
+  );
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getData().then(() => setRefreshing(false));
+  }, []);
+
+  const handlePress = (status) => {
+    setSelected(status);
+  };
+
+  const renderContent = () => {
+    if (selected === 'notReceived') {
+      return (
+        <View>
+          <View style={styles.row}>
+            <Image
+              style={styles.logo}
+              source={require("map/asset/food.jpg")}
+            />
+            <View>
+              <Text style={styles.leftText}>{userData ? userData.adjustTime : 'Loading...'}</Text>
+              <Text style={styles.detail}>麵包: {userData ? userData.bread_quantity : 'Loading...'} 份        牛奶: {userData ? userData.milk_quantity : 'Loading...'} 份 </Text>
+              <Text style={styles.detail}>餅乾: {userData ? userData.cookies_quantity : 'Loading...'} 份      水果: {userData ? userData.friut_quantity : 'Loading...'} 份</Text>
+            </View>
+          </View>
+        </View>
+      );
+    } else if (selected === 'received') {
+      return (
+        <View>
+          {donateData.length > 0 ? donateData.map((data, index) => (
+            <View key={index}>
+              <View style={styles.row}>
+                <Image
+                  style={styles.logo}
+                  source={require("map/asset/food.jpg")}
+                />
+                <View>
+                  <Text style={styles.leftText}>{data.storeName}</Text>
+                  <Text style={styles.detail}>有人捐贈了{data.count}份待用餐!!</Text>
+                  <Text style={styles.detail}>{data.dateTime}</Text>
+                </View>
+              </View>
+              <Text></Text>
+              <View style={styles.line} />
+              <Text></Text>
+            </View>
+          )) : <Text>沒有待用餐記錄</Text>}
+        </View>
+      );
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-      <Image
-                style={styles.logo1}
-                source={require("map/asset/背景.jpg")}
-              />
-      <Text style={styles.imageText}>食享冰箱更新通知</Text>
-      <View style={styles.row}>
-              <Image
-                style={styles.logo}
-                source={require("map/asset/food.jpg")}
-              />
-              <View>
-                <Text style={styles.leftText}>{userData ? userData.adjustTime : 'Loading...'}</Text>
-                <Text style={styles.detail}>麵包:{userData ? userData.bread_quantity : 'Loading...'}份        牛奶:{userData ? userData.milk_quantity : 'Loading...'}份 </Text>
-                <Text style={styles.detail}>餅乾:{userData ? userData.cookies_quantity  : 'Loading...'}份      水果{userData ? userData.friut_quantity  : 'Loading...'}份</Text>
-              </View>
-              
-            </View>
-        
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <Image
+          style={styles.logo1}
+          source={require("map/asset/背景.jpg")}
+        />
+        <Text style={styles.imageText}>及時通知</Text>
+        <View style={styles.row1}>
+          <TouchableOpacity
+            style={[
+              styles.textContainer,
+              selected === 'notReceived' ? styles.selected : null,
+            ]}
+            onPress={() => handlePress('notReceived')}
+            activeOpacity={0.5}
+          >
+            <Text style={styles.text}>食享冰箱</Text>
+          </TouchableOpacity>
 
+          <TouchableOpacity
+            style={[
+              styles.textContainer,
+              selected === 'received' ? styles.selected : null,
+            ]}
+            onPress={() => handlePress('received')}
+            activeOpacity={0.5}
+          >
+            <Text style={styles.text}>待用餐店家</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.contentContainer}>{renderContent()}</View>
       </ScrollView>
     </View>
   );
-
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FDFBF1',
-    
   },
   textContainer: {
     flex: 1,
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
-
-
   },
   buttonWrapper: {
-    marginTop: 45, 
+    marginTop: 45,
   },
   headerText: {
     fontSize: 35,
     alignItems: 'center',
   },
-
   logo: {
-    width: 80,
-    height: 80,
+    width: 70,
+    height: 70,
     borderRadius: 100,
-    top:10
-
+    top: 10,
   },
   row: {
     flexDirection: 'row',
-    top:-20,
+    top: -20,
   },
   line: {
     borderBottomWidth: 1,
@@ -107,10 +182,10 @@ const styles = StyleSheet.create({
     borderBottomStyle: 'solid',
     width: 350,
     alignSelf: 'center',
-    top:-30
+    top: -30,
   },
   leftText: {
-    fontSize:24,
+    fontSize: 24,
     paddingLeft: 15,
     color: '#DA7746',
   },
@@ -118,9 +193,8 @@ const styles = StyleSheet.create({
     width: 400,
     height: 250,
     borderRadius: 50,
-    top: -60
+    top: -60,
   },
-
   detail: {
     fontSize: 20,
     paddingLeft: 15,
@@ -131,9 +205,6 @@ const styles = StyleSheet.create({
   selected: {
     backgroundColor: '#FBE8CD', // 更改此處以設置所選項目的顏色
   },
-
-
-
   buttonContainer: {
     backgroundColor: '#E6A984', // 自定义背景颜色
     padding: 15,
@@ -141,7 +212,6 @@ const styles = StyleSheet.create({
     marginVertical: 10, // 设置垂直间距
     width: '20%',
     marginLeft: 'auto',
-    
   },
   buttonText: {
     color: 'white', // 按钮文本颜色
@@ -156,14 +226,22 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: 80,
     height: 55,
-    top:-30
+    top: -30,
   },
   imageText: {
     position: 'absolute',
-    top: 130, 
-    left: 20, 
+    top: 130,
+    left: 20,
     fontSize: 32,
     color: 'white',
+  },
+  row1: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginVertical: 20,
+  },
+  contentContainer: {
+    padding: 10,
   },
 });
 
