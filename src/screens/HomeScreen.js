@@ -23,7 +23,7 @@ const HomeScreen = ({ navigation }) => {
             case "1":
                 setButtons([
                     { text: '介紹', onPress: () => navigation.navigate('Introduction', {  status: status }) },
-                    { text: '食享冰箱', onPress: () => navigation.navigate('Ref') },
+                    { text: '食享冰箱', onPress: () => navigation.navigate('FjuRef') },
                     { text: '待用餐', onPress: () => navigation.navigate('Meal', {  status: status,email: email }) }
                 ]);
                 break;
