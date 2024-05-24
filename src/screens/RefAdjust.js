@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 20,
+    alignItems: 'center',
   },
   input: {
     borderWidth: 1,
@@ -237,29 +238,38 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   addButton: {
-    backgroundColor: '#E6A984',
-    padding: 5,
-    borderRadius: 20,
+    backgroundColor: '#5599FF',
+    padding: 10, // 调整这个值来控制按钮的大小
+    borderRadius: 20, // 使按钮的半径足够大以形成圆形
+    width: 40, // 设置宽度
+    height: 40, // 设置高度与宽度相等
     alignItems: 'center',
-   
+    justifyContent: 'center',
+    marginHorizontal: 5, // 确保按钮之间有间距
+    left: 133,
   },
   addButtonText: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 20,
+    textAlign: 'center',
+    lineHeight: 21, // 确保文本垂直居中
   },
   removeButton: {
     backgroundColor: '#FF2D2D',
-    padding: 20,
-    
-    borderRadius: 120,
+    padding: 10, // 调整这个值来控制按钮的大小
+    borderRadius: 20, // 使按钮的半径足够大以形成圆形
+    width: 40, // 设置宽度
+    height: 40, // 设置高度与宽度相等
     alignItems: 'center',
     justifyContent: 'center',
   },
   removeButtonText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 15,
+    fontSize: 20,
+    textAlign: 'center',
+    lineHeight: 21, // 确保文本垂直居中
   },
 });
 
