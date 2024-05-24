@@ -123,7 +123,7 @@ const Test1 = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <View style={{ marginLeft: 10,marginTop: -33 }}>
-            <Text style={styles.leftText1}>領取比率</Text>
+            <Text style={styles.leftText1}>  領取率</Text>
 
               <View style={[styles.pic, { backgroundColor: '#FBE8CD' }]}>
                 <Text style={styles.detail}> {((pickupCount / (pickupCount + cancelCount)) * 100).toFixed(0)}% </Text>
