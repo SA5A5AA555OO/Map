@@ -1,192 +1,259 @@
-import {Text, TextInput, View,Button, TouchableOpacity, StyleSheet,Image, ScrollView} from 'react-native';
+import { Text, TextInput, View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { getFirestore, collection, doc, getDoc, where,query, updateDoc } from 'firebase/firestore/lite';
+import { getFirestore, doc, getDoc, updateDoc, writeBatch,deleteField } from 'firebase/firestore/lite';
 import { initializeApp } from 'firebase/app';
 import { Alert } from 'react-native';
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBARwrOhviGWEHN94EDPR0Ojy-YftRlljA",
-authDomain: "sa5a5aa555oo.firebaseapp.com",
-databaseURL: "https://sa5a5aa555oo-default-rtdb.asia-southeast1.firebasedatabase.app",
-projectId: "sa5a5aa555oo",
-storageBucket: "sa5a5aa555oo.appspot.com",
-messagingSenderId: "602378113582",
-appId: "1:602378113582:web:c6b308cc039586506ec5bf",
-measurementId: "G-NS22NW5C8F"
+  authDomain: "sa5a5aa555oo.firebaseapp.com",
+  databaseURL: "https://sa5a5aa555oo-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sa5a5aa555oo",
+  storageBucket: "sa5a5aa555oo.appspot.com",
+  messagingSenderId: "602378113582",
+  appId: "1:602378113582:web:c6b308cc039586506ec5bf",
+  measurementId: "G-NS22NW5C8F"
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-
 
 const RefAdjust = ({ navigation }) => {
   const route = useRoute();
   const { status } = route.params || { status: 0 };
-  const [userData, setUserData] = useState(null);
-  const [time, settime] = useState('');
-  const [address, setaddress] = useState('');
-  const [phone, setphone] = useState('');
-  const [milk, setmilk] = useState('');
-  const [cookies, setcookies] = useState('');
-  const [friut, setfriut] = useState('');
-  const [bread, setbread] = useState('');
+  const [fields, setFields] = useState([]);
+  const [isOpen, setIsOpen] = useState(true);
+  const [buttonText, setButtonText] = useState('結束領取');
+  const [time, setTime] = useState('');
+
   const handleButtonPress = async () => {
-    const storeDocRef = doc(db, 'fridges', 'jtJgYOmcTgBJAfbhR5WD'); 
+    const updates = {};
+    fields.forEach(({ field, value }) => {
+      updates[field] = value;
+    });
+    const storeDocRef1 = doc(db, 'fridges', '9fPJgKl8FvEzphsriDvn');
+    const storeDocRef2 = doc(db, 'fridges', 'jtJgYOmcTgBJAfbhR5WD');
     try {
-      const currentTime = new Date().toLocaleString();
-      await updateDoc(storeDocRef, {
-        start_time: time,
-        fridge_address: address,
-        fridge_phone: phone,
-        milk_quantity: milk,
-        cookies_quantity: cookies,
-        friut_quantity: friut,
-        bread_quantity: bread,
-        adjustTime: currentTime
-      });
-      showAlert(); // 顯示修改成功的提示
+      await updateDoc(storeDocRef1, updates);
+      await updateDoc(storeDocRef2, { start_time: time });
+      showAlert();
       navigation.navigate('Home', { status });
     } catch (error) {
       console.error('Error updating document: ', error);
     }
   };
 
+  const handleOpenClosePress = async () => {
+    const storeDocRef = doc(db, 'fridges', 'jtJgYOmcTgBJAfbhR5WD');
+    try {
+      const newOpenStatus = !isOpen;
+      await updateDoc(storeDocRef, { open: newOpenStatus });
+      setIsOpen(newOpenStatus);
+      setButtonText(newOpenStatus ? '結束領取' : '開放領取');
+    } catch (error) {
+      console.error('Error updating document: ', error);
+    }
+  };
+
+  const handleAddField = () => {
+    setFields([...fields, { field: '', value: '' }]);
+  };
+
+  const handleRemoveField = async (index) => {
+    const newFields = fields.filter((_, i) => i !== index);
+    const fieldToRemove = fields[index].field;
+    setFields(newFields);
+    
+    const storeDocRef = doc(db, 'fridges', '9fPJgKl8FvEzphsriDvn');
+    const batch = writeBatch(db);
+    try {
+      const docSnap = await getDoc(storeDocRef);
+      if (docSnap.exists()) {
+        const docData = docSnap.data();
+        if (docData.hasOwnProperty(fieldToRemove)) {
+          batch.update(storeDocRef, { [fieldToRemove]: deleteField() });
+          await batch.commit();
+        }
+      }
+    } catch (error) {
+      console.error('Error removing field from document: ', error);
+    }
+  };
+
   const showAlert = () => {
     Alert.alert('修改成功');
   };
+
   useEffect(() => {
     fetchUserData();
   }, []);
 
-  useEffect(() => {
-    fetchUserData();
-}, []);
+  const fetchUserData = async () => {
+    try {
+      const fridge1DocRef = doc(db, 'fridges', '9fPJgKl8FvEzphsriDvn');
+      const fridge2DocRef = doc(db, 'fridges', 'jtJgYOmcTgBJAfbhR5WD');
 
-const fetchUserData = async () => {
-  try {
-    const userQuery = doc(db, 'fridges', 'jtJgYOmcTgBJAfbhR5WD');
-    const userDocSnap = await getDoc(userQuery);
-    if (userDocSnap.exists()) {
-      const userData = userDocSnap.data();
-      settime(userData.start_time); // 更新開放領取持間
-      setaddress(userData.fridge_address); // 更新地址
-      setphone(userData.fridge_phone); // 更新電話
-      setmilk(userData.milk_quantity); // 更新牛奶數量
-      setcookies(userData.cookies_quantity); // 更新餅乾數量
-      setfriut(userData.friut_quantity); // 更新水果數量
-      setbread(userData.bread_quantity); // 更新麵包數量
-    } else {
-      console.log('找不到符合條件的使用者');
+      const [fridge1DocSnap, fridge2DocSnap] = await Promise.all([getDoc(fridge1DocRef), getDoc(fridge2DocRef)]);
+
+      if (fridge1DocSnap.exists() && fridge2DocSnap.exists()) {
+        const fridge1Data = fridge1DocSnap.data();
+        const fridge2Data = fridge2DocSnap.data();
+
+        const initialFields = Object.keys(fridge1Data).map(key => ({
+          field: key,
+          value: fridge1Data[key]
+        }));
+
+        setFields(initialFields);
+        setIsOpen(fridge2Data.open);
+        setTime(fridge2Data.start_time);
+        setButtonText(fridge2Data.open ? '結束領取' : '開放領取');
+      } else {
+        console.log('找不到符合條件的使用者');
+      }
+    } catch (error) {
+      console.error('獲取使用者資料時發生錯誤：', error);
     }
-  } catch (error) {
-    console.error('獲取使用者資料時發生錯誤：', error);
-  }
-};
-
+  };
 
   return (
     <View style={styles.container}>
-      
-      <View style={styles.wrapper}><ScrollView>
-        <Text></Text>
-        <Text>開放領取時間</Text>
-        <TextInput
-          style={styles.input}
-          value={time}
-          placeholder="開放領取持間"
-          onChangeText={text => settime(text)}
-        />
-        <Text>地址</Text>
-        <TextInput
-          style={styles.input}
-          value={address}
-          placeholder="地址"
-          onChangeText={text => setaddress(text)}
-        />
-        <Text>電話</Text>
-        <TextInput
-          style={styles.input}
-          value={phone}
-          placeholder="電話"
-          onChangeText={text => setphone(text)}
-        />
-        <Text>牛奶數量</Text>
-        <TextInput
-          style={styles.input}
-          value={milk}
-          placeholder="牛奶數量"
-          onChangeText={text => setmilk(text)}
-          
-        />
-        <Text>餅乾數量</Text>
-        <TextInput
-          style={styles.input}
-          value={cookies}
-          placeholder="餅乾數量"
-          onChangeText={text => setcookies(text)}
-          s
-        />
-        <Text>水果數量</Text>
-        <TextInput
-          style={styles.input}
-          value={friut}
-          placeholder="水果數量"
-          onChangeText={text => setfriut(text)}
-          
-        />
-        <Text>麵包數量</Text>
-        <TextInput
-          style={styles.input}
-          value={bread}
-          placeholder="麵包數量"
-          onChangeText={text => setbread(text)}
-      
-        />
-        
-        <TouchableOpacity onPress={handleButtonPress} style={styles.button}>
-          <Text style={styles.buttonText}>修改</Text>
-        </TouchableOpacity>
-        <View style={{ flexDirection: 'row', marginTop: 20 }}></View>
-      </ScrollView></View>
+      <TouchableOpacity onPress={handleOpenClosePress} style={styles.button1}>
+        <Text style={styles.buttonText1}>{buttonText}</Text>
+      </TouchableOpacity>
+      {isOpen && (
+        <View style={styles.wrapper}>
+          <ScrollView>
+          <Text>開放領取時間</Text>
+            <TextInput
+              style={styles.input}
+              value={time}
+              placeholder="開放領取時間"
+              onChangeText={text => setTime(text)}
+            />
+            <Text></Text>
+            {fields.map((field, index) => (
+              <View key={index} style={styles.row}>
+                <TextInput
+                  style={[styles.input, styles.fieldInput]}
+                  value={field.field}
+                  placeholder="物資名稱"
+                  onChangeText={text => {
+                    const newFields = [...fields];
+                    newFields[index].field = text;
+                    setFields(newFields);
+                  }}
+                />
+                <TextInput
+                  style={[styles.input, styles.valueInput]}
+                  value={field.value}
+                  placeholder="數量"
+                  onChangeText={text => {
+                    const newFields = [...fields];
+                    newFields[index].value = text;
+                    setFields(newFields);
+                  }}
+                />
+                <TouchableOpacity onPress={() => handleRemoveField(index)} style={styles.removeButton}>
+                  <Text style={styles.removeButtonText}>-</Text>
+                </TouchableOpacity>
+              </View>
+            ))}
+            <TouchableOpacity onPress={handleAddField} style={styles.addButton}>
+              <Text style={styles.addButtonText}>+</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleButtonPress} style={styles.button}>
+              <Text style={styles.buttonText}>修改</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+      )}
     </View>
   );
 };
-const styles =StyleSheet.create({
-  container:{
-  flex:1,
-  alignItems:'center',
-  backgroundColor:'#FDFBF1',
-  justifyContent:'center',},
-  wrapper:{
-      width:'80%',
-      
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#FDFBF1',
+    justifyContent: 'center',
+  },
+  wrapper: {
+    width: '80%',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#bbb',
+    borderRadius: 20,
+    paddingHorizontal: 14,
+    backgroundColor: 'white',
+    height: 55,
+  },
+  fieldInput: {
+    flex: 1,
+    marginRight: 10,
+  },
+  valueInput: {
+    flex: 1,
+    marginRight: 10,
   },
   button: {
-      backgroundColor: '#E6A984', // 自定义按钮颜色
-      padding: 20,
-      borderRadius: 20,
-    },
-    buttonText: {
-      color: 'white', // 按钮文本颜色
-      fontWeight: 'bold',
-      textAlign: 'center',
-      fontSize:20,
-    },
-
-  input:{
-      marginBottom:20,
-      borderWidth:1,
-      borderColor:'#bbb',
-      borderRadius:20,
-      paddingHorizontal:14,
-      backgroundColor: 'white',
-      height:60,
+    backgroundColor: '#E6A984',
+    padding: 15,
+    borderRadius: 20,
+    marginVertical: 10,
   },
-  link:{
-      color:'#DA7746',
-  }
-  
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  button1: {
+    backgroundColor: '#E6A984',
+    padding: 13,
+    borderRadius: 15,
+    marginVertical: 10,
+    width: '40%',
+    bottom: 5,
+  },
+  buttonText1: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  addButton: {
+    backgroundColor: '#E6A984',
+    padding: 5,
+    borderRadius: 20,
+    alignItems: 'center',
+   
+  },
+  addButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  removeButton: {
+    backgroundColor: '#E6A984',
+    padding: 20,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  removeButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
 });
 
 export default RefAdjust;
