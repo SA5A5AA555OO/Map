@@ -32,11 +32,17 @@ const RefAdjust = ({ navigation }) => {
     fields.forEach(({ field, value }) => {
       updates[field] = value;
     });
+    
     const storeDocRef1 = doc(db, 'fridges', '9fPJgKl8FvEzphsriDvn');
     const storeDocRef2 = doc(db, 'fridges', 'jtJgYOmcTgBJAfbhR5WD');
+  
     try {
       await updateDoc(storeDocRef1, updates);
-      await updateDoc(storeDocRef2, { start_time: time });
+  
+      const now = new Date();
+      const formattedTime = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+      await updateDoc(storeDocRef2, { adjustTime: formattedTime });
+  
       showAlert();
       navigation.navigate('Home', { status });
     } catch (error) {
@@ -243,9 +249,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   removeButton: {
-    backgroundColor: '#E6A984',
+    backgroundColor: '#FF2D2D',
     padding: 20,
-    borderRadius: 20,
+    
+    borderRadius: 120,
     alignItems: 'center',
     justifyContent: 'center',
   },

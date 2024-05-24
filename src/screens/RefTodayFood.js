@@ -18,58 +18,90 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const RefTodayFood = () => {
-  const [userData, setUserData] = useState(null);
+  const [userData1, setUserData1] = useState(null);
+  const [userData2, setUserData2] = useState(null);
 
-  const getData = async (db) => {
-    const userCollection = collection(db, "fridges");
-    const userDoc = doc(userCollection, "jtJgYOmcTgBJAfbhR5WD");
-    const userDocSnap = await getDoc(userDoc);
-    if (userDocSnap.exists()) {
-      setUserData(userDocSnap.data());
-    } else {
-      console.log("Document not found");
+  const getData = async () => {
+    try {
+      const userCollection = collection(db, "fridges");
+      const userDoc1 = doc(userCollection, "jtJgYOmcTgBJAfbhR5WD");
+      const userDoc2 = doc(userCollection, "9fPJgKl8FvEzphsriDvn");
+
+      const userDocSnap1 = await getDoc(userDoc1);
+      const userDocSnap2 = await getDoc(userDoc2);
+
+      if (userDocSnap1.exists()) {
+        setUserData1(userDocSnap1.data());
+      } else {
+        console.log("Document 1 not found");
+      }
+
+      if (userDocSnap2.exists()) {
+        const data = userDocSnap2.data();
+        const defaultData = { 麵包: 0, 牛奶: 0, 餅乾: 0, 水果: 0 };
+        setUserData2({ ...defaultData, ...data });
+      } else {
+        console.log("Document 2 not found");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
-    getData(db);
+    getData();
   }, []);
 
   const renderContent = () => {
-    if (userData && userData.open === false) {
+    if (userData1 && userData1.open === false) {
       return <Text style={styles.detail1}>今日已結束領取</Text>;
-    } else if (userData && userData.open === true) {
+    } else if (userData1 && userData1.open === true) {
+      const otherItems = userData2
+        ? Object.entries(userData2).filter(
+            ([key]) =>
+              key !== "麵包" &&
+              key !== "牛奶" &&
+              key !== "餅乾" &&
+              key !== "水果"
+          )
+        : [];
+
       return (
         <View>
-          <View style={{alignSelf: 'flex-start'}}>
-            <Text style={styles.detail}>今日開放領取時間:{userData.start_time}</Text>
+          <View style={{ alignSelf: 'flex-start' }}>
+            <Text style={styles.detail}>今日開放領取時間:{userData1.start_time}</Text>
           </View>
           <Text />
           <Text />
-          <View style={{marginBottom: 60}}>
-            <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+          <View style={{ marginBottom: 60 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
               <View>
                 <Image style={styles.pic} source={require('map/asset/吐司.png')} />
                 <View style={styles.square}></View>
-                <Text style={styles.detail}>麵包:{userData.bread_quantity}份</Text>
+                <Text style={styles.detail}>麵包:{userData2 ? userData2.麵包 : 'Loading...'}份</Text>
               </View>
-              <View style={{marginLeft: 60}}>
+              <View style={{ marginLeft: 60 }}>
                 <Image style={styles.pic} source={require('map/asset/牛奶.jpg')} />
-                <Text style={styles.detail}>牛奶:{userData.milk_quantity}份</Text>
+                <Text style={styles.detail}>牛奶:{userData2 ? userData2.牛奶 : 'Loading...'}份</Text>
               </View>
             </View>
           </View>
-          <View style={{marginBottom: 60}}>
-            <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+          <View style={{ marginBottom: 60 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
               <View>
                 <Image style={styles.pic} source={require('map/asset/餅乾.jpg')} />
-                <Text style={styles.detail}>餅乾:{userData.cookies_quantity}份</Text>
+                <Text style={styles.detail}>餅乾:{userData2 ? userData2.餅乾 : 'Loading...'}份</Text>
               </View>
-              <View style={{marginLeft: 60}}>
+              <View style={{ marginLeft: 60 }}>
                 <Image style={styles.pic} source={require('map/asset/水果.jpg')} />
-                <Text style={styles.detail}>水果:{userData.fruit_quantity}份</Text>
+                <Text style={styles.detail}>水果:{userData2 ? userData2.水果 : 'Loading...'}份</Text>
               </View>
             </View>
+          </View>
+          <View style={{  flexDirection: 'row',marginBottom: 60 }}>
+            {otherItems.map(([key, value]) => (
+              <Text style={styles.detail} key={key}>{key}:{value}份    </Text>
+            ))}
           </View>
         </View>
       );
@@ -95,13 +127,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor:'#FDFBF1',
-    paddingTop:20,
+    backgroundColor: '#FDFBF1',
+    paddingTop: 20,
   },
   imageText: {
     position: 'absolute',
-    top: 130, 
-    left: 20, 
+    top: 130,
+    left: 20,
     fontSize: 35,
     color: 'white',
   },
@@ -115,8 +147,8 @@ const styles = StyleSheet.create({
     width: 130,
     height: 130,
     borderRadius: 100,
-    backgroundColor:'white',
-    top:-60
+    backgroundColor: 'white',
+    top: -60
   },
   detail: {
     fontSize: 20,

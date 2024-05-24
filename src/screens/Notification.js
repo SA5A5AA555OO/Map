@@ -20,21 +20,32 @@ const db = getFirestore(app);
 
 const Notification = ({ navigation }) => {
   const [userData, setUserData] = useState(null);
+  const [userData1, setUserData1] = useState(null);
   const [donateData, setDonateData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [selected, setSelected] = useState('notReceived');
 
   const getData = async () => {
     try {
-      const userCollection = collection(db, "fridges");
-      const userDoc = doc(userCollection, "jtJgYOmcTgBJAfbhR5WD");
-      const userDocSnap = await getDoc(userDoc);
-      if (userDocSnap.exists()) {
-        setUserData(userDocSnap.data());
+      const userCollection1 = collection(db, "fridges"); // 集合名稱可能需要修改
+      const userDoc1 = doc(userCollection1, "jtJgYOmcTgBJAfbhR5WD");
+      const userDocSnap1 = await getDoc(userDoc1);
+      if (userDocSnap1.exists()) {
+        setUserData(userDocSnap1.data());
       } else {
         console.log("Document not found");
       }
-
+  
+      const userCollection2 = collection(db, "fridges"); // 集合名稱可能需要修改
+      const userDoc2 = doc(userCollection2, "9fPJgKl8FvEzphsriDvn");
+      const userDocSnap2 = await getDoc(userDoc2);
+      if (userDocSnap2.exists()) {
+        const userData2 = userDocSnap2.data(); // 取得 9fPJgKl8FvEzphsriDvn 文件的資料
+        setUserData1(userData2); // 設置到對應的變數中
+      } else {
+        console.log("Document not found");
+      }
+  
       const today = new Date().toISOString().split('T')[0]; 
       console.log("Today's date:", today); 
       const donateCollection = collection(db, "donate");
@@ -68,17 +79,24 @@ const Notification = ({ navigation }) => {
       return (
         <View>
           
-          {userData && userData.open ? (
+          { userData && userData1 && userData.open ? (
             <View style={styles.row}>
               <Image
                 style={styles.logo}
                 source={require("map/asset/food.jpg")}
               />
-              <View>
-                <Text style={styles.leftText}>{userData.adjustTime}</Text>
-                <Text style={styles.detail}>麵包: {userData.bread_quantity} 份        牛奶: {userData.milk_quantity} 份 </Text>
-                <Text style={styles.detail}>餅乾: {userData.cookies_quantity} 份      水果: {userData.fruit_quantity} 份</Text>
-              </View>
+                  <View>
+      <Text style={styles.leftText}>{userData.adjustTime}</Text>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+  {Object.keys(userData1).map((key, index) => (
+    <View key={index} style={{ flexDirection: 'row',  width: '40%' }}>
+      <Text style={styles.detail}>{key}: {userData1[key]}份</Text>
+      {index % 2 === 1 && <Text></Text>}
+
+    </View>
+  ))}
+</View>
+    </View>
             </View>
           ) : (
             <Text style={styles.detail1}>今日已結束領取</Text>
@@ -105,7 +123,7 @@ const Notification = ({ navigation }) => {
               <View style={styles.line} />
               <Text></Text>
             </View>
-          )) : <Text>沒有待用餐記錄</Text>}
+          )) : <Text style={styles.detail1}>沒有待用餐記錄</Text>}
           <Text></Text>
           <Text></Text>
           <Text></Text>
