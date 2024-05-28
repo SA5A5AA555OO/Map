@@ -49,7 +49,7 @@ const Notification = ({ navigation }) => {
       const today = new Date().toISOString().split('T')[0]; 
       console.log("Today's date:", today); 
       const donateCollection = collection(db, "donate");
-      const q = query(donateCollection, where("date", "==", today)); 
+      const q = query(donateCollection, where("date", "==", today), where("pay", "==", true)); 
       const querySnapshot = await getDocs(q);
       const donateList = querySnapshot.docs.map(doc => doc.data());
       console.log("Donations fetched:", donateList); 
@@ -123,7 +123,7 @@ const Notification = ({ navigation }) => {
               <View style={styles.line} />
               <Text></Text>
             </View>
-          )) : <Text style={styles.detail1}>沒有待用餐記錄</Text>}
+          )) : <Text style={styles.detail1}>今日尚無捐贈記錄</Text>}
           <Text></Text>
           <Text></Text>
           <Text></Text>
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   },
   detail1: {
     fontSize: 30,
-    paddingLeft: 80,
+    paddingLeft: 65,
     paddingTop: 100,
   },
   text: {
