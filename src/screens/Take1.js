@@ -40,7 +40,7 @@ const Take1 = ({navigation}) =>{
   const { storeName,status,email } = route.params;
   const handleButtonPress = async () => {
     try {
-      const pickupQuery = query(collection(db, 'pickup'), where('email', '==', email), where('storeName', '==', storeName), where('take', '==', "1"));
+      const pickupQuery = query(collection(db, 'pickup'), where('email', '==', email), where('storeName', '==', storeName), where('take', '==', 1));
       const pickupQuerySnapshot = await getDocs(pickupQuery);
       if (!pickupQuerySnapshot.empty) {
         alert('一天只能領取一次');
